@@ -11,30 +11,28 @@ const Chatbox = () => {
   };
   return (
     <>
-      <ChatboxWrapper>
-        <form onSubmit={handleSendMessage}>
-          <Flex p={3}>
-            <FormControl id='first-name' isRequired>
-              <Input
-                placeholder='Type in a message'
-                onChange={(e) => setMessage(e.target.value)}
-                value={message}
-                autoComplete={false}
-                name='message'
-              />
-            </FormControl>
-            <IconButton
-              variant='outline'
-              colorScheme='gray'
-              aria-label='Send Message'
-              fontSize='20px'
-              icon={<IoSend />}
-              isRound={true}
-              marginLeft={3}
-              type='submit'
+      <ChatboxWrapper onSubmit={handleSendMessage}>
+        <Flex>
+          <FormControl id='first-name' isRequired>
+            <Input
+              placeholder='Type in a message'
+              onChange={(e) => setMessage(e.target.value)}
+              value={message}
+              autoComplete={false}
+              name='message'
             />
-          </Flex>
-        </form>
+          </FormControl>
+          <IconButton
+            variant='outline'
+            colorScheme='gray'
+            aria-label='Send Message'
+            fontSize='20px'
+            icon={<IoSend />}
+            isRound={true}
+            marginLeft={3}
+            type='submit'
+          />
+        </Flex>
       </ChatboxWrapper>
     </>
   );
@@ -42,9 +40,10 @@ const Chatbox = () => {
 
 export default Chatbox;
 
-const ChatboxWrapper = styled.div`
+const ChatboxWrapper = styled.form`
   position: fixed !important;
   bottom: 0px !important;
-  right: 0px !important;
   width: 100% !important;
+  max-width: 1280px !important;
+  padding: 10px;
 `;

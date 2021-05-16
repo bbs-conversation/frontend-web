@@ -28,7 +28,7 @@ const Menu = ({ setMenuOpen }) => {
           marginRight={5}
           onClick={() => setMenuOpen(false)}
         />
-        <VStack>
+        <VStack display={'grid'} zIndex={100000}>
           <ChakraLink fontSize={20} as={Link} href={'/'}>
             Home
           </ChakraLink>

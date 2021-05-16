@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
-import { Button, Container, Flex, Text, VStack } from '@chakra-ui/react';
+import {
+  Button,
+  Container,
+  Flex,
+  Text,
+  useMediaQuery,
+  VStack,
+} from '@chakra-ui/react';
 import Header from '../Header';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, googleAuth } from '../../config/firebase';
@@ -9,6 +16,7 @@ import { BiErrorCircle } from 'react-icons/bi';
 
 const LoginPage = () => {
   const [user, error, loading] = useAuthState(auth);
+  const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
   const [loginError, setLoginError] = useState('');
   const loginWithGoogle = () => {
     auth.signInWithPopup(googleAuth).catch((err) => {
@@ -20,7 +28,10 @@ const LoginPage = () => {
       <Head>
         <title>Conversations | Login</title>
       </Head>
-      <Header appName={'Conversations | Login'} withNav={false} />
+      <Header
+        appName={isLargerThan768 ? 'Conversations | Login' : 'Conversations'}
+        withNav={false}
+      />
       <Container maxW='container.xl'>
         <Flex>
           {loading && (

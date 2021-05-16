@@ -51,7 +51,12 @@ const CounsellorChat = () => {
             </>
           )}
           <form onSubmit={(e) => e.preventDefault()}>
-            <FormControl display='flex' alignItems='center'>
+            <FormControl
+              display='flex'
+              alignItems='center'
+              zIndex={0}
+              position={'static'}
+            >
               <FormLabel htmlFor='saveChatHistory' mb='0'>
                 Do not save chat to Server?
               </FormLabel>
