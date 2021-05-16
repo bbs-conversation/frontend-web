@@ -1,16 +1,11 @@
 import React from 'react';
-import {
-  IconButton,
-  ListItem,
-  UnorderedList,
-  VStack,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { IconButton, VStack, useColorModeValue } from '@chakra-ui/react';
 import { Box } from '@chakra-ui/react';
-
-import { Link } from '@chakra-ui/react';
-
+import { Link as ChakraLink } from '@chakra-ui/react';
 import { VscChromeClose } from 'react-icons/vsc';
+
+import Link from 'next/link';
+
 const Menu = ({ setMenuOpen }) => {
   const menuBgColor = useColorModeValue('gray.50', 'gray.600');
   return (
@@ -23,6 +18,7 @@ const Menu = ({ setMenuOpen }) => {
         bg={menuBgColor}
         padding={4}
         boxShadow={'md'}
+        zIndex={10000}
       >
         <IconButton
           size={'md'}
@@ -33,13 +29,27 @@ const Menu = ({ setMenuOpen }) => {
           onClick={() => setMenuOpen(false)}
         />
         <VStack>
-          <Link fontSize={20}>Home</Link>
-          <Link fontSize={20}>Chat</Link>
-          <Link fontSize={20}>Schedule an appointment</Link>
-          <Link fontSize={20}>Request for group session</Link>
-          <Link fontSize={20}>Attend group session</Link>
-          <Link fontSize={20}>Mindfullness activities</Link>
-          <Link fontSize={20}>Resources and Tips</Link>
+          <ChakraLink fontSize={20} as={Link} href={'/'}>
+            Home
+          </ChakraLink>
+          <ChakraLink fontSize={20} as={Link} href={'/counsellor-chat'}>
+            Chat
+          </ChakraLink>
+          <ChakraLink fontSize={20} as={Link} href={'/'}>
+            Schedule an appointment
+          </ChakraLink>
+          <ChakraLink fontSize={20} as={Link} href={'/'}>
+            Request for group session
+          </ChakraLink>
+          <ChakraLink fontSize={20} as={Link} href={'/'}>
+            Attend group session
+          </ChakraLink>
+          <ChakraLink fontSize={20} as={Link} href={'/'}>
+            Mindfullness activities
+          </ChakraLink>
+          <ChakraLink fontSize={20} as={Link} href={'/'}>
+            Resources and Tips
+          </ChakraLink>
         </VStack>
       </Box>
     </>

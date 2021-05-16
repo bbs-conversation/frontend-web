@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { Container } from '@chakra-ui/react';
+import { Container, useMediaQuery } from '@chakra-ui/react';
 import { Text } from '@chakra-ui/react';
 import Header from '../components/Header';
 import { Skeleton } from '@chakra-ui/react';
 import { Grid, Box } from '@chakra-ui/react';
 import NavigationBlock from '../components/NavigationBlock';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../firebase/firebase';
+import { auth } from '../config/firebase';
 
 const HomePage = () => {
   useEffect(() => {
@@ -18,13 +18,22 @@ const HomePage = () => {
       },
     })
       .then((response) => response.json())
-      .then((data) => setQuote(data.contents.quotes[0].quote))
-      .catch((err) => console.error(err));
+      .then((data) =>
+        setQuote(`Today's quote - ${data.contents.quotes[0].quote}`)
+      )
+      .catch((err) => {
+        console.error(err);
+        setQuote(
+          `Sorry, there was some error loading the page please try again after sometime`
+        );
+      });
   }, []);
 
   const [quote, setQuote] = useState('');
 
   const [user] = useAuthState(auth);
+
+  const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
 
   return (
     <>
@@ -34,7 +43,11 @@ const HomePage = () => {
       <Header appName={'Conversations'} withNav={true} />
       <Container maxW='container.xl' marginBottom={5}>
         {user ? (
-          <Text textAlign='center' fontSize={'4xl'}>
+          <Text
+            textAlign='center'
+            fontSize={isLargerThan768 ? '4xl' : '3xl'}
+            as={'h3'}
+          >
             Hello, {user?.displayName}!
           </Text>
         ) : (
@@ -48,7 +61,7 @@ const HomePage = () => {
           </>
         ) : (
           <>
-            <Text textAlign='center'>Todays Quote: {quote}</Text>
+            <Text textAlign='center'>{quote}</Text>
           </>
         )}
         <Grid
@@ -59,16 +72,20 @@ const HomePage = () => {
           <NavigationBlock
             title={'Chat'}
             linkDescription={'with your counsellors privately'}
+            link={'/counsellor-chat'}
           />
           <NavigationBlock
             title={'Schedule'}
+            link={'/'}
             linkDescription={'an appointment with your counsellor'}
           />
           <NavigationBlock
+            link={'/'}
             title={'Request'}
             linkDescription={'your counsellors for a group session'}
           />
           <NavigationBlock
+            link={'/'}
             title={'Attend'}
             linkDescription={'a group session with your peers and counsellors'}
           />
@@ -79,6 +96,7 @@ const HomePage = () => {
           marginTop={5}
         >
           <NavigationBlock
+            link={'/'}
             title={'Mindful Activities'}
             linkDescription={'Do mindful activities to calm yourself'}
           />
@@ -87,6 +105,7 @@ const HomePage = () => {
             linkDescription={
               'Get access to resources and tips to help you in your tough times'
             }
+            link={'/'}
           />
         </Grid>
       </Container>

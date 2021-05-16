@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import { Button, Container, Flex, Text, VStack } from '@chakra-ui/react';
 import Header from '../Header';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, googleAuth } from '../../firebase/firebase';
+import { auth, googleAuth } from '../../config/firebase';
 import { FcGoogle } from 'react-icons/fc';
 import { BiErrorCircle } from 'react-icons/bi';
 
 const LoginPage = () => {
   const [user, error, loading] = useAuthState(auth);
+  const [loginError, setLoginError] = useState('');
   const loginWithGoogle = () => {
-    auth.signInWithPopup(googleAuth);
+    auth.signInWithPopup(googleAuth).catch((err) => {
+      console.error(err), setLoginError(err.message);
+    });
   };
   return (
     <>
@@ -32,22 +35,23 @@ const LoginPage = () => {
               Loading...
             </Button>
           )}
-          {error && (
-            <>
-              <VStack margin={'auto'}>
-                <Button
-                  margin={'auto'}
-                  rightIcon={<BiErrorCircle />}
-                  colorScheme='gray'
-                  variant='outline'
-                  isDisabled
-                >
-                  An error occurred
-                </Button>
-                <Text margin={'auto'}>{error}</Text>
-              </VStack>
-            </>
-          )}
+          {error ||
+            (loginError !== '' && (
+              <>
+                <VStack margin={'auto'}>
+                  <Button
+                    margin={'auto'}
+                    rightIcon={<BiErrorCircle />}
+                    colorScheme='gray'
+                    variant='outline'
+                    isDisabled
+                  >
+                    An error occurred
+                  </Button>
+                  <Text margin={'auto'}>{error || loginError}</Text>
+                </VStack>
+              </>
+            ))}
           {!user && (
             <>
               <Button

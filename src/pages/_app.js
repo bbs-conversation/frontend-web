@@ -1,7 +1,8 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import '../styles/globals.css';
-import { ThemeProvider, theme } from '@chakra-ui/react';
-import { auth } from '../firebase/firebase';
+import { ThemeProvider } from '@chakra-ui/react';
+import theme from '../config/chakraTheme';
+import { auth } from '../config/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import LoginPage from '../components/Login';
 
