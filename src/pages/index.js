@@ -42,16 +42,42 @@ const HomePage = () => {
           </>
         )}
         <Grid
-          templateColumns='repeat(auto-fill, minmax(220px, 1fr))'
+          templateColumns='repeat(auto-fill, minmax(260px, 1fr))'
           gap={6}
           marginTop={5}
         >
-          <NavigationBlock /> <NavigationBlock /> <NavigationBlock />
-          <NavigationBlock /> <NavigationBlock /> <NavigationBlock />
-          <NavigationBlock /> <NavigationBlock /> <NavigationBlock />
-          <NavigationBlock /> <NavigationBlock /> <NavigationBlock />
-          <NavigationBlock /> <NavigationBlock /> <NavigationBlock />
-          <NavigationBlock />
+          <NavigationBlock
+            title={'Chat'}
+            linkDescription={'with your counsellors privately'}
+          />
+          <NavigationBlock
+            title={'Schedule'}
+            linkDescription={'an appointment with your counsellor'}
+          />
+          <NavigationBlock
+            title={'Request'}
+            linkDescription={'your counsellors for a group session'}
+          />
+          <NavigationBlock
+            title={'Attend'}
+            linkDescription={'a group session with your peers and counsellors'}
+          />
+        </Grid>
+        <Grid
+          templateColumns='repeat(auto-fill, max(260px, 1fr))'
+          gap={6}
+          marginTop={5}
+        >
+          <NavigationBlock
+            title={'Mindful Activities'}
+            linkDescription={'Do mindful activities to calm yourself'}
+          />
+          <NavigationBlock
+            title={'Resources and tips'}
+            linkDescription={
+              'Get access to resources and tips to help you in your tough times'
+            }
+          />
         </Grid>
       </Container>
     </>

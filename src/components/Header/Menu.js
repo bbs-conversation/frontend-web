@@ -38,7 +38,6 @@ const Menu = ({ setMenuOpen }) => {
           <Link fontSize={20}>Schedule an appointment</Link>
           <Link fontSize={20}>Request for group session</Link>
           <Link fontSize={20}>Attend group session</Link>
-          <Link fontSize={20}>Chats</Link>
           <Link fontSize={20}>Mindfullness activities</Link>
           <Link fontSize={20}>Resources and Tips</Link>
         </VStack>

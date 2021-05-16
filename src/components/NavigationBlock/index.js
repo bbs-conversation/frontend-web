@@ -10,21 +10,21 @@ import {
 import { BsArrowRightShort as BsArrowRight } from 'react-icons/bs';
 import styled from 'styled-components';
 
-const NavigationBlock = () => {
+const NavigationBlock = ({ title, linkDescription }) => {
   const textHeadingColor = useColorModeValue('black', 'gray.900');
   return (
     <>
       <WrapperBox
         w='100%'
         minH='20'
-        bg='gray.50'
+        bg='gray.100'
         borderRadius={10}
         p={2}
         boxShadow={'md'}
       >
         <Flex>
           <Text fontSize={'2xl'} color={textHeadingColor} alignSelf={'center'}>
-            Hello
+            {title}
           </Text>
           <Spacer />
           <Icon
@@ -36,7 +36,7 @@ const NavigationBlock = () => {
         </Flex>
         <Flex>
           <Text fontSize={'sm'} color={textHeadingColor}>
-            Please go here it is the right way
+            {linkDescription}
           </Text>
         </Flex>
       </WrapperBox>

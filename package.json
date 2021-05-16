@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "ghBuild": "next build && next export -o build",
     "start": "next start"
   },
   "dependencies": {
