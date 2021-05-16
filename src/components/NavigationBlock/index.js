@@ -47,9 +47,9 @@ const NavigationBlock = ({ title, linkDescription }) => {
 export default NavigationBlock;
 
 const WrapperBox = styled(Box)`
-  transition: 0.3s;
+  transition: 0.3s !important;
   &:hover {
-    box-shadow: 2px 2px 0px #d0d3d4;
-    cursor: pointer;
+    box-shadow: 2px 2px 0px #d0d3d4 !important;
+    cursor: pointer !important;
   }
 `;

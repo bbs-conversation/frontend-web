@@ -6,6 +6,8 @@ import Header from '../components/Header';
 import { Skeleton } from '@chakra-ui/react';
 import { Grid, Box } from '@chakra-ui/react';
 import NavigationBlock from '../components/NavigationBlock';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../firebase/firebase';
 
 const HomePage = () => {
   useEffect(() => {
@@ -22,16 +24,24 @@ const HomePage = () => {
 
   const [quote, setQuote] = useState('');
 
+  const [user] = useAuthState(auth);
+
   return (
     <>
       <Head>
         <title>Home Page</title>
       </Head>
-      <Header appName={'Conversations'} />
-      <Container maxW='container.xl'>
-        <Text textAlign='center' fontSize={'4xl'}>
-          Hello Akshaj!
-        </Text>
+      <Header appName={'Conversations'} withNav={true} />
+      <Container maxW='container.xl' marginBottom={5}>
+        {user ? (
+          <Text textAlign='center' fontSize={'4xl'}>
+            Hello, {user?.displayName}!
+          </Text>
+        ) : (
+          <>
+            <Skeleton height='60px' />
+          </>
+        )}
         {quote === '' ? (
           <>
             <Skeleton height='20px' />
