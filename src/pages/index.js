@@ -8,6 +8,7 @@ import { Grid, Box } from '@chakra-ui/react';
 import NavigationBlock from '../components/NavigationBlock';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../config/firebase';
+import { useChatStateValue } from '../context/providers/ChatProvider';
 
 const HomePage = () => {
   useEffect(() => {
@@ -38,7 +39,7 @@ const HomePage = () => {
   return (
     <>
       <Head>
-        <title>Home Page</title>
+        <title>Conversations | Home</title>
       </Head>
       <Header appName={'Conversations'} withNav={true} />
       <Container maxW='container.xl' marginBottom={5}>

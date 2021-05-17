@@ -37,7 +37,15 @@ class MyDocument extends Document {
             rel='stylesheet'
           />
         </Head>
-        <body>
+        <body
+        // style={{
+        //   background:
+        //     'url(/images/mainbg.png) no-repeat center fixed !important',
+        //   backgroundSize: 'cover !important',
+        //   width: '100%',
+        //   minHeight: '100vh',
+        // }}
+        >
           <Main />
           <NextScript />
         </body>

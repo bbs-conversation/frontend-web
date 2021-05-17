@@ -32,25 +32,22 @@ const CounsellorChat = () => {
       <Header appName={'Conversations'} withNav={true} />
       <Container maxW='container.xl'>
         <Flex p={2}>
-          {isLargerThan576 && (
-            <>
-              <Breadcrumb>
-                <BreadcrumbItem>
-                  <BreadcrumbLink as={Link} href='/'>
-                    Home
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
+          <Breadcrumb>
+            <BreadcrumbItem>
+              <BreadcrumbLink as={Link} href='/'>
+                Home
+              </BreadcrumbLink>
+            </BreadcrumbItem>
 
-                <BreadcrumbItem isCurrentPage>
-                  <BreadcrumbLink as={Link} href='/counsellor-chat'>
-                    Counsellor Chat
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-              </Breadcrumb>
-              <Spacer />
-            </>
-          )}
-          <form onSubmit={(e) => e.preventDefault()}>
+            <BreadcrumbItem isCurrentPage>
+              <BreadcrumbLink as={Link} href='/counsellor-chat'>
+                Counsellor Chat
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+          </Breadcrumb>
+          <Spacer />
+
+          {/* <form onSubmit={(e) => e.preventDefault()}>
             <FormControl
               display='flex'
               alignItems='center'
@@ -66,7 +63,7 @@ const CounsellorChat = () => {
                 value={saveChatHistory}
               />
             </FormControl>
-          </form>
+          </form> */}
         </Flex>
         <Chatbox />
       </Container>
