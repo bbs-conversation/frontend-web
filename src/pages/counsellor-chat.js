@@ -31,7 +31,7 @@ const CounsellorChat = () => {
       </Head>
       <Header appName={'Conversations'} withNav={true} />
       <Container maxW='container.xl'>
-        <Flex p={2}>
+        <Flex p={0}>
           <Breadcrumb>
             <BreadcrumbItem>
               <BreadcrumbLink as={Link} href='/'>
