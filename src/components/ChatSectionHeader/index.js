@@ -1,4 +1,10 @@
-import { Flex, IconButton, useMediaQuery } from '@chakra-ui/react';
+import {
+  Flex,
+  IconButton,
+  Spacer,
+  Text,
+  useMediaQuery,
+} from '@chakra-ui/react';
 import React from 'react';
 import { IoMenu } from 'react-icons/io5';
 
@@ -16,7 +22,10 @@ const ChatSectionHeader = ({ setChatSidebarOpen, chatSidebarOpen }) => {
           mr={2}
         />
       )}
-      <h1>Hello</h1>
+      {!isLargerThan992 && <Spacer />}
+      <Text alignSelf={'center'} fontSize={'xl'} fontWeight={'semibold'}>
+        Teacher Name
+      </Text>
     </Flex>
   );
 };

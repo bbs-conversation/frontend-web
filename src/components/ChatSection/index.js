@@ -17,7 +17,7 @@ import ChatSidebar from '../ChatSidebar';
 const ChatSection = () => {
   const [isLargerThan992] = useMediaQuery('(min-width: 992px)');
   const [chatSidebarOpen, setChatSidebarOpen] = useState(false);
-  const sideBarColor = useColorModeValue('gray.50', 'gray.600');
+  const sideBarColor = useColorModeValue('white', 'gray.600');
   return (
     <Container maxW='container.xl' p={0}>
       <Grid
@@ -38,6 +38,7 @@ const ChatSection = () => {
               overflow={'scroll'}
               flexDirection='column'
               p={2}
+              boxShadow={'md'}
             >
               <Flex>
                 <IconButton
@@ -52,7 +53,12 @@ const ChatSection = () => {
             </Flex>
           </>
         )}
-        <GridItem rowSpan={12} colSpan={1} display={!isLargerThan992 && 'none'}>
+        <GridItem
+          rowSpan={12}
+          colSpan={1}
+          display={!isLargerThan992 && 'none'}
+          overflow={'scroll'}
+        >
           <ChatSidebar />
         </GridItem>
         <GridItem rowSpan={1} colSpan={isLargerThan992 ? 4 : 5}>
