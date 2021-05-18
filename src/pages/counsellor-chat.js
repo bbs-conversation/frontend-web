@@ -14,7 +14,7 @@ import Head from 'next/head';
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Header from '../components/Header';
-import Chatbox from '../components/Chatbox';
+import ChatSection from '../components/ChatSection';
 
 const CounsellorChat = () => {
   const [saveChatHistory, setSaveChatHistory] = useState(true);
@@ -65,7 +65,7 @@ const CounsellorChat = () => {
             </FormControl>
           </form> */}
         </Flex>
-        <Chatbox />
+        <ChatSection />
       </Container>
     </>
   );

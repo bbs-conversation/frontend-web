@@ -11,7 +11,7 @@ import { BsArrowRightShort as BsArrowRight } from 'react-icons/bs';
 import styled from 'styled-components';
 import Link from 'next/link';
 
-const NavigationBlock = ({ title, linkDescription, link }) => {
+const NavigationBlock = ({ title, linkDescription, link, icon, iconSize }) => {
   const textHeadingColor = useColorModeValue('black', 'gray.900');
   return (
     <>
@@ -35,9 +35,9 @@ const NavigationBlock = ({ title, linkDescription, link }) => {
             <Spacer />
             <Icon
               alignSelf={'center'}
-              fontSize={40}
+              fontSize={iconSize ? iconSize : 40}
               color={textHeadingColor}
-              as={BsArrowRight}
+              as={icon ? icon : BsArrowRight}
             />
           </Flex>
           <Flex>

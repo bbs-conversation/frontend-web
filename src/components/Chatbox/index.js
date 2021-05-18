@@ -41,9 +41,11 @@ const Chatbox = () => {
 export default Chatbox;
 
 const ChatboxWrapper = styled.form`
-  position: fixed !important;
+  /* position: fixed !important;
   bottom: 0px !important;
-  width: 100% !important;
+  width: 100% !important; */
   max-width: 1280px !important;
   padding: 10px;
+  align-items: center !important;
+  /* align-self: end !important; */
 `;

@@ -8,7 +8,15 @@ import { Grid, Box } from '@chakra-ui/react';
 import NavigationBlock from '../components/NavigationBlock';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../config/firebase';
-import { useChatStateValue } from '../context/providers/ChatProvider';
+import { BsChatDots } from 'react-icons/bs';
+import {
+  AiOutlineSchedule,
+  AiOutlineQuestion,
+  AiOutlineVideoCamera,
+} from 'react-icons/ai';
+import { GiMeditation } from 'react-icons/gi';
+import { FaBook } from 'react-icons/fa';
+// import { useChatStateValue } from '../context/providers/ChatProvider';
 
 const HomePage = () => {
   useEffect(() => {
@@ -74,21 +82,29 @@ const HomePage = () => {
             title={'Chat'}
             linkDescription={'with your counsellors privately'}
             link={'/counsellor-chat'}
+            icon={BsChatDots}
+            iconSize={32}
           />
           <NavigationBlock
             title={'Schedule'}
             link={'/'}
             linkDescription={'an appointment with your counsellor'}
+            icon={AiOutlineSchedule}
+            iconSize={36}
           />
           <NavigationBlock
             link={'/'}
             title={'Request'}
             linkDescription={'your counsellors for a group session'}
+            icon={AiOutlineQuestion}
+            iconSize={32}
           />
           <NavigationBlock
             link={'/'}
             title={'Attend'}
             linkDescription={'a group session with your peers and counsellors'}
+            icon={AiOutlineVideoCamera}
+            iconSize={33}
           />
         </Grid>
         <Grid
@@ -100,6 +116,8 @@ const HomePage = () => {
             link={'/'}
             title={'Mindful Activities'}
             linkDescription={'Do mindful activities to calm yourself'}
+            icon={GiMeditation}
+            iconSize={35}
           />
           <NavigationBlock
             title={'Resources and tips'}
@@ -107,6 +125,8 @@ const HomePage = () => {
               'Get access to resources and tips to help you in your tough times'
             }
             link={'/'}
+            icon={FaBook}
+            iconSize={30}
           />
         </Grid>
       </Container>
