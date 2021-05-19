@@ -1,6 +1,6 @@
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, CSSReset, theme } from '@chakra-ui/react';
 import { ThemeProvider } from '@chakra-ui/react';
-import theme from '../config/chakraTheme';
+// import theme from '../config/chakraTheme';
 import { auth } from '../config/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import LoginPage from '../components/Login';
@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <GlobalStyles />
-      {loading || error || user ? (
+      {error || user ? (
         <>
           <SocketProvider
             id={typeof window !== 'undefined' && localStorage.getItem('id')}
@@ -24,6 +24,7 @@ function MyApp({ Component, pageProps }) {
             <ChatProvider reducer={chatReducer} initialState={chatInitialState}>
               <ChakraProvider>
                 <ThemeProvider theme={theme}>
+                  <CSSReset />
                   <Component {...pageProps} />
                 </ThemeProvider>
               </ChakraProvider>
@@ -34,7 +35,7 @@ function MyApp({ Component, pageProps }) {
         <>
           <ChakraProvider>
             <ThemeProvider theme={theme}>
-              <LoginPage {...pageProps} />
+              {<LoginPage {...pageProps} />}
             </ThemeProvider>
           </ChakraProvider>
         </>

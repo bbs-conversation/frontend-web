@@ -22,5 +22,9 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 const storage = firebase.storage();
 const googleAuth = new firebase.auth.GoogleAuthProvider();
+const microsoftAuth = new firebase.auth.OAuthProvider('microsoft.com');
+microsoftAuth.setCustomParameters({
+  tenant: '581747cb-f4f5-49b3-aeec-baad159fc64c',
+});
 
-export { auth, db, storage, googleAuth };
+export { auth, db, storage, googleAuth, microsoftAuth };

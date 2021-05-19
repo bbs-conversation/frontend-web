@@ -10,18 +10,21 @@ import {
 } from '@chakra-ui/react';
 import Header from '../Header';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, googleAuth } from '../../config/firebase';
-import { FcGoogle } from 'react-icons/fc';
+import { auth, googleAuth, microsoftAuth } from '../../config/firebase';
+import { FaMicrosoft } from 'react-icons/fa';
 import { BiErrorCircle } from 'react-icons/bi';
 
 const LoginPage = () => {
   const [user, error, loading] = useAuthState(auth);
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
   const [loginError, setLoginError] = useState('');
-  const loginWithGoogle = () => {
-    auth.signInWithPopup(googleAuth).catch((err) => {
-      console.error(err), setLoginError(err.message);
-    });
+  const loginWithMicrosoft = () => {
+    auth
+      .signInWithPopup(microsoftAuth)
+      .then((user) => console.log(user))
+      .catch((err) => {
+        console.error(err), setLoginError(err.message);
+      });
   };
   return (
     <>
@@ -67,12 +70,13 @@ const LoginPage = () => {
             <>
               <Button
                 margin={'auto'}
-                rightIcon={<FcGoogle />}
+                rightIcon={<FaMicrosoft />}
                 colorScheme='gray'
                 variant='outline'
-                onClick={loginWithGoogle}
+                onClick={loginWithMicrosoft}
+                fontSize='22px'
               >
-                Login with Google
+                Login with Microsoft
               </Button>
             </>
           )}

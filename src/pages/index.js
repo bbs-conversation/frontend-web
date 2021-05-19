@@ -138,6 +138,7 @@ const HomePage = () => {
             iconSize={33}
           />
         </Grid>
+
         <Grid
           templateColumns='repeat(auto-fill, max(260px, 1fr))'
           gap={6}
