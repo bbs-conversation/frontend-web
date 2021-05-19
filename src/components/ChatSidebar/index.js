@@ -5,27 +5,13 @@ import ChatUser from '../Chatuser';
 const ChatSidebar = () => {
   return (
     <Grid overflow='auto'>
-      <ChatUser name={'Ms. Kamya Kumar'} role='Counsellor' />
-      <ChatUser name={'Ms. Ritu Kaushik'} role='Counsellor' />
-      <ChatUser name={'Ms. Seema Kalra'} role='Counsellor' />
-      <ChatUser name={'Ms. Kamya Kumar'} role='Counsellor' />
-      <ChatUser name={'Ms. Ritu Kaushik'} role='Counsellor' />
-      <ChatUser name={'Ms. Seema Kalra'} role='Counsellor' />
-      <ChatUser name={'Ms. Kamya Kumar'} role='Counsellor' />
-      <ChatUser name={'Ms. Ritu Kaushik'} role='Counsellor' />
-      <ChatUser name={'Ms. Seema Kalra'} role='Counsellor' />
-      <ChatUser name={'Ms. Kamya Kumar'} role='Counsellor' />
-      <ChatUser name={'Ms. Ritu Kaushik'} role='Counsellor' />
-      <ChatUser name={'Ms. Seema Kalra'} role='Counsellor' />
-      <ChatUser name={'Ms. Kamya Kumar'} role='Counsellor' />
-      <ChatUser name={'Ms. Ritu Kaushik'} role='Counsellor' />
-      <ChatUser name={'Ms. Seema Kalra'} role='Counsellor' />
-      <ChatUser name={'Ms. Kamya Kumar'} role='Counsellor' />
-      <ChatUser name={'Ms. Ritu Kaushik'} role='Counsellor' />
-      <ChatUser name={'Ms. Seema Kalra'} role='Counsellor' />
-      <ChatUser name={'Ms. Kamya Kumar'} role='Counsellor' />
-      <ChatUser name={'Ms. Ritu Kaushik'} role='Counsellor' />
-      <ChatUser name={'Ms. Seema Kalra'} role='Counsellor' />
+      <ChatUser
+        name={'Ms. Bhavana Bhasin'}
+        role='Counsellor'
+        id='asajsasasas'
+      />
+      <ChatUser name={'Ms. Kamiya Kumar'} role='Counsellor' id='sdsdkasda' />
+      <ChatUser name={'Ms. Tanvi Bajaj'} role='Counsellor' id='sasans' />
     </Grid>
   );
 };

@@ -11,10 +11,12 @@ import {
   useMediaQuery,
 } from '@chakra-ui/react';
 import Head from 'next/head';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Header from '../components/Header';
 import ChatSection from '../components/ChatSection';
+import { useChatStateValue } from '../context/providers/ChatProvider';
+import { useSocket } from '../context/providers/SocketProvider';
 
 const CounsellorChat = () => {
   const [saveChatHistory, setSaveChatHistory] = useState(true);
@@ -24,6 +26,21 @@ const CounsellorChat = () => {
     console.log(saveChatHistory);
   };
   const [isLargerThan576] = useMediaQuery('(min-width: 576px)');
+
+  const [{ messages }, dispatch] = useChatStateValue();
+  const socket = useSocket();
+  useEffect(() => {
+    if (socket == null) return;
+    socket.on('message', (message) => {
+      console.log(message);
+      dispatch({
+        type: 'ADD_TO_MESSAGES',
+        message: message,
+      });
+    });
+
+    return () => socket.off('message');
+  }, [socket, dispatch]);
   return (
     <>
       <Head>

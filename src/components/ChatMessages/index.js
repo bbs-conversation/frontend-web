@@ -1,12 +1,18 @@
-import { Flex } from '@chakra-ui/react';
+import { VStack } from '@chakra-ui/react';
 import React from 'react';
+import { useChatStateValue } from '../../context/providers/ChatProvider';
+import ChatMessage from './ChatMessage';
 
 const ChatMessages = () => {
+  const [{ messages }] = useChatStateValue();
+
   return (
     <>
-      <Flex>
-        <h1>Hello</h1>
-      </Flex>
+      <VStack overflowY={'scroll'} maxHeight={'68vh'}>
+        {messages.map((m, i) => (
+          <ChatMessage type={m.type} message={m.message} key={i} />
+        ))}
+      </VStack>
     </>
   );
 };

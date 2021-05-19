@@ -4,6 +4,7 @@ import {
   Grid,
   GridItem,
   IconButton,
+  Text,
   useColorModeValue,
   useMediaQuery,
 } from '@chakra-ui/react';
@@ -13,10 +14,13 @@ import Chatbox from '../Chatbox';
 import ChatMessages from '../ChatMessages';
 import ChatSectionHeader from '../ChatSectionHeader';
 import ChatSidebar from '../ChatSidebar';
+import { useRouter } from 'next/router';
 
 const ChatSection = () => {
   const [isLargerThan992] = useMediaQuery('(min-width: 992px)');
   const [chatSidebarOpen, setChatSidebarOpen] = useState(false);
+  const router = useRouter();
+  const { id } = router.query;
   const sideBarColor = useColorModeValue('white', 'gray.600');
   return (
     <Container maxW='container.xl' p={0}>
@@ -67,12 +71,27 @@ const ChatSection = () => {
             chatSidebarOpen={chatSidebarOpen}
           />
         </GridItem>
-        <GridItem rowSpan={10} colSpan={isLargerThan992 ? 4 : 5}>
-          <ChatMessages />
-        </GridItem>
-        <GridItem rowSpan={1} colSpan={isLargerThan992 ? 4 : 5}>
-          <Chatbox />
-        </GridItem>
+        {id ? (
+          <>
+            <GridItem rowSpan={10} colSpan={isLargerThan992 ? 4 : 5}>
+              <ChatMessages />
+            </GridItem>
+            <GridItem rowSpan={1} colSpan={isLargerThan992 ? 4 : 5}>
+              <Chatbox />
+            </GridItem>
+          </>
+        ) : (
+          <GridItem
+            colSpan={isLargerThan992 ? 4 : 5}
+            rowSpan={11}
+            alignSelf={'center'}
+            justifyContent={'center'}
+          >
+            <Text as='h3' fontSize='xl' width={'100%'} textAlign={'center'}>
+              Please choose one of our counsellors
+            </Text>
+          </GridItem>
+        )}
       </Grid>
     </Container>
   );

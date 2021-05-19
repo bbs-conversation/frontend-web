@@ -8,28 +8,37 @@ import GlobalStyles from '../config/globalStyles';
 import { ChatProvider } from '../context/providers/ChatProvider';
 import chatReducer, { chatInitialState } from '../context/reducers/chatReducer';
 import { useEffect } from 'react';
+import { SocketProvider } from '../context/providers/SocketProvider';
 
 function MyApp({ Component, pageProps }) {
   const [user, error, loading] = useAuthState(auth);
 
   return (
     <>
-      <ChatProvider reducer={chatReducer} initialState={chatInitialState}>
-        <ChakraProvider>
-          <ThemeProvider theme={theme}>
-            <GlobalStyles />
-            {loading || error || user ? (
-              <>
-                <Component {...pageProps} />
-              </>
-            ) : (
-              <>
-                <LoginPage {...pageProps} />
-              </>
-            )}
-          </ThemeProvider>
-        </ChakraProvider>
-      </ChatProvider>
+      <GlobalStyles />
+      {loading || error || user ? (
+        <>
+          <SocketProvider
+            id={typeof window !== 'undefined' && localStorage.getItem('id')}
+          >
+            <ChatProvider reducer={chatReducer} initialState={chatInitialState}>
+              <ChakraProvider>
+                <ThemeProvider theme={theme}>
+                  <Component {...pageProps} />
+                </ThemeProvider>
+              </ChakraProvider>
+            </ChatProvider>
+          </SocketProvider>
+        </>
+      ) : (
+        <>
+          <ChakraProvider>
+            <ThemeProvider theme={theme}>
+              <LoginPage {...pageProps} />
+            </ThemeProvider>
+          </ChakraProvider>
+        </>
+      )}
     </>
   );
 }

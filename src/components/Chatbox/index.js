@@ -1,12 +1,28 @@
 import { Flex, FormControl, IconButton, Input } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { IoSend } from 'react-icons/io5';
 import styled from 'styled-components';
+import { useChatStateValue } from '../../context/providers/ChatProvider';
+import { useSocket } from '../../context/providers/SocketProvider';
 
 const Chatbox = () => {
   const [message, setMessage] = useState('');
+  const [{ messages }, dispatch] = useChatStateValue();
+  const socket = useSocket();
+  const router = useRouter();
+  const { id } = router.query;
   const handleSendMessage = (e) => {
     e.preventDefault();
+    dispatch({
+      type: 'ADD_TO_MESSAGES',
+      message: {
+        type: 'fromUser',
+        message: message,
+        byUser: 'Yashraj',
+      },
+    });
+    socket.emit('send-message', { recipients: [id], text: message });
     setMessage('');
   };
   return (
@@ -18,7 +34,7 @@ const Chatbox = () => {
               placeholder='Type in a message'
               onChange={(e) => setMessage(e.target.value)}
               value={message}
-              autoComplete={false}
+              autoComplete={'off'}
               name='message'
             />
           </FormControl>

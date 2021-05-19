@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { Container, useMediaQuery } from '@chakra-ui/react';
+import { Container, useMediaQuery, useToast } from '@chakra-ui/react';
 import { Text } from '@chakra-ui/react';
 import Header from '../components/Header';
 import { Skeleton } from '@chakra-ui/react';
@@ -16,6 +16,8 @@ import {
 } from 'react-icons/ai';
 import { GiMeditation } from 'react-icons/gi';
 import { FaBook } from 'react-icons/fa';
+import { useChatStateValue } from '../context/providers/ChatProvider';
+import { useSocket } from '../context/providers/SocketProvider';
 // import { useChatStateValue } from '../context/providers/ChatProvider';
 
 const HomePage = () => {
@@ -50,6 +52,28 @@ const HomePage = () => {
   //     .then((token) => console.log(token))
   //     .catch((error) => console.log(error));
   // }, []);
+
+  const [{ messages }, dispatch] = useChatStateValue();
+  const toast = useToast();
+  const socket = useSocket();
+  useEffect(() => {
+    if (socket == null) return;
+    socket.on('message', (message) => {
+      dispatch({
+        type: 'ADD_TO_MESSAGES',
+        message: message,
+      });
+      toast({
+        title: 'New message',
+        description: 'You just recieved a new message',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      });
+    });
+
+    return () => socket.off('message');
+  }, [socket, dispatch]);
 
   return (
     <>
