@@ -114,6 +114,7 @@ const HomePage = () => {
             linkDescription={'with your counsellors privately'}
             link={'/counsellor-chat'}
             icon={BsChatDots}
+            iconSize={32}
             bg = ['Teal.300']
           />
           <NavigationBlock
