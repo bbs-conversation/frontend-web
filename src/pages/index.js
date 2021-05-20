@@ -114,7 +114,7 @@ const HomePage = () => {
             linkDescription={'with your counsellors privately'}
             link={'/counsellor-chat'}
             icon={BsChatDots}
-            iconSize={32}
+            bg = ['Teal.300']
           />
           <NavigationBlock
             title={'Schedule'}
@@ -122,6 +122,7 @@ const HomePage = () => {
             linkDescription={'an appointment with your counsellor'}
             icon={AiOutlineSchedule}
             iconSize={36}
+            bg = ['Teal.300']
           />
           <NavigationBlock
             link={'/'}
@@ -129,6 +130,7 @@ const HomePage = () => {
             linkDescription={'your counsellors for a group session'}
             icon={AiOutlineQuestion}
             iconSize={32}
+            bg = ['Teal.300']
           />
           <NavigationBlock
             link={'/'}
@@ -136,6 +138,7 @@ const HomePage = () => {
             linkDescription={'a group session with your peers and counsellors'}
             icon={AiOutlineVideoCamera}
             iconSize={33}
+            bg = ['Teal.300']
           />
         </Grid>
 
