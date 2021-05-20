@@ -14,6 +14,7 @@ import Chatbox from '../Chatbox';
 import ChatMessages from '../ChatMessages';
 import ChatSectionHeader from '../ChatSectionHeader';
 import ChatSidebar from '../ChatSidebar';
+import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
 const ChatSection = () => {
@@ -57,14 +58,14 @@ const ChatSection = () => {
             </Flex>
           </>
         )}
-        <GridItem
+        <ChatSidebarWrapper
           rowSpan={12}
           colSpan={1}
           display={!isLargerThan992 && 'none'}
           overflow={'scroll'}
         >
           <ChatSidebar />
-        </GridItem>
+        </ChatSidebarWrapper>
         <GridItem rowSpan={1} colSpan={isLargerThan992 ? 4 : 5}>
           <ChatSectionHeader
             setChatSidebarOpen={setChatSidebarOpen}
@@ -98,3 +99,12 @@ const ChatSection = () => {
 };
 
 export default ChatSection;
+
+const ChatSidebarWrapper = styled(GridItem)`
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;

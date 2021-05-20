@@ -3,15 +3,14 @@ import React from 'react';
 
 const AppointmentsList = () => {
   return (
-    <Grid templateColumns='repeat(6, 1fr)' marginTop={2} marginBottom={2}>
-      <GridItem
-        w='100%'
-        border={'1px'}
-        h={16}
-        bg='blue.400'
-        colSpan={2}
-        borderLeftRadius={10}
-      >
+    <Grid
+      templateColumns='repeat(6, 1fr)'
+      marginTop={2}
+      marginBottom={2}
+      border={'1px'}
+      borderRadius={10}
+    >
+      <GridItem w='100%' h={16} bg='gray.500' colSpan={2} borderLeftRadius={10}>
         <Flex flexDir={'column'} p={1}>
           <Text
             fontSize={'2xl'}
@@ -33,7 +32,6 @@ const AppointmentsList = () => {
       </GridItem>
       <GridItem
         w='100%'
-        border={'1px'}
         h={16}
         bg='gray.50'
         colSpan={4}

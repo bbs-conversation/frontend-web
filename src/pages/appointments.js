@@ -1,10 +1,26 @@
-import { Container, Grid, GridItem, Text, VStack } from '@chakra-ui/react';
+import {
+  Container,
+  Flex,
+  FormControl,
+  Grid,
+  GridItem,
+  Input,
+  Spacer,
+  Text,
+  useMediaQuery,
+  VStack,
+} from '@chakra-ui/react';
 import Head from 'next/head';
-import React from 'react';
+import React, { useEffect } from 'react';
 import AppointmentsList from '../components/AppointmentsList';
 import Header from '../components/Header';
 
 const AppointmentPage = () => {
+  const today = new Date();
+  const month = ('0' + (today.getMonth() + 1)).slice(-2);
+  const todayFormatted = `${today.getFullYear()}-${month}-${today.getDate()}`;
+
+  const [isLargerThan576] = useMediaQuery('(min-width: 576px)');
   return (
     <>
       <Head>
@@ -12,10 +28,24 @@ const AppointmentPage = () => {
       </Head>
       <Header appName={'Conversations'} withNav={true} />
       <Container maxW='container.xl' width={'100%'}>
-        <Text fontSize={'xl'} fontWeight={'semibold'} textAlign={'center'}>
-          Appointments
-        </Text>
-        <Grid maxHeight='47vh' overflow='scroll'>
+        <Flex
+          px={2}
+          flexDirection={isLargerThan576 ? 'row' : 'column'}
+          alignItems={!isLargerThan576 && 'center'}
+        >
+          <Text fontSize={'xl'} fontWeight={'semibold'} textAlign={'center'}>
+            Appointments
+          </Text>
+          {isLargerThan576 && <Spacer />}
+          <Input
+            placeholder='Filter by Date'
+            type='date'
+            maxWidth={'25vh'}
+            defaultValue={todayFormatted}
+            onChange={(e) => console.log(e.target.value)}
+          />
+        </Flex>
+        <Grid p={2}>
           <AppointmentsList />
           <AppointmentsList />
           <AppointmentsList />
@@ -25,9 +55,6 @@ const AppointmentPage = () => {
           <AppointmentsList />
           <AppointmentsList />
         </Grid>
-        <Text fontSize={'xl'} fontWeight={'semibold'} textAlign={'center'}>
-          Request for an Appointment
-        </Text>
       </Container>
     </>
   );
