@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^1.6.1",
-    "@emotion/react": "^11",
+    "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11",
     "firebase": "^8.6.1",
     "framer-motion": "^4",

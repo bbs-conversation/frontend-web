@@ -9,14 +9,23 @@ import { ChatProvider } from '../context/providers/ChatProvider';
 import chatReducer, { chatInitialState } from '../context/reducers/chatReducer';
 import { useEffect } from 'react';
 import { SocketProvider } from '../context/providers/SocketProvider';
+import { useRouter } from 'next/router';
 
 function MyApp({ Component, pageProps }) {
-  const [user, error, loading] = useAuthState(auth);
-
+  const [user, loading, error] = useAuthState(auth);
+  const router = useRouter();
+  useEffect(() => {
+    if (!loading) {
+      if (user) router.push('/home');
+      if (!user) router.push('/login');
+      if (error) router.push('/login');
+    }
+  }, [loading, user, error]);
+  // if (loading) return <IndexPage />;
   return (
     <>
       <GlobalStyles />
-      {error || user ? (
+      {!error || user ? (
         <>
           <SocketProvider
             id={typeof window !== 'undefined' && localStorage.getItem('id')}
