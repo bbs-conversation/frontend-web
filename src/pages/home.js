@@ -116,12 +116,12 @@ const HomePage = () => {
             icon={BsChatDots}
             iconSize={32}
           />
-          <NavigationBlock
-            link={'/'}
-            title={'Request'}
-            linkDescription={'your counsellors for a group session'}
-            icon={AiOutlineQuestion}
-            iconSize={32}
+           <NavigationBlock
+            title={'Schedule'}
+            link={'/appointments'}
+            linkDescription={'an appointment with your counsellor'}
+            icon={AiOutlineSchedule}
+            iconSize={36}
           />
           <NavigationBlock
             link={'/'}
