@@ -115,7 +115,7 @@ const HomePage = () => {
             link={'/counsellor-chat'}
             icon={BsChatDots}
             iconSize={32}
-            bg = {Teal.300}
+            bg={'teal.300'}
           />
           <NavigationBlock
             title={'Schedule'}
@@ -130,7 +130,7 @@ const HomePage = () => {
             linkDescription={'a group session with your peers and counsellors'}
             icon={AiOutlineVideoCamera}
             iconSize={33}
-            bg = {Teal.300}
+            bg={'teal.300'}
           />
         </Grid>
 
@@ -145,7 +145,7 @@ const HomePage = () => {
             linkDescription={'Do mindful activities to calm yourself'}
             icon={GiMeditation}
             iconSize={35}
-            bg = {Teal.300}
+            bg={'teal.300'}
           />
           <NavigationBlock
             title={'Resources and tips'}
@@ -155,7 +155,7 @@ const HomePage = () => {
             link={'/'}
             icon={FaBook}
             iconSize={30}
-            bg = {Teal.300}
+            bg={'teal.300'}
           />
         </Grid>
       </Container>
