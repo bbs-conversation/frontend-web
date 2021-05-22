@@ -30,7 +30,7 @@ const HomePage = () => {
     })
       .then((response) => response.json())
       .then((data) =>
-        setQuote(`Today's quote - ${data.contents.quotes[0].quote}`)
+        setQuote(`Today's quote - "${data.contents.quotes[0].quote}" `)
       )
       .catch((err) => {
         console.error(err);
@@ -115,7 +115,7 @@ const HomePage = () => {
             link={'/counsellor-chat'}
             icon={BsChatDots}
             iconSize={32}
-            bg={'teal.300'}
+            bg={'Teal.300'}
           />
           <NavigationBlock
             title={'Schedule'}
@@ -123,6 +123,7 @@ const HomePage = () => {
             linkDescription={'an appointment with your counsellor'}
             icon={AiOutlineSchedule}
             iconSize={36}
+            bg ={'Teal.300'} 
           />
           <NavigationBlock
             link={'/'}
@@ -130,7 +131,7 @@ const HomePage = () => {
             linkDescription={'a group session with your peers and counsellors'}
             icon={AiOutlineVideoCamera}
             iconSize={33}
-            bg={'teal.300'}
+            bg={'Teal.300'}
           />
         </Grid>
 
@@ -145,7 +146,7 @@ const HomePage = () => {
             linkDescription={'Do mindful activities to calm yourself'}
             icon={GiMeditation}
             iconSize={35}
-            bg={'teal.300'}
+            bg={'Teal.300'}
           />
           <NavigationBlock
             title={'Resources and tips'}
@@ -155,7 +156,7 @@ const HomePage = () => {
             link={'/'}
             icon={FaBook}
             iconSize={30}
-            bg={'teal.300'}
+            bg={'Teal.300'}
           />
         </Grid>
       </Container>
