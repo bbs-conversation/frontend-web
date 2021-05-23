@@ -41,6 +41,10 @@ const CounsellorChat = () => {
 
     return () => socket.off('message');
   }, [socket, dispatch]);
+
+  useEffect(() => {
+    localStorage.setItem('messages', JSON.stringify(messages));
+  }, [messages]);
   return (
     <>
       <Head>

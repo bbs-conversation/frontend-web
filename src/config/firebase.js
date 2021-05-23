@@ -20,7 +20,17 @@ if (!firebase.apps.length) {
 
 const auth = firebase.auth();
 const db = firebase.firestore();
+
+if (process.env.NEXT_PUBLIC_FIREBASE_ENV !== 'production') {
+  db.useEmulator('localhost', 8080);
+}
+
 const storage = firebase.storage();
+
+if (process.env.NEXT_PUBLIC_FIREBASE_ENV !== 'production') {
+  db.useEmulator('localhost', 9199);
+}
+
 const googleAuth = new firebase.auth.GoogleAuthProvider();
 const microsoftAuth = new firebase.auth.OAuthProvider('microsoft.com');
 microsoftAuth.setCustomParameters({

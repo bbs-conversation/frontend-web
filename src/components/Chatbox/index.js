@@ -5,10 +5,13 @@ import { IoSend } from 'react-icons/io5';
 import styled from 'styled-components';
 import { useChatStateValue } from '../../context/providers/ChatProvider';
 import { useSocket } from '../../context/providers/SocketProvider';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../config/firebase';
 
 const Chatbox = () => {
   const [message, setMessage] = useState('');
   const [{ messages }, dispatch] = useChatStateValue();
+  const [user] = useAuthState(auth);
   const socket = useSocket();
   const router = useRouter();
   const { id } = router.query;
@@ -19,10 +22,12 @@ const Chatbox = () => {
       message: {
         type: 'fromUser',
         message: message,
-        byUser: 'Yashraj',
+        byUser: user.displayName,
+        channelId: id,
       },
     });
     socket.emit('send-message', { recipients: [id], text: message });
+
     setMessage('');
   };
   return (

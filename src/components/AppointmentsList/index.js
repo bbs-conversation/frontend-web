@@ -1,7 +1,25 @@
 import { Box, Flex, Grid, GridItem, Text } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 
-const AppointmentsList = () => {
+const AppointmentsList = ({ appointmentName, startTime, endTime }) => {
+  const start = startTime.toDate();
+  const end = endTime.toDate();
+
+  let monthArray = [];
+  monthArray[0] = 'January';
+  monthArray[1] = 'February';
+  monthArray[2] = 'March';
+  monthArray[3] = 'April';
+  monthArray[4] = 'May';
+  monthArray[5] = 'June';
+  monthArray[6] = 'July';
+  monthArray[7] = 'August';
+  monthArray[8] = 'September';
+  monthArray[9] = 'October';
+  monthArray[10] = 'November';
+  monthArray[11] = 'December';
+  const month = monthArray[start.getMonth()];
+
   return (
     <Grid
       templateColumns='repeat(6, 1fr)'
@@ -18,7 +36,7 @@ const AppointmentsList = () => {
             color={'white'}
             textAlign='center'
           >
-            20
+            {start.getDate()}
           </Text>
           <Text
             fontSize={'xs'}
@@ -26,7 +44,7 @@ const AppointmentsList = () => {
             color={'white'}
             textAlign='center'
           >
-            May 2021
+            {month} {start.getFullYear()}
           </Text>
         </Flex>
       </GridItem>
@@ -50,7 +68,7 @@ const AppointmentsList = () => {
             color={'gray.900'}
             textAlign='center'
           >
-            This is the title
+            {appointmentName}
           </Text>
           <Text
             fontSize={'xs'}
@@ -60,7 +78,8 @@ const AppointmentsList = () => {
             alignSelf={'center'}
             justifyContent='end'
           >
-            19:00 - 19:30
+            {start.getHours()}:{start.getMinutes()} - {end.getHours()}:
+            {end.getMinutes()}
           </Text>
         </Flex>
       </GridItem>
