@@ -5,10 +5,12 @@ import {
   Text,
   useMediaQuery,
 } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { IoMenu } from 'react-icons/io5';
 
 const ChatSectionHeader = ({ setChatSidebarOpen, chatSidebarOpen }) => {
+  const router = useRouter();
   const [isLargerThan992] = useMediaQuery('(min-width:992px)');
   return (
     <Flex>
@@ -24,7 +26,7 @@ const ChatSectionHeader = ({ setChatSidebarOpen, chatSidebarOpen }) => {
       )}
       {!isLargerThan992 && <Spacer />}
       <Text alignSelf={'center'} fontSize={'xl'} fontWeight={'semibold'}>
-        Teacher Name
+        {router.query.name}
       </Text>
     </Flex>
   );

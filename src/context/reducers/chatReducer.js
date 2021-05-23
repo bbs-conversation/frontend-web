@@ -1,5 +1,13 @@
+const getMessages = () => {
+  let savedMessages;
+  if (typeof window !== 'undefined') {
+    savedMessages = localStorage.getItem('messages');
+    return JSON.parse(savedMessages);
+  } else return undefined;
+};
+
 export const chatInitialState = {
-  messages: [],
+  messages: getMessages() || [],
   user: null,
   token: null,
 };

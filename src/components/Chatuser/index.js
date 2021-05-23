@@ -3,10 +3,10 @@ import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
 
-const ChatUser = ({ name, role, id }) => {
+const ChatUser = ({ name, role, id, setChatSidebarOpen }) => {
   const textColor = useColorModeValue('gray.900', 'gray.900');
   return (
-    <Link href={`/counsellor-chat?id=${id}`}>
+    <Link href={`/counsellor-chat?id=${id}&name=${name}`}>
       <BoxWrapper
         minH={14}
         width={'100%'}

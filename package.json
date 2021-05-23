@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "ghBuild": "next build && next export -o build",
+    "prodBuild": "yarn build && next export -o build",
+    "buildAndDeploy": "yarn prodBuild && npx firebase deploy --only hosting",
     "start": "next start"
   },
   "dependencies": {

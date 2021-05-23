@@ -17,19 +17,18 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     if (!loading) {
       if (user) router.push('/home');
+
       if (!user) router.push('/login');
       if (error) router.push('/login');
     }
   }, [loading, user, error]);
-  // if (loading) return <IndexPage />;
+
   return (
     <>
       <GlobalStyles />
-      {!error || user ? (
+      {user || !error ? (
         <>
-          <SocketProvider
-            id={typeof window !== 'undefined' && localStorage.getItem('id')}
-          >
+          <SocketProvider>
             <ChatProvider reducer={chatReducer} initialState={chatInitialState}>
               <ChakraProvider>
                 <ThemeProvider theme={theme}>

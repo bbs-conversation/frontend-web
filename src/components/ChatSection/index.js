@@ -40,7 +40,7 @@ const ChatSection = () => {
               top={0}
               left={0}
               bg={sideBarColor}
-              overflow={'scroll'}
+              overflowY={'scroll'}
               flexDirection='column'
               p={2}
               boxShadow={'md'}

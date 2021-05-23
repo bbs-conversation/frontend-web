@@ -1,7 +1,7 @@
 import { Box, Flex, Spacer, Text } from '@chakra-ui/react';
 import React from 'react';
 
-const ChatMessage = ({ message, type }) => {
+const ChatMessage = ({ message, type, name }) => {
   return (
     <>
       {type === 'fromUser' && (
@@ -18,7 +18,7 @@ const ChatMessage = ({ message, type }) => {
             bg='gray.100'
           >
             <Text>{message}</Text>
-            <Text fontSize={'xs'}>By Yashraj</Text>
+            <Text fontSize={'xs'}>By {name}</Text>
           </Box>
         </Flex>
       )}

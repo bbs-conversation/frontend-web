@@ -1,18 +1,35 @@
 import { VStack } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useChatStateValue } from '../../context/providers/ChatProvider';
 import ChatMessage from './ChatMessage';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
 const ChatMessages = () => {
   const [{ messages }] = useChatStateValue();
+  const router = useRouter();
+  function filterByChannel(msg) {
+    return msg.channelId === router.query.id || msg.channelId === 'all';
+  }
+  const messagesEndRef = useRef(null);
 
+  const scrollToBottom = () => {
+    messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(scrollToBottom, [router.query.id, messages]);
   return (
     <>
       <ChatMessagesWrapper overflowY={'scroll'} height={'68vh'} pr={2}>
-        {messages.map((m, i) => (
-          <ChatMessage type={m.type} message={m.message} key={i} />
+        {messages.filter(filterByChannel).map((m, i) => (
+          <ChatMessage
+            type={m.type}
+            message={m.message}
+            name={m.byUser}
+            key={i}
+          />
         ))}
+        <div ref={messagesEndRef} />
       </ChatMessagesWrapper>
     </>
   );

@@ -4,7 +4,7 @@ import ChatUser from '../Chatuser';
 
 const ChatSidebar = () => {
   return (
-    <Grid overflow='auto'>
+    <Grid overflowY='auto'>
       <ChatUser
         name={'Ms. Bhavana Bhasin'}
         role='Counsellor'
