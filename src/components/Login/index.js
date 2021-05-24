@@ -97,7 +97,7 @@ const LoginPage = () => {
                 </VStack>
               </>
             ))}
-          {!user && (
+          {!user && !error && !loginError && (
             <>
               <Button
                 margin={'auto'}

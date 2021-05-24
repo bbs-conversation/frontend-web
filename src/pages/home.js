@@ -98,16 +98,18 @@ const HomePage = () => {
             iconSize={32}
           />
           <NavigationBlock
-            title={'Schedule'}
+            title={'Appointments'}
             link={'/appointments'}
-            linkDescription={'an appointment with your counsellor'}
+            linkDescription={'with your counsellors'}
             icon={AiOutlineSchedule}
             iconSize={36}
           />
           <NavigationBlock
             link={'/'}
             title={'Request'}
-            linkDescription={'your counsellors for a group session'}
+            linkDescription={
+              'your counsellors for an appointment or a group session'
+            }
             icon={AiOutlineQuestion}
             iconSize={32}
           />
