@@ -11,20 +11,34 @@ export function useSocket() {
 
 export function SocketProvider({ children }) {
   const [socket, setSocket] = useState();
-  const [user] = useAuthState(auth);
+  const [user, loading, error] = useAuthState(auth);
 
   useEffect(() => {
     if (user) {
-      const newSocket = io(process.env.NEXT_PUBLIC_SOCKETIO_URI, {
-        query: { id: user.uid },
-      });
-      setSocket(newSocket);
+      user
+        .getIdToken()
+        .then((token) => {
+          const newSocket = io(process.env.NEXT_PUBLIC_SOCKETIO_URI, {
+            query: { id: user.uid, token },
+          });
+          setSocket(newSocket);
 
-      return () => newSocket.close();
+          return () => newSocket.close();
+        })
+        .catch((err) => {
+          console.error(err);
+          return;
+        });
     } else {
       return;
     }
   }, [user]);
+
+  useEffect(() => {
+    if ((!user && !loading) || error) {
+      socket.emit('disconnect_user');
+    }
+  }, [user, loading, error]);
 
   return (
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>

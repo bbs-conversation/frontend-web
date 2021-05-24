@@ -15,13 +15,14 @@ import Header from '../components/Header';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { auth, db } from '../config/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import useListenToSocket from '../hooks/useListenToSocket';
 
 const AppointmentPage = () => {
   const today = new Date();
   const month = ('0' + (today.getMonth() + 1)).slice(-2);
   const todayFormatted = `${today.getFullYear()}-${month}-${today.getDate()}`;
-  const [filterDateValue, setFilterDateValue] = useState();
-  const [user, authLoading, authError] = useAuthState(auth);
+  const [filterDateValue, setFilterDateValue] = useState(todayFormatted);
+  const [user] = useAuthState(auth);
   const query = db
     .collection('appointments')
     .where('forUser', '==', user?.uid || null);
@@ -33,6 +34,8 @@ const AppointmentPage = () => {
       console.error(error);
     }
   }, [error]);
+
+  useListenToSocket(true, null);
 
   // const getCollection = async () => {
   //   await collection.onSnapshot((snapshot) => {
@@ -79,7 +82,6 @@ const AppointmentPage = () => {
             placeholder='Filter by Date'
             type='date'
             maxWidth={'25vh'}
-            defaultValue={todayFormatted}
             value={filterDateValue}
             onChange={(e) => setFilterDateValue(e.target.value)}
           />

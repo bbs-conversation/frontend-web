@@ -17,7 +17,6 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     if (!loading) {
       if (user) router.push('/home');
-
       if (!user) router.push('/login');
       if (error) router.push('/login');
     }

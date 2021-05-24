@@ -18,19 +18,21 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-const auth = firebase.auth();
 const db = firebase.firestore();
 
-if (process.env.NEXT_PUBLIC_FIREBASE_ENV !== 'production') {
-  db.useEmulator('localhost', 8080);
-}
+// if (typeof window !== 'undefined') {
+//   if (process.env.NODE_ENV === 'development') {
+//     db.useEmulator('localhost', 8080);
+//   }
+// }
 
 const storage = firebase.storage();
 
-if (process.env.NEXT_PUBLIC_FIREBASE_ENV !== 'production') {
-  db.useEmulator('localhost', 9199);
-}
+// if (process.env.NODE_ENV === 'development') {
+//   storage.useEmulator('localhost', 9199);
+// }
 
+const auth = firebase.auth();
 const googleAuth = new firebase.auth.GoogleAuthProvider();
 const microsoftAuth = new firebase.auth.OAuthProvider('microsoft.com');
 microsoftAuth.setCustomParameters({

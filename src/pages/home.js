@@ -18,6 +18,7 @@ import { GiMeditation } from 'react-icons/gi';
 import { FaBook } from 'react-icons/fa';
 import { useChatStateValue } from '../context/providers/ChatProvider';
 import { useSocket } from '../context/providers/SocketProvider';
+import useListenToSocket from '../hooks/useListenToSocket';
 // import { useChatStateValue } from '../context/providers/ChatProvider';
 
 const HomePage = () => {
@@ -53,27 +54,7 @@ const HomePage = () => {
   //     .catch((error) => console.log(error));
   // }, []);
 
-  const [{ messages }, dispatch] = useChatStateValue();
-  const toast = useToast();
-  const socket = useSocket();
-  useEffect(() => {
-    if (socket == null) return;
-    socket.on('message', (message) => {
-      dispatch({
-        type: 'ADD_TO_MESSAGES',
-        message: message,
-      });
-      toast({
-        title: 'New message',
-        description: 'You just recieved a new message',
-        duration: 3000,
-        isClosable: true,
-        position: 'top-right',
-      });
-    });
-
-    return () => socket.off('message');
-  }, [socket, dispatch]);
+  useListenToSocket(true, null);
 
   return (
     <>
