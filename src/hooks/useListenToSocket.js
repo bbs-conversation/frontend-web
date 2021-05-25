@@ -26,18 +26,20 @@ const useListenToSocket = (hasToastForMessage, pageId) => {
     });
 
     socket.on('connect_error', (message) => {
-      dispatch({
-        type: 'ADD_TO_MESSAGES',
-        message: message,
-      });
-      toast({
-        title: 'Error',
-        description: "Couldn't connect to the server",
-        duration: 3000,
-        isClosable: true,
-        position: 'top-right',
-        status: 'error',
-      });
+      if (message.type != 'TransportError') {
+        dispatch({
+          type: 'ADD_TO_MESSAGES',
+          message: message,
+        });
+        toast({
+          title: 'Error',
+          description: "Couldn't connect to the server",
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right',
+          status: 'error',
+        });
+      }
     });
 
     return () => socket.off('message');

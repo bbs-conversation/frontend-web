@@ -19,7 +19,8 @@ export function SocketProvider({ children }) {
         .getIdToken()
         .then((token) => {
           const newSocket = io(process.env.NEXT_PUBLIC_SOCKETIO_URI, {
-            randomizationFactor: 1,
+            reconnectionAttempts: 10,
+
             query: { id: user.uid, token },
           });
           setSocket(newSocket);
