@@ -17,6 +17,7 @@ import Header from '../components/Header';
 import ChatSection from '../components/ChatSection';
 import { useChatStateValue } from '../context/providers/ChatProvider';
 import { useSocket } from '../context/providers/SocketProvider';
+import useListenToSocket from '../hooks/useListenToSocket';
 
 const CounsellorChat = () => {
   const [saveChatHistory, setSaveChatHistory] = useState(true);
@@ -27,24 +28,8 @@ const CounsellorChat = () => {
   };
   const [isLargerThan576] = useMediaQuery('(min-width: 576px)');
 
-  const [{ messages }, dispatch] = useChatStateValue();
-  const socket = useSocket();
-  useEffect(() => {
-    if (socket == null) return;
-    socket.on('message', (message) => {
-      console.log(message);
-      dispatch({
-        type: 'ADD_TO_MESSAGES',
-        message: message,
-      });
-    });
+  const { messageForChannel } = useListenToSocket(true, null);
 
-    return () => socket.off('message');
-  }, [socket, dispatch]);
-
-  useEffect(() => {
-    localStorage.setItem('messages', JSON.stringify(messages));
-  }, [messages]);
   return (
     <>
       <Head>

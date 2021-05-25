@@ -26,7 +26,11 @@ const Chatbox = () => {
         channelId: id,
       },
     });
-    socket.emit('send-message', { recipients: [id], text: message });
+    socket.emit('send-message', {
+      recipients: [id],
+      text: message,
+      byUser: user.displayName,
+    });
 
     setMessage('');
   };
