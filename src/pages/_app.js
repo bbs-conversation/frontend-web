@@ -15,10 +15,12 @@ function MyApp({ Component, pageProps }) {
   const [user, loading, error] = useAuthState(auth);
   const router = useRouter();
   useEffect(() => {
-    if (!loading) {
-      if (user) router.push('/');
-      if (!user) router.push('/login');
-      if (error) router.push('/login');
+    if (router.asPath === '/redirect' || router.asPath === '/') {
+      return;
+    } else if ((!loading && !user) || router.asPath === '/login') {
+      router.push('/redirect');
+    } else {
+      router.push(`/redirect?path=${router.asPath}`);
     }
   }, [loading, user, error]);
 

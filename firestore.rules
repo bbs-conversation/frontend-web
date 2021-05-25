@@ -7,7 +7,12 @@ service cloud.firestore {
     }
     
     match /appointments/{appointment} {
-      allow read: if request.auth != null && request.data.forUser is string && request.auth.uid == resource.data.forUser  
+      allow read: if request.auth != null && resource.data.forUser is string && request.auth.uid == resource.data.forUser  
+      allow write: if false
+    }
+
+    match /counsellors/{counsellor} {
+      allow read: if request.auth != null && resource.data.display is string && resource.data.display == 'public'
       allow write: if false
     }
   }
