@@ -26,6 +26,7 @@ const ChatMessages = () => {
             type={m.type}
             message={m.message}
             name={m.byUser}
+            time={m.time}
             key={i}
           />
         ))}
