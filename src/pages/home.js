@@ -47,13 +47,6 @@ const HomePage = () => {
 
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
 
-  // useEffect(() => {
-  //   auth.currentUser
-  //     .getIdToken()
-  //     .then((token) => console.log(token))
-  //     .catch((error) => console.log(error));
-  // }, []);
-
   useListenToSocket(true, null);
 
   return (

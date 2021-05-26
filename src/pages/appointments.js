@@ -13,7 +13,7 @@ import React, { useEffect, useState } from 'react';
 import AppointmentsList from '../components/AppointmentsList';
 import Header from '../components/Header';
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { auth, db } from '../config/firebase';
+import { auth, db, dbTimestamp } from '../config/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import useListenToSocket from '../hooks/useListenToSocket';
 
@@ -23,9 +23,18 @@ const AppointmentPage = () => {
   const todayFormatted = `${today.getFullYear()}-${month}-${today.getDate()}`;
   const [filterDateValue, setFilterDateValue] = useState(todayFormatted);
   const [user] = useAuthState(auth);
+  let dateFilterDate = new Date(filterDateValue || todayFormatted);
+  let startHours = new Date(dateFilterDate.setHours(0, 0, 0));
+  let startTime = dbTimestamp.fromDate(startHours);
+  let endHours = new Date(dateFilterDate.setHours(23, 59, 59));
+  let endTime = dbTimestamp.fromDate(endHours);
   const query = db
     .collection('appointments')
-    .where('forUser', '==', user?.uid || null);
+    .where('forUser', '==', user?.uid || null)
+    .where('startTime', '>=', startTime)
+    .where('startTime', '<=', endTime)
+
+    .orderBy('startTime');
 
   const [value, loading, error] = useCollection(query);
 
@@ -36,30 +45,6 @@ const AppointmentPage = () => {
   }, [error]);
 
   useListenToSocket(true, null);
-
-  // const getCollection = async () => {
-  //   await collection.onSnapshot((snapshot) => {
-  //     console.log(
-  //       snapshot.docs.map((doc) => {
-  //         return {
-  //           id: doc.id,
-  //           data: doc.data(),
-  //         };
-  //       })
-  //     );
-  //     setValue(
-  //       snapshot.docs.map((doc) => {
-  //         return {
-  //           id: doc.id,
-  //           data: doc.data(),
-  //         };
-  //       })
-  //     );
-  //   });
-  // };
-  // useEffect(() => {
-  //   getCollection();
-  // }, [getCollection]);
 
   const [isLargerThan576] = useMediaQuery('(min-width: 576px)');
   return (
@@ -97,11 +82,16 @@ const AppointmentPage = () => {
             </>
           )}
           {error && (
-            <p>
+            <Text color='red'>
               {
                 'Sorry there was some error loading the content, please try again later'
               }
-            </p>
+            </Text>
+          )}
+          {value && value.docs.length < 1 && (
+            <>
+              <Text>No content found for {filterDateValue}</Text>
+            </>
           )}
           {value &&
             value.docs.map((doc) => (

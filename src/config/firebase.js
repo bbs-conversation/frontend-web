@@ -19,6 +19,7 @@ if (!firebase.apps.length) {
 }
 
 const db = firebase.firestore();
+const dbTimestamp = firebase.firestore.Timestamp;
 
 // if (typeof window !== 'undefined') {
 //   if (process.env.NODE_ENV === 'development') {
@@ -39,4 +40,4 @@ microsoftAuth.setCustomParameters({
   tenant: '581747cb-f4f5-49b3-aeec-baad159fc64c',
 });
 
-export { auth, db, storage, googleAuth, microsoftAuth };
+export { auth, db, storage, googleAuth, microsoftAuth, dbTimestamp };

@@ -23,7 +23,6 @@ const LoginPage = () => {
       .signInWithPopup(microsoftAuth)
       .then((result) => {
         if (result.user) {
-          console.log(result.additionalUserInfo);
           db.collection('users')
             .doc(result.user.uid)
             .set(
