@@ -132,7 +132,7 @@ const HomePage = () => {
             linkDescription={
               'Get access to resources and tips to help you in your tough times'
             }
-            link={'/'}
+            link={'/resources'}
             icon={FaBook}
             iconSize={30}
           />

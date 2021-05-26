@@ -16,7 +16,12 @@ service cloud.firestore {
       allow write: if false
     }
 
-    match /groupSessions/{groupSessions} {
+    match /groupSessions/{groupSession} {
+      allow read: if request.auth != null && resource.data.display is string && resource.data.display == 'public'
+      allow write: if false
+    } 
+    
+    match /resources/{resourceDoc} {
       allow read: if request.auth != null && resource.data.display is string && resource.data.display == 'public'
       allow write: if false
     }
