@@ -25,6 +25,12 @@ const useListenToSocket = (hasToastForMessage, pageId) => {
       }
     });
 
+    return () => socket.off('message');
+  }, [socket, dispatch]);
+
+  useEffect(() => {
+    if (socket == null) return;
+
     socket.on('connect_error', (message) => {
       if (message.type != 'TransportError') {
         dispatch({
@@ -42,7 +48,7 @@ const useListenToSocket = (hasToastForMessage, pageId) => {
       }
     });
 
-    return () => socket.off('message');
+    return () => socket.off('connect_error');
   }, [socket, dispatch]);
 
   useEffect(() => {

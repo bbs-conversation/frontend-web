@@ -15,8 +15,6 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Header from '../components/Header';
 import ChatSection from '../components/ChatSection';
-import { useChatStateValue } from '../context/providers/ChatProvider';
-import { useSocket } from '../context/providers/SocketProvider';
 import useListenToSocket from '../hooks/useListenToSocket';
 
 const CounsellorChat = () => {
@@ -28,7 +26,7 @@ const CounsellorChat = () => {
   };
   const [isLargerThan576] = useMediaQuery('(min-width: 576px)');
 
-  const { messageForChannel } = useListenToSocket(true, null);
+  useListenToSocket(true, null);
 
   return (
     <>
@@ -61,7 +59,7 @@ const CounsellorChat = () => {
               position={'static'}
             >
               <FormLabel htmlFor='saveChatHistory' mb='0'>
-                Do not save chat to Server?
+                Do not save chat to device?
               </FormLabel>
               <Switch
                 id='saveChatHistory'

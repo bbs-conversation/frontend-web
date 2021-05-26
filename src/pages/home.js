@@ -98,7 +98,7 @@ const HomePage = () => {
             iconSize={36}
           />
           <NavigationBlock
-            link={'/'}
+            link={'/request'}
             title={'Request'}
             linkDescription={
               'your counsellors for an appointment or a group session'
