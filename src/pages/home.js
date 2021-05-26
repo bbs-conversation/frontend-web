@@ -107,7 +107,7 @@ const HomePage = () => {
             iconSize={32}
           />
           <NavigationBlock
-            link={'/'}
+            link={'/group-sessions'}
             title={'Attend'}
             linkDescription={'a group session with your peers and counsellors'}
             icon={AiOutlineVideoCamera}

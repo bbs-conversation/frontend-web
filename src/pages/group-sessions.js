@@ -26,7 +26,7 @@ const AppointmentPage = () => {
   const month = ('0' + (today.getMonth() + 1)).slice(-2);
   const todayFormatted = `${today.getFullYear()}-${month}-${today.getDate()}`;
   const [filterDateValue, setFilterDateValue] = useState(todayFormatted);
-  const [radioValue, setRadioValue] = useState(1);
+  const [radioValue, setRadioValue] = useState('1');
   const [user] = useAuthState(auth);
   let dateFilterDate = new Date(filterDateValue || todayFormatted);
   let startHours = new Date(dateFilterDate.setHours(0, 0, 0));
@@ -34,15 +34,15 @@ const AppointmentPage = () => {
   let endHours = new Date(dateFilterDate.setHours(23, 59, 59));
   let endTime = dbTimestamp.fromDate(endHours);
   const queryByDate = db
-    .collection('appointments')
-    .where('forUser', '==', user?.uid || null)
+    .collection('groupSessions')
+    .where('display', '==', 'public')
     .where('startTime', '>=', startTime)
     .where('startTime', '<=', endTime)
     .orderBy('startTime');
 
   const queryAll = db
-    .collection('appointments')
-    .where('forUser', '==', user?.uid || null)
+    .collection('groupSessions')
+    .where('display', '==', 'public')
     .orderBy('startTime')
     .limit(10);
 
@@ -70,7 +70,7 @@ const AppointmentPage = () => {
   return (
     <>
       <Head>
-        <title>Conversations | Appointments</title>
+        <title>Conversations | Group Sessions</title>
       </Head>
       <Header appName={'Conversations'} withNav={true} />
       <Container maxW='container.xl' width={'100%'}>
@@ -80,7 +80,7 @@ const AppointmentPage = () => {
           alignItems={!isLargerThan576 && 'center'}
         >
           <Text fontSize={'xl'} fontWeight={'semibold'} textAlign={'center'}>
-            Appointments
+            Group Session
           </Text>
           {isLargerThan576 && <Spacer />}
           <RadioGroup
@@ -91,12 +91,12 @@ const AppointmentPage = () => {
           >
             <Stack direction='row'>
               <Radio value={'1'}>
-                <Tooltip label='See all your appointments by date'>
+                <Tooltip label='See all your group sessions by date'>
                   By Date
                 </Tooltip>
               </Radio>
               <Radio value={'2'}>
-                <Tooltip label='See all your appointments limited to 10'>
+                <Tooltip label='See all your group sessions limited to 10'>
                   Show All
                 </Tooltip>
               </Radio>
@@ -140,7 +140,7 @@ const AppointmentPage = () => {
             value.docs.map((doc) => (
               <React.Fragment key={doc.id}>
                 <EventList
-                  name={doc.data().appointmentName}
+                  name={doc.data().sessionName}
                   startTime={doc.data().startTime}
                   endTime={doc.data().endTime}
                 />

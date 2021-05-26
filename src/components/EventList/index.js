@@ -1,7 +1,7 @@
 import { Box, Flex, Grid, GridItem, Text } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 
-const AppointmentsList = ({ appointmentName, startTime, endTime }) => {
+const EventList = ({ name, startTime, endTime }) => {
   const start = startTime.toDate();
   const end = endTime.toDate();
 
@@ -68,7 +68,7 @@ const AppointmentsList = ({ appointmentName, startTime, endTime }) => {
             color={'gray.900'}
             textAlign='center'
           >
-            {appointmentName}
+            {name}
           </Text>
           <Text
             fontSize={'xs'}
@@ -87,4 +87,4 @@ const AppointmentsList = ({ appointmentName, startTime, endTime }) => {
   );
 };
 
-export default AppointmentsList;
+export default EventList;
