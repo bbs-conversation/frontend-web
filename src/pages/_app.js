@@ -9,11 +9,18 @@ import { ChatProvider } from '../context/providers/ChatProvider';
 import chatReducer, { chatInitialState } from '../context/reducers/chatReducer';
 import { useEffect } from 'react';
 import { SocketProvider } from '../context/providers/SocketProvider';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
+
+import NProgress from 'nprogress'; //nprogress module
+import 'nprogress/nprogress.css'; //styles of nprogress
 
 function MyApp({ Component, pageProps }) {
   const [user, loading, error] = useAuthState(auth);
   const router = useRouter();
+  NProgress.configure({ easing: 'ease', speed: 500, showSpinner: false });
+  Router.events.on('routeChangeStart', () => NProgress.start());
+  Router.events.on('routeChangeComplete', () => NProgress.done());
+  Router.events.on('routeChangeError', () => NProgress.done());
   useEffect(() => {
     if (router.asPath === '/redirect' || router.asPath === '/') {
       return;
