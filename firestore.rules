@@ -11,11 +11,6 @@ service cloud.firestore {
       allow write: if false
     }
 
-    match /counsellors/{counsellor} {
-      allow read: if request.auth != null && resource.data.display is string && resource.data.display == 'public'
-      allow write: if false
-    }
-
     match /groupSessions/{groupSession} {
       allow read: if request.auth != null && resource.data.display is string && resource.data.display == 'public'
       allow write: if false
@@ -25,5 +20,14 @@ service cloud.firestore {
       allow read: if request.auth != null && resource.data.display is string && resource.data.display == 'public'
       allow write: if false
     }
+
+    match /chatRooms/{room} {
+      allow read: if request.auth != null && resource.data.display == 'public' && request.auth.uid in resource.data.users
+      allow create: if request.auth != null && resource.data.display is string && request.auth.uid in resource.data.users
+      match /messages/{msg} {
+        allow read: if request.auth != null && request.auth.uid in get(/databases/$(database)/documents/chatRooms/$(room)).data.users
+        allow create: if request.auth != null && request.resource.data.fromUser == request.auth.uid && request.auth.uid in get(/databases/$(database)/documents/chatRooms/$(room)).data.users
+      }
+    }    
   }
 }

@@ -1,12 +1,19 @@
 import { Grid, Skeleton, Text } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import ChatUser from '../Chatuser';
-import { db } from '../../config/firebase';
+import { auth, db } from '../../config/firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 const ChatSidebar = () => {
+  const [user] = useAuthState(auth);
+
   // prettier-ignore
-  const query = db.collection('counsellors').where('display', '==', 'public').orderBy('name');
+  const query = db
+    .collection('chatRooms')
+    .where('users', 'array-contains', user?.uid || null)
+    .where('display', '==', 'public')
+    .orderBy('name');
 
   const [value, loading, error] = useCollection(query);
 
@@ -52,7 +59,7 @@ const ChatSidebar = () => {
           <React.Fragment key={doc.id}>
             <ChatUser
               name={doc.data().name}
-              role={doc.data().role.displayRole}
+              role={doc.data().purpose}
               id={doc.id}
             />
           </React.Fragment>

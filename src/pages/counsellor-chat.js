@@ -15,8 +15,6 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Header from '../components/Header';
 import ChatSection from '../components/ChatSection';
-import useListenToSocket from '../hooks/useListenToSocket';
-
 const CounsellorChat = () => {
   const [saveChatHistory, setSaveChatHistory] = useState(true);
   const handleSaveChatHistoryToggle = (e) => {
@@ -25,8 +23,6 @@ const CounsellorChat = () => {
     console.log(saveChatHistory);
   };
   const [isLargerThan576] = useMediaQuery('(min-width: 576px)');
-
-  useListenToSocket(true, null);
 
   return (
     <>

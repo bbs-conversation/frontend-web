@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../config/firebase';
-import useListenToSocket from '../hooks/useListenToSocket';
 
 const IndexPage = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -16,8 +15,6 @@ const IndexPage = () => {
       if (error) router.push('/login');
     }
   }, [error, user, router, loading]);
-
-  useListenToSocket(true, null);
 
   return (
     <>

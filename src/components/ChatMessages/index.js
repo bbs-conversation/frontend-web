@@ -1,17 +1,27 @@
-import { VStack } from '@chakra-ui/react';
+import { Skeleton, Text, VStack } from '@chakra-ui/react';
 import React, { useEffect, useRef } from 'react';
-import { useChatStateValue } from '../../context/providers/ChatProvider';
 import ChatMessage from './ChatMessage';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
+import { useCollection } from 'react-firebase-hooks/firestore';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth, db } from '../../config/firebase';
 
 const ChatMessages = () => {
-  const [{ messages }] = useChatStateValue();
   const router = useRouter();
-  function filterByChannel(msg) {
-    return msg.channelId === router.query.id || msg.channelId === 'all';
-  }
+  const [user] = useAuthState(auth);
+  const query = db
+    .collection(`chatRooms/${router.query.id}/messages`)
+
+    .orderBy('createdAt', 'asc');
+  const [messages, loading, error] = useCollection(query);
   const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    if (error) {
+      console.error(error);
+    }
+  }, [error]);
 
   const scrollToBottom = () => {
     messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -21,15 +31,32 @@ const ChatMessages = () => {
   return (
     <>
       <ChatMessagesWrapper overflowY={'scroll'} height={'68vh'} pr={2}>
-        {messages.filter(filterByChannel).map((m, i) => (
-          <ChatMessage
-            type={m.type}
-            message={m.message}
-            name={m.byUser}
-            time={m.time}
-            key={i}
-          />
-        ))}
+        {!loading && error && (
+          <>
+            <Text color='red'>
+              Sorry there was a problem loading the messages
+            </Text>
+          </>
+        )}
+        {!error && loading && (
+          <>
+            <Skeleton height={'40px'} />
+            <Skeleton height={'40px'} />
+            <Skeleton height={'40px'} />
+            <Skeleton height={'40px'} />
+            <Skeleton height={'40px'} />
+          </>
+        )}
+        {messages &&
+          messages.docs.map((m, i) => (
+            <ChatMessage
+              type={m.data().toUser === user.uid ? 'toUser' : 'fromUser'}
+              message={m.data().message}
+              name={m.data().fromUserName}
+              time={m.data().time}
+              key={m.id}
+            />
+          ))}
         <div ref={messagesEndRef} />
       </ChatMessagesWrapper>
     </>

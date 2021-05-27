@@ -1,39 +1,49 @@
-import { Flex, FormControl, IconButton, Input } from '@chakra-ui/react';
+import {
+  Flex,
+  FormControl,
+  IconButton,
+  Input,
+  useToast,
+} from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { IoSend } from 'react-icons/io5';
 import styled from 'styled-components';
-import { useChatStateValue } from '../../context/providers/ChatProvider';
-import { useSocket } from '../../context/providers/SocketProvider';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../../config/firebase';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import { auth, db } from '../../config/firebase';
 
 const Chatbox = () => {
   const [message, setMessage] = useState('');
-  const [{ messages }, dispatch] = useChatStateValue();
   const [user] = useAuthState(auth);
-  const socket = useSocket();
   const router = useRouter();
   const { id } = router.query;
+  const toast = useToast();
   const handleSendMessage = (e) => {
     e.preventDefault();
-    dispatch({
-      type: 'ADD_TO_MESSAGES',
-      message: {
-        type: 'fromUser',
-        message: message,
-        byUser: user.displayName,
-        channelId: id,
-      },
-    });
-    socket.emit('send-message', {
-      recipients: [id],
-      text: message,
-      byUser: user.displayName,
-    });
-
-    setMessage('');
+    db.collection(`chatRooms/${id}/messages`)
+      .add({
+        message,
+        fromUser: user?.uid,
+        fromUserName: user.displayName,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      })
+      .then(() => {
+        setMessage('');
+      })
+      .catch((error) => {
+        toast({
+          title: "Couldn't send message",
+          variant: 'left-accent',
+          status: 'error',
+          isClosable: true,
+          position: 'top-right',
+        });
+        console.error('Error writing document: ', error);
+      });
   };
+
   return (
     <>
       <ChatboxWrapper onSubmit={handleSendMessage}>

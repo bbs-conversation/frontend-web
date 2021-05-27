@@ -4,7 +4,7 @@ import { Container, useMediaQuery, useToast } from '@chakra-ui/react';
 import { Text } from '@chakra-ui/react';
 import Header from '../components/Header';
 import { Skeleton } from '@chakra-ui/react';
-import { Grid, Box } from '@chakra-ui/react';
+import { Grid } from '@chakra-ui/react';
 import NavigationBlock from '../components/NavigationBlock';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../config/firebase';
@@ -16,11 +16,6 @@ import {
 } from 'react-icons/ai';
 import { GiMeditation } from 'react-icons/gi';
 import { FaBook } from 'react-icons/fa';
-import { useChatStateValue } from '../context/providers/ChatProvider';
-import { useSocket } from '../context/providers/SocketProvider';
-import useListenToSocket from '../hooks/useListenToSocket';
-// import { useChatStateValue } from '../context/providers/ChatProvider';
-
 const HomePage = () => {
   useEffect(() => {
     fetch('https://quotes.rest/qod', {
@@ -46,8 +41,6 @@ const HomePage = () => {
   const [user] = useAuthState(auth);
 
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
-
-  useListenToSocket(true, null);
 
   return (
     <>

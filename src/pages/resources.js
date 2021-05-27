@@ -19,7 +19,6 @@ import Header from '../components/Header';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { auth, db, dbTimestamp } from '../config/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import useListenToSocket from '../hooks/useListenToSocket';
 import InfoList from '../components/InfoList';
 
 const AppointmentPage = () => {
@@ -40,8 +39,6 @@ const AppointmentPage = () => {
       console.error(error);
     }
   }, [error]);
-
-  useListenToSocket(true, null);
 
   const [isLargerThan576] = useMediaQuery('(min-width: 576px)');
   return (
