@@ -38,3 +38,8 @@ firebase-debug.log
 src/config/firebase.js
 firestore-debug.log
 ui-debug.log
+
+# PWA Config
+**/public/workbox-*.js
+**/public/sw.js
+**/public/fallback-*.js

@@ -12,7 +12,8 @@ const ChatMessages = () => {
   const [user] = useAuthState(auth);
   const query = db
     .collection(`chatRooms/${router.query.id}/messages`)
-    .orderBy('createdAt', 'asc');
+    .orderBy('createdAt', 'desc')
+    .limit(50);
   const [messages, loading, error] = useCollection(query);
   const messagesEndRef = useRef(null);
 
@@ -47,15 +48,17 @@ const ChatMessages = () => {
           </>
         )}
         {messages &&
-          messages.docs.map((m, i) => (
-            <ChatMessage
-              type={m.data().fromUser === user.uid ? 'fromUser' : 'toUser'}
-              message={m.data().message}
-              name={m.data().fromUserName}
-              time={m.data().time}
-              key={m.id}
-            />
-          ))}
+          messages.docs
+            .reverse()
+            .map((m) => (
+              <ChatMessage
+                type={m.data().fromUser === user.uid ? 'fromUser' : 'toUser'}
+                message={m.data().message}
+                name={m.data().fromUserName}
+                time={m.data().time}
+                key={m.id}
+              />
+            ))}
         <div ref={messagesEndRef} />
       </ChatMessagesWrapper>
     </>
