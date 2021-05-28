@@ -1,10 +1,4 @@
-import {
-  Flex,
-  FormControl,
-  IconButton,
-  Input,
-  useToast,
-} from '@chakra-ui/react';
+import { Flex, FormControl, IconButton, Input } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { IoSend } from 'react-icons/io5';
@@ -13,13 +7,24 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import { auth, db } from '../../config/firebase';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Chatbox = () => {
   const [message, setMessage] = useState('');
   const [user] = useAuthState(auth);
   const router = useRouter();
   const { id } = router.query;
-  const toast = useToast();
+  const showError = () =>
+    toast.error("Couldn't send message", {
+      position: 'top-right',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   const handleSendMessage = (e) => {
     e.preventDefault();
     db.collection(`chatRooms/${id}/messages`)
@@ -33,19 +38,31 @@ const Chatbox = () => {
         setMessage('');
       })
       .catch((error) => {
-        toast({
-          title: "Couldn't send message",
-          variant: 'left-accent',
-          status: 'error',
-          isClosable: true,
-          position: 'top-right',
-        });
+        // toast({
+        //   title: "Couldn't send message",
+        //   variant: 'left-accent',
+        //   status: 'error',
+        //   isClosable: true,
+        //   position: 'top-right',
+        // });
+        showError();
         console.error('Error writing document: ', error);
       });
   };
 
   return (
     <>
+      <ToastContainer
+        position='top-right'
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <ChatboxWrapper onSubmit={handleSendMessage}>
         <Flex>
           <FormControl id='first-name' isRequired>
