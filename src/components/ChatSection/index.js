@@ -10,11 +10,8 @@ import {
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { IoClose, IoMenu } from 'react-icons/io5';
-import Chatbox from '../Chatbox';
-import ChatMessages from '../ChatMessages';
-import ChatSectionHeader from '../ChatSectionHeader';
+import ChatSidebar from '../ChatSidebar';
 import dynamic from 'next/dynamic';
-
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
@@ -24,7 +21,16 @@ const ChatSection = () => {
   const router = useRouter();
   const { id } = router.query;
   const sideBarColor = useColorModeValue('white', 'gray.600');
-  const ChatSidebar = dynamic(() => import('../ChatSidebar'), {
+
+  const ChatSectionHeader = dynamic(() => import('../ChatSectionHeader'), {
+    ssr: false,
+  });
+
+  const ChatMessages = dynamic(() => import('../ChatMessages'), {
+    ssr: false,
+  });
+
+  const Chatbox = dynamic(() => import('../Chatbox'), {
     ssr: false,
   });
   return (

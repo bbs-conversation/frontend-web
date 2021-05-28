@@ -26,7 +26,7 @@ const ChatMessage = ({ message, type, name, time }) => {
       )}
       {type === 'toUser' && (
         <Tooltip label={time && `At ${time && new Date(time).toString()}`}>
-          <Flex width={'100%'} flexDirection={'column'}>
+          <Flex width={'100%'}>
             <Box
               pt={2}
               pb={2}

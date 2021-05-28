@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { Container, useMediaQuery, useToast } from '@chakra-ui/react';
+import { Container, useMediaQuery } from '@chakra-ui/react';
 import { Text } from '@chakra-ui/react';
-import Header from '../components/Header';
 import { Skeleton } from '@chakra-ui/react';
 import { Grid } from '@chakra-ui/react';
-import NavigationBlock from '../components/NavigationBlock';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../config/firebase';
 import { BsChatDots } from 'react-icons/bs';
@@ -16,7 +14,17 @@ import {
 } from 'react-icons/ai';
 import { GiMeditation } from 'react-icons/gi';
 import { FaBook } from 'react-icons/fa';
+import dynamic from 'next/dynamic';
 const HomePage = () => {
+  const NavigationBlock = dynamic(
+    () => import('../components/NavigationBlock'),
+    {
+      ssr: false,
+    }
+  );
+  const Header = dynamic(() => import('../components/Header'), {
+    ssr: false,
+  });
   useEffect(() => {
     fetch('https://quotes.rest/qod', {
       method: 'GET',

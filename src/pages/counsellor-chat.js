@@ -4,18 +4,18 @@ import {
   BreadcrumbLink,
   Container,
   Flex,
-  FormControl,
-  FormLabel,
   Spacer,
-  Switch,
   useMediaQuery,
 } from '@chakra-ui/react';
 import Head from 'next/head';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import Header from '../components/Header';
 import ChatSection from '../components/ChatSection';
+import dynamic from 'next/dynamic';
 const CounsellorChat = () => {
+  const Header = dynamic(() => import('../components/Header'), {
+    ssr: false,
+  });
   const [saveChatHistory, setSaveChatHistory] = useState(true);
   const handleSaveChatHistoryToggle = (e) => {
     e.preventDefault();

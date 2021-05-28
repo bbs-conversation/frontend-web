@@ -8,13 +8,16 @@ import {
   useMediaQuery,
   VStack,
 } from '@chakra-ui/react';
-import Header from '../Header';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, db, microsoftAuth } from '../../config/firebase';
 import { FaMicrosoft } from 'react-icons/fa';
 import { BiErrorCircle } from 'react-icons/bi';
+import dynamic from 'next/dynamic';
 
 const LoginPage = () => {
+  const Header = dynamic(() => import('../Header'), {
+    ssr: false,
+  });
   const [user, error, loading] = useAuthState(auth);
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
   const [loginError, setLoginError] = useState('');

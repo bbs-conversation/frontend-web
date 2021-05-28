@@ -1,27 +1,26 @@
 import {
   Container,
-  Flex,
   Grid,
-  Input,
-  Radio,
-  RadioGroup,
   Skeleton,
-  Spacer,
-  Stack,
   Text,
-  Tooltip,
   useMediaQuery,
   VStack,
 } from '@chakra-ui/react';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
-import Header from '../components/Header';
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { auth, db, dbTimestamp } from '../config/firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import InfoList from '../components/InfoList';
+import { db } from '../config/firebase';
+import dynamic from 'next/dynamic';
 
 const AppointmentPage = () => {
+  const Header = dynamic(() => import('../components/Header'), {
+    ssr: false,
+  });
+
+  const InfoList = dynamic(() => import('../components/InfoList'), {
+    ssr: false,
+  });
+
   const today = new Date();
   const month = ('0' + (today.getMonth() + 1)).slice(-2);
   const todayFormatted = `${today.getFullYear()}-${month}-${today.getDate()}`;

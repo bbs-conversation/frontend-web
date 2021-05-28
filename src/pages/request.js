@@ -1,10 +1,15 @@
 import { Container, Text, VStack } from '@chakra-ui/react';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import React from 'react';
-import Header from '../components/Header';
-import RequestBlock from '../components/RequestBlock';
-
 const RequestPage = () => {
+  const Header = dynamic(() => import('../components/Header'), {
+    ssr: false,
+  });
+
+  const RequestBlock = dynamic(() => import('../components/RequestBlock'), {
+    ssr: false,
+  });
   return (
     <>
       <Head>
