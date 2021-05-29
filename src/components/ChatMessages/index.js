@@ -8,6 +8,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, db } from '../../config/firebase';
 
 const ChatMessages = () => {
+console.log(`Loading messages`);
   const router = useRouter();
   const [user] = useAuthState(auth);
   const query = db

@@ -5,7 +5,7 @@ import { auth, db } from '../../config/firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-const ChatSidebar = () => {
+const ChatSidebar = React.memo(() => {
   const [user] = useAuthState(auth);
 
   // prettier-ignore
@@ -15,12 +15,13 @@ const ChatSidebar = () => {
     .where('display', '==', 'public')
     .orderBy('name');
 
-  const [value, loading, error] = useCollection(query);
+  const [value, loading, error] = useCollection(query)
 
   useEffect(() => {
     if (!loading && error) {
       console.error(error);
     }
+    if (loading) console.log(`Loading`);
   }, [error, loading]);
 
   return (
@@ -66,6 +67,6 @@ const ChatSidebar = () => {
         ))}
     </Grid>
   );
-};
+})
 
 export default ChatSidebar;

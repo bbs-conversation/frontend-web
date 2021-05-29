@@ -16,29 +16,14 @@ const firebaseConfig = {
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
+  firebase
+    .firestore()
+    .enablePersistence({ synchronizeTabs: true })
+    .catch((err) => console.log(err));
 }
-
 const db = firebase.firestore();
-// .enablePersistence()
-// .then(() => console.log(`Now enabled offline mode`))
-// .catch((err) => {
-//   if (err.code == 'failed-precondition') {
-//     console.error('Please open the app in only one tab');
-//   } else if (err.code == 'unimplemented') {
-//     // The current browser does not support all of the
-//     // features required to enable persistence
-//     // ...
-//     console.error('Your browser does not support offline features');
-//   }
-// });
 
 const dbTimestamp = firebase.firestore.Timestamp;
-
-// if (typeof window !== 'undefined') {
-//   if (process.env.NODE_ENV === 'development') {
-//     db.useEmulator('localhost', 8080);
-//   }
-// }
 
 const storage = firebase.storage();
 

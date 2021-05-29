@@ -14,13 +14,13 @@ const ChatSectionHeader = ({ setChatSidebarOpen, chatSidebarOpen }) => {
   const [isLargerThan992] = useMediaQuery('(min-width:992px)');
   return (
     <Flex>
-      {!isLargerThan992 && !chatSidebarOpen && (
+      {!isLargerThan992 && (
         <IconButton
           size={'md'}
           icon={<IoMenu />}
           left={0}
           alignSelf={'center'}
-          onClick={() => setChatSidebarOpen(true)}
+          onClick={setChatSidebarOpen}
           mr={2}
         />
       )}

@@ -1,57 +1,70 @@
 import React from 'react';
-import { IconButton, VStack, useColorModeValue } from '@chakra-ui/react';
+import {
+  IconButton,
+  VStack,
+  useColorModeValue,
+  DrawerOverlay,
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerBody,
+  Grid,
+  Flex,
+  Text,
+  Spacer,
+} from '@chakra-ui/react';
 import { Box } from '@chakra-ui/react';
 import { Link as ChakraLink } from '@chakra-ui/react';
 import { VscChromeClose } from 'react-icons/vsc';
 
 import Link from 'next/link';
 
-const Menu = ({ setMenuOpen }) => {
-  const menuBgColor = useColorModeValue('gray.50', 'gray.600');
+const Menu = ({ onClose, isOpen }) => {
   return (
     <>
-      <Box
-        p='2'
-        position={'fixed'}
-        right={0}
-        height={'100%'}
-        bg={menuBgColor}
-        padding={4}
-        boxShadow={'md'}
-        zIndex={10000}
+      <Drawer
+        placement={'right'}
+        onClose={onClose}
+        isOpen={isOpen}
+        colorScheme={'gray'}
+        size={'xs'}
       >
-        <IconButton
-          size={'md'}
-          icon={<VscChromeClose />}
-          position={'fixed'}
-          right={0}
-          marginRight={5}
-          onClick={() => setMenuOpen(false)}
-        />
-        <VStack display={'grid'} zIndex={100000}>
-          <ChakraLink fontSize={20} as={Link} href={'/'}>
-            Home
-          </ChakraLink>
-          <ChakraLink fontSize={20} as={Link} href={'/counsellor-chat'}>
-            Chat
-          </ChakraLink>
-          <ChakraLink fontSize={20} as={Link} href={'/'}>
-            Schedule an appointment
-          </ChakraLink>
-          <ChakraLink fontSize={20} as={Link} href={'/'}>
-            Request for group session
-          </ChakraLink>
-          <ChakraLink fontSize={20} as={Link} href={'/'}>
-            Attend group session
-          </ChakraLink>
-          <ChakraLink fontSize={20} as={Link} href={'/'}>
-            Mindfullness activities
-          </ChakraLink>
-          <ChakraLink fontSize={20} as={Link} href={'/'}>
-            Resources and Tips
-          </ChakraLink>
-        </VStack>
-      </Box>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerHeader borderBottomWidth='1px'>
+            <Flex alignItems={'center'}>
+              <Text fontSize={'2xl'}>Menu</Text>
+              <Spacer />
+              <IconButton as={VscChromeClose} p={2} onClick={onClose} />
+            </Flex>
+          </DrawerHeader>
+          <DrawerBody>
+            <Grid rowGap={2}>
+              <ChakraLink fontSize={20} as={Link} href={'/home'}>
+                Home
+              </ChakraLink>
+              <ChakraLink fontSize={20} as={Link} href={'/counsellor-chat'}>
+                Chat
+              </ChakraLink>
+              <ChakraLink fontSize={20} as={Link} href={'/appointments'}>
+                Your appointments
+              </ChakraLink>
+              <ChakraLink fontSize={20} as={Link} href={'/request'}>
+                Request
+              </ChakraLink>
+              <ChakraLink fontSize={20} as={Link} href={'/group-sessions'}>
+                Group sessions
+              </ChakraLink>
+              <ChakraLink fontSize={20} as={Link} href={'#'}>
+                Mindfullness activities
+              </ChakraLink>
+              <ChakraLink fontSize={20} as={Link} href={'/resources'}>
+                Resources and Tips
+              </ChakraLink>
+            </Grid>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </>
   );
 };

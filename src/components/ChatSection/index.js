@@ -6,6 +6,7 @@ import {
   IconButton,
   Text,
   useColorModeValue,
+  useDisclosure,
   useMediaQuery,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
@@ -14,21 +15,17 @@ import ChatSidebar from '../ChatSidebar';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
+import ChatMessages from '../ChatMessages';
+import ChatSectionHeader from '../ChatSectionHeader';
+import MobileSidebar from '../ChatSectionHeader/MobileSidebar';
 
-const ChatSection = () => {
+const ChatSection = React.memo(() => {
   const [isLargerThan992] = useMediaQuery('(min-width: 992px)');
   const [chatSidebarOpen, setChatSidebarOpen] = useState(false);
   const router = useRouter();
   const { id } = router.query;
   const sideBarColor = useColorModeValue('white', 'gray.600');
-
-  const ChatSectionHeader = dynamic(() => import('../ChatSectionHeader'), {
-    ssr: false,
-  });
-
-  const ChatMessages = dynamic(() => import('../ChatMessages'), {
-    ssr: false,
-  });
+  const { onClose, onOpen, isOpen } = useDisclosure();
 
   const Chatbox = dynamic(() => import('../Chatbox'), {
     ssr: false,
@@ -41,31 +38,9 @@ const ChatSection = () => {
         templateColumns='repeat(5, 1fr)'
         gap={4}
       >
-        {!isLargerThan992 && chatSidebarOpen && (
+        {!isLargerThan992 && (
           <>
-            <Flex
-              position={'fixed'}
-              height={'100vh'}
-              minW={'60%'}
-              top={0}
-              left={0}
-              bg={sideBarColor}
-              overflowY={'scroll'}
-              flexDirection='column'
-              p={2}
-              boxShadow={'md'}
-            >
-              <Flex>
-                <IconButton
-                  size={'md'}
-                  icon={<IoClose />}
-                  left={0}
-                  alignSelf={'center'}
-                  onClick={() => setChatSidebarOpen(false)}
-                />
-              </Flex>
-              <ChatSidebar />
-            </Flex>
+            <MobileSidebar onClose={onClose} isOpen={isOpen} />
           </>
         )}
         <ChatSidebarWrapper
@@ -78,8 +53,8 @@ const ChatSection = () => {
         </ChatSidebarWrapper>
         <GridItem rowSpan={1} colSpan={isLargerThan992 ? 4 : 5}>
           <ChatSectionHeader
-            setChatSidebarOpen={setChatSidebarOpen}
-            chatSidebarOpen={chatSidebarOpen}
+            setChatSidebarOpen={onOpen}
+            chatSidebarOpen={isOpen}
           />
         </GridItem>
         {id ? (
@@ -106,7 +81,7 @@ const ChatSection = () => {
       </Grid>
     </Container>
   );
-};
+});
 
 export default ChatSection;
 
