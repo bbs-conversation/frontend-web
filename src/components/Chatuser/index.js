@@ -16,6 +16,7 @@ const ChatUser = ({ name, role, id, setChatSidebarOpen }) => {
         marginBottom={2}
         boxShadow={'md'}
         p={2}
+        onClick={setChatSidebarOpen}
       >
         <Text fontSize={'md'} alignSelf='end' color={textColor}>
           {name}

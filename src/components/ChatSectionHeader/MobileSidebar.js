@@ -33,7 +33,7 @@ const MobileSidebar = ({ isOpen, onClose }) => {
             </Flex>
           </DrawerHeader>
           <DrawerBody>
-            <ChatSidebar />
+            <ChatSidebar onClose={onClose} />
           </DrawerBody>
         </DrawerContent>
       </Drawer>

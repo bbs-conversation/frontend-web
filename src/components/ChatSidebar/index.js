@@ -5,7 +5,7 @@ import { auth, db } from '../../config/firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-const ChatSidebar = React.memo(() => {
+const ChatSidebar = React.memo(({ onClose }) => {
   const [user] = useAuthState(auth);
 
   // prettier-ignore
@@ -15,7 +15,7 @@ const ChatSidebar = React.memo(() => {
     .where('display', '==', 'public')
     .orderBy('name');
 
-  const [value, loading, error] = useCollection(query)
+  const [value, loading, error] = useCollection(query);
 
   useEffect(() => {
     if (!loading && error) {
@@ -59,6 +59,7 @@ const ChatSidebar = React.memo(() => {
         value.docs.map((doc) => (
           <React.Fragment key={doc.id}>
             <ChatUser
+              setChatSidebarOpen={onClose}
               name={doc.data().name}
               role={doc.data().purpose}
               id={doc.id}
@@ -67,6 +68,6 @@ const ChatSidebar = React.memo(() => {
         ))}
     </Grid>
   );
-})
+});
 
 export default ChatSidebar;
