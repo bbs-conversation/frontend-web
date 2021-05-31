@@ -43,3 +43,6 @@ ui-debug.log
 **/public/workbox-*.js
 **/public/sw.js
 **/public/fallback-*.js
+
+# Firebase auth accounts
+firebase-accounts.json

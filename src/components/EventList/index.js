@@ -1,4 +1,11 @@
-import { Box, Flex, Grid, GridItem, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Grid,
+  GridItem,
+  Text,
+  useMediaQuery,
+} from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 
 const EventList = ({ name, startTime, endTime }) => {
@@ -19,6 +26,8 @@ const EventList = ({ name, startTime, endTime }) => {
   monthArray[10] = 'November';
   monthArray[11] = 'December';
   const month = monthArray[start.getMonth()];
+
+  const [isLargerThan576] = useMediaQuery('(min-width: 576)');
 
   return (
     <Grid

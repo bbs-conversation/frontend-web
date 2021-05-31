@@ -41,11 +41,13 @@ const AppointmentPage = () => {
     .where('forUser', '==', user?.uid || null)
     .where('startTime', '>=', startTime)
     .where('startTime', '<=', endTime)
+    .where('approved', '==', true)
     .orderBy('startTime');
 
   const queryAll = db
     .collection('appointments')
     .where('forUser', '==', user?.uid || null)
+    .where('approved', '==', true)
     .orderBy('startTime')
     .limit(10);
 
@@ -141,7 +143,7 @@ const AppointmentPage = () => {
             value.docs.map((doc) => (
               <React.Fragment key={doc.id}>
                 <EventList
-                  name={doc.data().appointmentName}
+                  name={doc.data().sessionName}
                   startTime={doc.data().startTime}
                   endTime={doc.data().endTime}
                 />

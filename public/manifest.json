@@ -1,7 +1,7 @@
 {
   "theme_color": "#e0e0e0",
   "background_color": "#e0e0e0",
-  "display": "standalone",
+  "display": "portrait",
   "start_url": "/",
   "name": "Conversations by Bluebells",
   "short_name": "Conversations",

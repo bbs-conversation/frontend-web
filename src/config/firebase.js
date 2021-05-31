@@ -27,6 +27,8 @@ const db = firebase.firestore();
 
 const dbTimestamp = firebase.firestore.Timestamp;
 
+const dbCurrentTime = firebase.firestore.FieldValue.serverTimestamp();
+
 const storage = firebase.storage();
 
 // if (process.env.NODE_ENV === 'development') {
@@ -35,9 +37,18 @@ const storage = firebase.storage();
 
 const auth = firebase.auth();
 const googleAuth = new firebase.auth.GoogleAuthProvider();
+
 const microsoftAuth = new firebase.auth.OAuthProvider('microsoft.com');
 microsoftAuth.setCustomParameters({
   tenant: '581747cb-f4f5-49b3-aeec-baad159fc64c',
 });
 
-export { auth, db, storage, googleAuth, microsoftAuth, dbTimestamp };
+export {
+  auth,
+  db,
+  storage,
+  googleAuth,
+  microsoftAuth,
+  dbTimestamp,
+  dbCurrentTime,
+};

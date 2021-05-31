@@ -11,7 +11,7 @@ import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { auth, db } from '../../config/firebase';
+import { auth, db, dbCurrentTime } from '../../config/firebase';
 import { toast, ToastContainer } from 'react-toastify';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import router from 'next/router';
@@ -36,13 +36,21 @@ const GroupSession = () => {
     useCollection(timeSlotsQuery);
 
   const [user] = useAuthState(auth);
+  function timeSlotById(id) {
+    return id.id === slot;
+  }
   const formData = {
     approved: false,
     forUser: 'all',
     sessionName,
     teacher,
-    timeSlot: slot,
+    timeSlotId: slot,
+    startTime:
+      timeSlots && slot && timeSlots?.docs?.find(timeSlotById).data().from,
+    endTime:
+      timeSlots && slot && timeSlots?.docs?.find(timeSlotById).data().till,
     type: 'groupSession',
+    createdAt: dbCurrentTime,
   };
   const requestGroupSession = (e) => {
     e.preventDefault();
