@@ -10,7 +10,8 @@ import Router, { useRouter } from 'next/router';
 
 import NProgress from 'nprogress'; //nprogress module
 import 'nprogress/nprogress.css'; //styles of nprogress
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function MyApp({ Component, pageProps }) {
   const [user, loading, error] = useAuthState(auth);
   const router = useRouter();
@@ -30,7 +31,19 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
+      <ToastContainer
+        position='top-right'
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <GlobalStyles />
+
       {user || !error ? (
         <>
           <ChakraProvider>

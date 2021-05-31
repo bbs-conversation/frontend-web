@@ -29,7 +29,7 @@ const AppointmentPage = () => {
   const month = ('0' + (today.getMonth() + 1)).slice(-2);
   const todayFormatted = `${today.getFullYear()}-${month}-${today.getDate()}`;
   const [filterDateValue, setFilterDateValue] = useState(todayFormatted);
-  const [radioValue, setRadioValue] = useState(1);
+  const [radioValue, setRadioValue] = useState('1');
   const [user] = useAuthState(auth);
   let dateFilterDate = new Date(filterDateValue || todayFormatted);
   let startHours = new Date(dateFilterDate.setHours(0, 0, 0));

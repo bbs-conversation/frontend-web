@@ -1,13 +1,14 @@
 import { Container, Text, VStack } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import Link from 'next/link';
 import React from 'react';
 const RequestPage = () => {
-  const Header = dynamic(() => import('../components/Header'), {
+  const Header = dynamic(() => import('../../components/Header'), {
     ssr: false,
   });
 
-  const RequestBlock = dynamic(() => import('../components/RequestBlock'), {
+  const RequestBlock = dynamic(() => import('../../components/RequestBlock'), {
     ssr: false,
   });
   return (
@@ -26,9 +27,22 @@ const RequestPage = () => {
           Request
         </Text>
         <VStack gridGap={2} mt={3}>
-          <RequestBlock forEvent={'an appointment'} from={'Counsellor'} />
-          <RequestBlock forEvent={'an appointment'} from={'Peer Counsellor'} />
-          <RequestBlock forEvent={'a group session'} from={'Counsellor'} />
+          <RequestBlock
+            forEvent={'an appointment'}
+            from={'Counsellor'}
+            url={'/counsellor'}
+          />
+          <RequestBlock
+            forEvent={'an appointment'}
+            from={'Peer Counsellor'}
+            url={'/peer-counsellor'}
+          />
+
+          <RequestBlock
+            forEvent={'a group session'}
+            from={'Counsellors'}
+            url={'/group-session'}
+          />
         </VStack>
       </Container>
     </>

@@ -7,7 +7,7 @@
     "build": "next build",
     "prodBuild": "yarn build && next export -o build",
     "buildAndDeploy": "yarn prodBuild && npx firebase deploy --only hosting",
-    "start": "next start"
+    "start": "next start -p 8080"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.6.1",

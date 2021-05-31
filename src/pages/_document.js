@@ -52,6 +52,10 @@ class MyDocument extends Document {
         </Head>
         <body
         // style={{
+        //   backgroundImage:
+        //     'url(https://media.discordapp.net/attachments/763767615042224149/848662035348979772/Layer_2.png)',
+        // }}
+        // style={{
         //   background:
         //     'url(/images/mainbg.png) no-repeat center fixed !important',
         //   backgroundSize: 'cover !important',

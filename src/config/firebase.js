@@ -16,10 +16,12 @@ const firebaseConfig = {
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
-  firebase
-    .firestore()
-    .enablePersistence({ synchronizeTabs: true })
-    .catch((err) => console.log(err));
+  if (typeof window !== 'undefined') {
+    firebase
+      .firestore()
+      .enablePersistence({ synchronizeTabs: true })
+      .catch((err) => console.error(err));
+  }
 }
 const db = firebase.firestore();
 
