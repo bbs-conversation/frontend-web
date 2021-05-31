@@ -38,7 +38,7 @@ const GroupSession = () => {
   const [user] = useAuthState(auth);
   const formData = {
     approved: false,
-    display: user?.uid,
+    forUser: 'all',
     sessionName,
     teacher,
     timeSlot: slot,

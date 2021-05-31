@@ -38,7 +38,7 @@ const CounsellorAppointment = () => {
   const [user] = useAuthState(auth);
   const formData = {
     approved: false,
-    display: user?.uid || null,
+    forUser: user?.uid,
     sessionName,
     teacher,
     timeSlot: slot,

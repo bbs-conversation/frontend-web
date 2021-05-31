@@ -38,7 +38,7 @@ const PeerCounsellorAppointment = () => {
   const [user] = useAuthState(auth);
   const formData = {
     approved: false,
-    display: user?.uid,
+    forUser: user?.uid,
     sessionName,
     teacher,
     timeSlot: slot,

@@ -8,7 +8,7 @@ service cloud.firestore {
     
     match /appointments/{appointment} {
       allow read: if request.auth != null && resource.data.forUser is string && request.auth.uid == resource.data.forUser  
-      allow create: if request.auth != null && request.resource.data.display == request.auth.uid
+      allow create: if request.auth != null && request.resource.data.forUser == request.auth.uid || request.resource.data.forUser == 'all'
     }
 
     match /groupSessions/{groupSession} {
