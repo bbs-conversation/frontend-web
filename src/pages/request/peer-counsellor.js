@@ -110,11 +110,20 @@ const PeerCounsellorAppointment = () => {
           <FormControl id='name'>
             <FormLabel>Appointment Name</FormLabel>
             <Input
+              list='sessionNames'
               value={sessionName}
               onChange={(e) => setSessionName(e.target.value)}
               type='text'
+              autoComplete={'off'}
               isRequired
             />
+            <datalist id='sessionNames'>
+              <option value='How to prepare for boards' />
+              <option value='I want to talk about my studies' />
+              <option value='I am not undersatnding a subject' />
+              <option value='I am feeling lonely during covid isolation' />
+              <option value='I am having problem with a teacher' />
+            </datalist>
           </FormControl>
           <FormControl id='teacher'>
             <FormLabel>Teacher</FormLabel>
