@@ -10,7 +10,7 @@ import Router, { useRouter } from 'next/router';
 
 import NProgress from 'nprogress'; //nprogress module
 import 'nprogress/nprogress.css'; //styles of nprogress
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 function MyApp({ Component, pageProps }) {
   const [user, loading, error] = useAuthState(auth);
@@ -28,11 +28,23 @@ function MyApp({ Component, pageProps }) {
       router.push(`/redirect?path=${router.asPath}`);
     }
   }, [loading, user, error]);
+  useEffect(() => {
+    window.addEventListener('offline', () => {
+      toast.info('You are offline', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    });
+  }, []);
 
   return (
     <>
       <ToastContainer
-        position='top-right'
         autoClose={3000}
         hideProgressBar={false}
         newestOnTop
