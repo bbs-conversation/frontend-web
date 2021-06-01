@@ -18,6 +18,7 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 import { auth, db, dbTimestamp } from '../config/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import dynamic from 'next/dynamic';
+import useListenToSocket from '../hooks/useListenToSocket';
 
 const AppointmentPage = () => {
   const Header = dynamic(() => import('../components/Header'), {
@@ -71,6 +72,8 @@ const AppointmentPage = () => {
   }, [error]);
 
   const [isLargerThan576] = useMediaQuery('(min-width: 576px)');
+
+  useListenToSocket(true);
   return (
     <>
       <Head>

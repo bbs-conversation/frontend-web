@@ -4,11 +4,13 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../config/firebase';
+import useListenToSocket from '../hooks/useListenToSocket';
 
 const Redirect = () => {
   const router = useRouter();
   const { path } = router.query;
   const [user] = useAuthState(auth);
+  useListenToSocket(true);
   useEffect(() => {
     if (path) {
       router.push(path);

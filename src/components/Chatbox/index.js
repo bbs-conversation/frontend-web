@@ -8,12 +8,16 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import { auth, db } from '../../config/firebase';
 import { ToastContainer, toast } from 'react-toastify';
+import { useChatStateValue } from '../../context/providers/ChatProvider';
+import { useSocket } from '../../context/providers/SocketProvider';
 
 const Chatbox = () => {
   const [message, setMessage] = useState('');
   const [user] = useAuthState(auth);
   const router = useRouter();
   const { id } = router.query;
+  const socket = useSocket();
+  const [{ messages }, dispatch] = useChatStateValue();
   const showError = () =>
     toast.error("Couldn't send message", {
       position: 'top-right',
@@ -26,27 +30,42 @@ const Chatbox = () => {
     });
   const handleSendMessage = (e) => {
     e.preventDefault();
-    db.collection(`chatRooms/${id}/messages`)
-      .add({
-        message,
-        fromUser: user?.uid,
-        fromUserName: user.displayName,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      })
-      .then(() => {
-        setMessage('');
-      })
-      .catch((error) => {
-        // toast({
-        //   title: "Couldn't send message",
-        //   variant: 'left-accent',
-        //   status: 'error',
-        //   isClosable: true,
-        //   position: 'top-right',
-        // });
-        showError();
-        console.error('Error writing document: ', error);
-      });
+    dispatch({
+      type: 'ADD_TO_MESSAGES',
+      message: {
+        message: message,
+        time: new Date(),
+        senderName: user.displayName,
+        sender: user.uid,
+        recipient: id,
+      },
+    });
+    socket.emit('send-message', {
+      message,
+    });
+
+    setMessage('');
+    // db.collection(`chatRooms/${id}/messages`)
+    //   .add({
+    //     message,
+    //     fromUser: user?.uid,
+    //     fromUserName: user.displayName,
+    //     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    //   })
+    //   .then(() => {
+    //     setMessage('');
+    //   })
+    //   .catch((error) => {
+    //     // toast({
+    //     //   title: "Couldn't send message",
+    //     //   variant: 'left-accent',
+    //     //   status: 'error',
+    //     //   isClosable: true,
+    //     //   position: 'top-right',
+    //     // });
+    //     showError();
+    //     console.error('Error writing document: ', error);
+    //   });
   };
 
   return (

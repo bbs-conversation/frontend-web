@@ -11,8 +11,10 @@ import React, { useEffect, useState } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../config/firebase';
 import dynamic from 'next/dynamic';
+import useListenToSocket from '../hooks/useListenToSocket';
 
 const AppointmentPage = () => {
+  useListenToSocket(true);
   const Header = dynamic(() => import('../components/Header'), {
     ssr: false,
   });

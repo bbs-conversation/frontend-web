@@ -15,8 +15,11 @@ import { auth, db, dbCurrentTime } from '../../config/firebase';
 import { toast, ToastContainer } from 'react-toastify';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import router from 'next/router';
+import useListenToSocket from '../../hooks/useListenToSocket';
 
 const GroupSession = () => {
+  useListenToSocket(true);
+
   const [loadSessions, setLoadSessions] = useState(false);
   const [sessionName, setSessionName] = useState('');
   const [slot, setSlot] = useState('');

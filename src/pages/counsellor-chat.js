@@ -12,6 +12,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import ChatSection from '../components/ChatSection';
 import dynamic from 'next/dynamic';
+import useListenToSocket from '../hooks/useListenToSocket';
 const CounsellorChat = () => {
   const Header = dynamic(() => import('../components/Header'), {
     ssr: false,
@@ -23,7 +24,7 @@ const CounsellorChat = () => {
     console.log(saveChatHistory);
   };
   const [isLargerThan576] = useMediaQuery('(min-width: 576px)');
-
+  useListenToSocket(true);
   return (
     <>
       <Head>

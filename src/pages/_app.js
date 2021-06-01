@@ -12,6 +12,10 @@ import NProgress from 'nprogress'; //nprogress module
 import 'nprogress/nprogress.css'; //styles of nprogress
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import useListenToSocket from '../hooks/useListenToSocket';
+import { SocketProvider } from '../context/providers/SocketProvider';
+import chatReducer, { chatInitialState } from '../context/reducers/chatReducer';
+import { ChatProvider } from '../context/providers/ChatProvider';
 function MyApp({ Component, pageProps }) {
   const [user, loading, error] = useAuthState(auth);
   const router = useRouter();
@@ -44,36 +48,28 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
-      <ToastContainer
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-      <GlobalStyles />
+      <SocketProvider>
+        <ChatProvider reducer={chatReducer} initialState={chatInitialState}>
+          <ToastContainer
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
+          <GlobalStyles />
 
-      {user || !error ? (
-        <>
           <ChakraProvider>
             <ThemeProvider theme={theme}>
               <CSSReset />
               <Component {...pageProps} />
             </ThemeProvider>
           </ChakraProvider>
-        </>
-      ) : (
-        <>
-          <ChakraProvider>
-            <ThemeProvider theme={theme}>
-              {<LoginPage {...pageProps} />}
-            </ThemeProvider>
-          </ChakraProvider>
-        </>
-      )}
+        </ChatProvider>
+      </SocketProvider>
     </>
   );
 }

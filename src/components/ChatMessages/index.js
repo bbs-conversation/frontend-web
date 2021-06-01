@@ -6,23 +6,38 @@ import { useRouter } from 'next/router';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, db } from '../../config/firebase';
+import { useChatStateValue } from '../../context/providers/ChatProvider';
 
 const ChatMessages = () => {
-console.log(`Loading messages`);
   const router = useRouter();
   const [user] = useAuthState(auth);
-  const query = db
-    .collection(`chatRooms/${router.query.id}/messages`)
-    .orderBy('createdAt', 'desc')
-    .limit(50);
-  const [messages, loading, error] = useCollection(query);
+  // user.getIdToken(true).then(token => {
+  //   fetch(`${process.env.NEXT_PUBLIC_API_URI}/api/chats`, {
+  //     method: 'GET',
+  //     headers: {
+  //       authorization: token,
+  //     },
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       if (data.code === 200) {
+  //         setPreviousMessage
+  //       }
+  //     });
+  // }).catch(e => console.error(e))
+  const [{ messages }] = useChatStateValue();
+  // const query = db
+  //   .collection(`chatRooms/${router.query.id}/messages`)
+  //   .orderBy('createdAt', 'desc')
+  //   .limit(50);
+  // const [messages, loading, error] = useCollection(query);
   const messagesEndRef = useRef(null);
 
-  useEffect(() => {
-    if (error) {
-      console.error(error);
-    }
-  }, [error]);
+  // useEffect(() => {
+  //   if (error) {
+  //     console.error(error);
+  //   }
+  // }, [error]);
 
   const scrollToBottom = () => {
     messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -32,14 +47,14 @@ console.log(`Loading messages`);
   return (
     <>
       <ChatMessagesWrapper overflowY={'scroll'} height={'68vh'} pr={2}>
-        {!loading && error && (
+        {/* {!loading && error && (
           <>
             <Text color='red'>
               Sorry there was a problem loading the messages
             </Text>
           </>
-        )}
-        {!error && loading && (
+        )} */}
+        {/* {!error && loading && (
           <>
             <Skeleton height={'40px'} />
             <Skeleton height={'40px'} />
@@ -47,19 +62,23 @@ console.log(`Loading messages`);
             <Skeleton height={'40px'} />
             <Skeleton height={'40px'} />
           </>
-        )}
+        )} */}
         {messages &&
-          messages.docs
-            .reverse()
-            .map((m) => (
-              <ChatMessage
-                type={m.data().fromUser === user.uid ? 'fromUser' : 'toUser'}
-                message={m.data().message}
-                name={m.data().fromUserName}
-                time={m.data().time}
-                key={m.id}
-              />
-            ))}
+          messages.map((m) => (
+            <ChatMessage
+              type={
+                m.sender
+                  ? m.sender === user.uid
+                    ? 'fromUser'
+                    : 'toUser'
+                  : 'fromServer'
+              }
+              message={m.message}
+              name={m.senderName}
+              time={m.time}
+              key={m.id}
+            />
+          ))}
         <div ref={messagesEndRef} />
       </ChatMessagesWrapper>
     </>

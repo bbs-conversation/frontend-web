@@ -15,6 +15,7 @@ import {
 import { GiMeditation } from 'react-icons/gi';
 import { FaBook } from 'react-icons/fa';
 import dynamic from 'next/dynamic';
+import useListenToSocket from '../hooks/useListenToSocket';
 const HomePage = () => {
   const NavigationBlock = dynamic(
     () => import('../components/NavigationBlock'),
@@ -49,6 +50,8 @@ const HomePage = () => {
   const [user] = useAuthState(auth);
 
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
+
+  useListenToSocket(true);
 
   return (
     <>

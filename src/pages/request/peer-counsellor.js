@@ -15,12 +15,14 @@ import { auth, db, dbCurrentTime } from '../../config/firebase';
 import { toast, ToastContainer } from 'react-toastify';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import router from 'next/router';
+import useListenToSocket from '../../hooks/useListenToSocket';
 
 const PeerCounsellorAppointment = () => {
   const [loadSessions, setLoadSessions] = useState(false);
   const [sessionName, setSessionName] = useState('');
   const [slot, setSlot] = useState('');
   const [teacher, setTeacher] = useState('');
+  useListenToSocket(true);
 
   const query = db
     .collection('counsellors')

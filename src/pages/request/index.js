@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import Link from 'next/link';
 import React from 'react';
+import useListenToSocket from '../../hooks/useListenToSocket';
 const RequestPage = () => {
   const Header = dynamic(() => import('../../components/Header'), {
     ssr: false,
@@ -11,6 +12,9 @@ const RequestPage = () => {
   const RequestBlock = dynamic(() => import('../../components/RequestBlock'), {
     ssr: false,
   });
+
+  useListenToSocket(true);
+
   return (
     <>
       <Head>
