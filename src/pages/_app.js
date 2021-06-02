@@ -31,6 +31,7 @@ function MyApp({ Component, pageProps }) {
     } else {
       router.push(`/redirect?path=${router.asPath}`);
     }
+    if (!loading) console.log(user.uid);
   }, [loading, user, error]);
   useEffect(() => {
     window.addEventListener('offline', () => {

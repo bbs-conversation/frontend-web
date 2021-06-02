@@ -8,15 +8,17 @@ import {
   useMediaQuery,
 } from '@chakra-ui/react';
 import Head from 'next/head';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import ChatSection from '../components/ChatSection';
 import dynamic from 'next/dynamic';
 import useListenToSocket from '../hooks/useListenToSocket';
+import { useSocket } from '../context/providers/SocketProvider';
+import { auth } from '../config/firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useRouter } from 'next/router';
+import Header from '../components/Header';
 const CounsellorChat = () => {
-  const Header = dynamic(() => import('../components/Header'), {
-    ssr: false,
-  });
   const [saveChatHistory, setSaveChatHistory] = useState(true);
   const handleSaveChatHistoryToggle = (e) => {
     e.preventDefault();
@@ -25,6 +27,16 @@ const CounsellorChat = () => {
   };
   const [isLargerThan576] = useMediaQuery('(min-width: 576px)');
   useListenToSocket(true);
+  const router = useRouter();
+
+  const socket = useSocket();
+  const [user] = useAuthState(auth);
+  useEffect(() => {
+    if (socket == null) return;
+    if (!user) return;
+    if (!router.query.id) return;
+    socket.emit('chat-with', { user: router.query.id });
+  }, [socket, user, router.query.id]);
   return (
     <>
       <Head>

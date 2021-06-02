@@ -2,15 +2,10 @@ import { Box, Text, useColorModeValue } from '@chakra-ui/react';
 import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
-import { useSocket } from '../../context/providers/SocketProvider';
 
 const ChatUser = ({ name, role, id, setChatSidebarOpen }) => {
   const textColor = useColorModeValue('gray.900', 'gray.900');
-  const socket = useSocket();
-  const handleClick = () => {
-    setChatSidebarOpen();
-    socket.emit('chat-with', { user: id });
-  };
+
   return (
     <Link href={`/counsellor-chat?id=${id}&name=${name}`}>
       <BoxWrapper
@@ -22,7 +17,7 @@ const ChatUser = ({ name, role, id, setChatSidebarOpen }) => {
         marginBottom={2}
         boxShadow={'md'}
         p={2}
-        onClick={handleClick}
+        onClick={setChatSidebarOpen}
       >
         <Text fontSize={'md'} alignSelf='end' color={textColor}>
           {name}

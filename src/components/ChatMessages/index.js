@@ -1,5 +1,5 @@
-import { Skeleton, Text, VStack } from '@chakra-ui/react';
-import React, { useEffect, useRef } from 'react';
+import { Skeleton, Spinner, Text, VStack } from '@chakra-ui/react';
+import React, { useEffect, useRef, useState } from 'react';
 import ChatMessage from './ChatMessage';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
@@ -11,20 +11,49 @@ import { useChatStateValue } from '../../context/providers/ChatProvider';
 const ChatMessages = () => {
   const router = useRouter();
   const [user] = useAuthState(auth);
-  // user.getIdToken(true).then(token => {
-  //   fetch(`${process.env.NEXT_PUBLIC_API_URI}/api/chats`, {
-  //     method: 'GET',
-  //     headers: {
-  //       authorization: token,
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       if (data.code === 200) {
-  //         setPreviousMessage
-  //       }
-  //     });
-  // }).catch(e => console.error(e))
+  const [previousMessages, setPreviousMessages] = useState([]);
+  const [previousMessagesError, setPreviousMessagesError] = useState('');
+  const [previousMessagesLoading, setPreviousMessagesLoading] = useState(false);
+  useEffect(() => {
+    if (!user) return;
+    if (!router.query.id) return;
+    setPreviousMessagesLoading(true);
+    user
+      .getIdToken(true)
+      .then((token) => {
+        fetch(
+          `${process.env.NEXT_PUBLIC_API_URI}/api/chats?user=${router.query.id}`,
+          {
+            method: 'GET',
+            headers: {
+              authorization: token,
+            },
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.code === 200) {
+              setPreviousMessages(data.message.messages);
+              setPreviousMessagesError('');
+              console.log(data.message.messages);
+            }
+            if (data.code === 404) {
+              setPreviousMessagesError('No messages found');
+              setPreviousMessages([]);
+            }
+            if (data.code === 400 || data.code === 401) {
+              setPreviousMessagesError(data.message);
+              setPreviousMessages([]);
+            }
+          });
+      })
+      .catch((e) => {
+        setPreviousMessages([]);
+        setPreviousMessagesError('Error getting chat history 500');
+        console.error(e);
+      })
+      .finally(() => setPreviousMessagesLoading(false));
+  }, [user, process.env.NEXT_PUBLIC_API_URI, router.query.id]);
   const [{ messages }] = useChatStateValue();
   // const query = db
   //   .collection(`chatRooms/${router.query.id}/messages`)
@@ -43,26 +72,42 @@ const ChatMessages = () => {
     messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
-  useEffect(scrollToBottom, [router.query.id, messages]);
+  useEffect(scrollToBottom, [router.query.id, messages, previousMessages]);
   return (
     <>
       <ChatMessagesWrapper overflowY={'scroll'} height={'68vh'} pr={2}>
-        {/* {!loading && error && (
+        {!previousMessagesLoading && previousMessagesError !== '' && (
           <>
-            <Text color='red'>
-              Sorry there was a problem loading the messages
-            </Text>
+            <Text color='red'>{previousMessagesError}</Text>
           </>
-        )} */}
-        {/* {!error && loading && (
+        )}
+        {previousMessagesLoading && (
           <>
+            {/* <Skeleton height={'40px'} />
             <Skeleton height={'40px'} />
             <Skeleton height={'40px'} />
             <Skeleton height={'40px'} />
-            <Skeleton height={'40px'} />
-            <Skeleton height={'40px'} />
+            <Skeleton height={'40px'} /> */}
+
+            <Spinner />
           </>
-        )} */}
+        )}
+        {previousMessages !== [] &&
+          previousMessages.map((m) => (
+            <ChatMessage
+              type={
+                m.sender
+                  ? m.sender === user.uid
+                    ? 'fromUser'
+                    : 'toUser'
+                  : 'fromServer'
+              }
+              message={m.message}
+              name={m.senderName}
+              time={m.time}
+              key={m.id}
+            />
+          ))}
         {messages &&
           messages.map((m) => (
             <ChatMessage

@@ -27,6 +27,7 @@ const useListenToSocket = (hasToastForMessage) => {
         type: 'ADD_TO_MESSAGES',
         message: message,
       });
+      console.log(message);
       if (hasToastForMessage) {
         showMessage();
       }
