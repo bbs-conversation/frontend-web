@@ -1,5 +1,3 @@
-import React, { useState } from 'react';
-import Head from 'next/head';
 import {
   Button,
   Container,
@@ -8,11 +6,13 @@ import {
   useMediaQuery,
   VStack,
 } from '@chakra-ui/react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, db, microsoftAuth } from '../../config/firebase';
-import { FaMicrosoft } from 'react-icons/fa';
-import { BiErrorCircle } from 'react-icons/bi';
 import dynamic from 'next/dynamic';
+import Head from 'next/head';
+import React, { useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { BiErrorCircle } from 'react-icons/bi';
+import { FaMicrosoft } from 'react-icons/fa';
+import { auth, db, microsoftAuth } from '../../config/firebase';
 
 const LoginPage = () => {
   const Header = dynamic(() => import('../Header'), {

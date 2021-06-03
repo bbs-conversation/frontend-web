@@ -1,12 +1,10 @@
-import { Skeleton, Spinner, Text, VStack } from '@chakra-ui/react';
+import { Spinner, Text, VStack } from '@chakra-ui/react';
 import React, { useEffect, useRef, useState } from 'react';
 import ChatMessage from './ChatMessage';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
-import { useCollection } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, db } from '../../config/firebase';
-import { useChatStateValue } from '../../context/providers/ChatProvider';
+import { auth } from '../../config/firebase';
 
 const ChatMessages = ({ messages }) => {
   const router = useRouter();
@@ -54,6 +52,10 @@ const ChatMessages = ({ messages }) => {
         setPreviousMessagesLoading(false);
       });
   }, [user, process.env.NEXT_PUBLIC_API_URI, router.query.id]);
+
+  useEffect(() => {
+    setPreviousMessages([]);
+  }, [router.query.id]);
 
   const messagesEndRef = useRef(null);
 

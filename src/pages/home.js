@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { Container, Skeleton, Text, useMediaQuery } from '@chakra-ui/react';
 import Head from 'next/head';
-import { Container, useMediaQuery } from '@chakra-ui/react';
-import { Text } from '@chakra-ui/react';
-import { Skeleton } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../config/firebase';
 import Header from '../components/Header';
-import useListenToSocket from '../hooks/useListenToSocket';
 import NavigationGrid from '../components/NavigationGrid';
+import { auth } from '../config/firebase';
+import useListenToSocket from '../hooks/useListenToSocket';
 const HomePage = () => {
   useEffect(() => {
     fetch('https://quotes.rest/qod', {

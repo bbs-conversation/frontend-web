@@ -1,9 +1,9 @@
 import { Grid, Skeleton, Text } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
-import ChatUser from '../Chatuser';
-import { auth, db } from '../../config/firebase';
-import { useCollection } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { useCollection } from 'react-firebase-hooks/firestore';
+import { auth, db } from '../../config/firebase';
+import ChatUser from '../Chatuser';
 
 const ChatSidebar = React.memo(({ onClose }) => {
   const [user] = useAuthState(auth);

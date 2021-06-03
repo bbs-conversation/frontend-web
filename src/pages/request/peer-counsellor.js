@@ -8,13 +8,13 @@ import {
   Text,
 } from '@chakra-ui/react';
 import Head from 'next/head';
-import React, { useEffect, useState } from 'react';
-import Header from '../../components/Header';
-import { useCollection } from 'react-firebase-hooks/firestore';
-import { auth, db, dbCurrentTime } from '../../config/firebase';
-import { toast, ToastContainer } from 'react-toastify';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import router from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useCollection } from 'react-firebase-hooks/firestore';
+import { toast } from 'react-toastify';
+import Header from '../../components/Header';
+import { auth, db, dbCurrentTime } from '../../config/firebase';
 import useListenToSocket from '../../hooks/useListenToSocket';
 
 const PeerCounsellorAppointment = () => {

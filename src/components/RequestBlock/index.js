@@ -1,7 +1,7 @@
 import { Flex, Text, useMediaQuery, VStack } from '@chakra-ui/react';
-import styled from 'styled-components';
-import React from 'react';
 import Link from 'next/link';
+import React from 'react';
+import styled from 'styled-components';
 
 const RequestBlock = ({ forEvent, from, url }) => {
   const [isLargerThan576] = useMediaQuery('(min-width: 576px)');

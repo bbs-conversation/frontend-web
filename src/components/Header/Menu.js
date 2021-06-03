@@ -1,23 +1,19 @@
-import React from 'react';
 import {
-  IconButton,
-  VStack,
-  useColorModeValue,
-  DrawerOverlay,
   Drawer,
+  DrawerBody,
   DrawerContent,
   DrawerHeader,
-  DrawerBody,
-  Grid,
+  DrawerOverlay,
   Flex,
-  Text,
+  Grid,
+  IconButton,
+  Link as ChakraLink,
   Spacer,
+  Text,
 } from '@chakra-ui/react';
-import { Box } from '@chakra-ui/react';
-import { Link as ChakraLink } from '@chakra-ui/react';
-import { VscChromeClose } from 'react-icons/vsc';
-
 import Link from 'next/link';
+import React from 'react';
+import { VscChromeClose } from 'react-icons/vsc';
 
 const Menu = ({ onClose, isOpen }) => {
   return (

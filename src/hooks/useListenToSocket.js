@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
-import { useChatStateValue } from '../context/providers/ChatProvider';
-import { useSocket } from '../context/providers/SocketProvider';
+import { useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../config/firebase';
 import { toast } from 'react-toastify';
+import { auth } from '../config/firebase';
+import { useSocket } from '../context/providers/SocketProvider';
 
 const useListenToSocket = (hasToastForMessage, setMessages, messages) => {
   const [user] = useAuthState(auth);

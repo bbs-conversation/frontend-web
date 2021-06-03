@@ -12,12 +12,12 @@ import {
   Tooltip,
   useMediaQuery,
 } from '@chakra-ui/react';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { auth, db, dbTimestamp } from '../config/firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import dynamic from 'next/dynamic';
 import useListenToSocket from '../hooks/useListenToSocket';
 
 const AppointmentPage = () => {

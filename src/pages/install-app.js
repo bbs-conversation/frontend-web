@@ -1,7 +1,7 @@
+import { Button, Container } from '@chakra-ui/react';
+import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
-import Head from 'next/head';
-import { Button, Container } from '@chakra-ui/react';
 
 const InstallApp = () => {
   const [supportsPWA, setSupportsPWA] = useState(false);

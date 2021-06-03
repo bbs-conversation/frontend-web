@@ -1,21 +1,23 @@
-import { ChakraProvider, CSSReset, theme } from '@chakra-ui/react';
-import { ThemeProvider } from '@chakra-ui/react';
-// import theme from '../config/chakraTheme';
-import { auth } from '../config/firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import LoginPage from '../components/Login';
-import GlobalStyles from '../config/globalStyles';
-import { useEffect } from 'react';
+import {
+  ChakraProvider,
+  CSSReset,
+  theme,
+  ThemeProvider,
+} from '@chakra-ui/react';
 import Router, { useRouter } from 'next/router';
-
 import NProgress from 'nprogress'; //nprogress module
 import 'nprogress/nprogress.css'; //styles of nprogress
+import { useEffect } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import useListenToSocket from '../hooks/useListenToSocket';
+// import theme from '../config/chakraTheme';
+import { auth } from '../config/firebase';
+import GlobalStyles from '../config/globalStyles';
+import { ChatProvider } from '../context/providers/ChatProvider';
 import { SocketProvider } from '../context/providers/SocketProvider';
 import chatReducer, { chatInitialState } from '../context/reducers/chatReducer';
-import { ChatProvider } from '../context/providers/ChatProvider';
+
 function MyApp({ Component, pageProps }) {
   const [user, loading, error] = useAuthState(auth);
   const router = useRouter();

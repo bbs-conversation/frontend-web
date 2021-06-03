@@ -4,11 +4,8 @@ import React, { useState } from 'react';
 import { IoSend } from 'react-icons/io5';
 import styled from 'styled-components';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import firebase from 'firebase/app';
 import 'firebase/firestore';
-import { auth, db } from '../../config/firebase';
-import { ToastContainer, toast } from 'react-toastify';
-import { useChatStateValue } from '../../context/providers/ChatProvider';
+import { auth } from '../../config/firebase';
 import { useSocket } from '../../context/providers/SocketProvider';
 
 const Chatbox = ({ messages, setMessages }) => {
@@ -17,16 +14,16 @@ const Chatbox = ({ messages, setMessages }) => {
   const router = useRouter();
   const { id } = router.query;
   const socket = useSocket();
-  const showError = () =>
-    toast.error("Couldn't send message", {
-      position: 'top-right',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+  // const showError = () =>
+  //   toast.error("Couldn't send message", {
+  //     position: 'top-right',
+  //     autoClose: 3000,
+  //     hideProgressBar: false,
+  //     closeOnClick: true,
+  //     pauseOnHover: true,
+  //     draggable: true,
+  //     progress: undefined,
+  //   });
   const handleSendMessage = (e) => {
     e.preventDefault();
 

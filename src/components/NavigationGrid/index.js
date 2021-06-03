@@ -1,14 +1,14 @@
 import { Grid } from '@chakra-ui/react';
 import React from 'react';
-import NavigationBlock from '../NavigationBlock';
-import { BsChatDots } from 'react-icons/bs';
 import {
-  AiOutlineSchedule,
   AiOutlineQuestion,
+  AiOutlineSchedule,
   AiOutlineVideoCamera,
 } from 'react-icons/ai';
-import { GiMeditation } from 'react-icons/gi';
+import { BsChatDots } from 'react-icons/bs';
 import { FaBook } from 'react-icons/fa';
+import { GiMeditation } from 'react-icons/gi';
+import NavigationBlock from '../NavigationBlock';
 
 const NavigationGrid = () => {
   return (

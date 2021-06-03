@@ -8,16 +8,14 @@ import {
   useMediaQuery,
 } from '@chakra-ui/react';
 import Head from 'next/head';
-import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import ChatSection from '../components/ChatSection';
-import dynamic from 'next/dynamic';
-import useListenToSocket from '../hooks/useListenToSocket';
-import { useSocket } from '../context/providers/SocketProvider';
-import { auth } from '../config/firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import ChatSection from '../components/ChatSection';
 import Header from '../components/Header';
+import { auth } from '../config/firebase';
+import { useSocket } from '../context/providers/SocketProvider';
 const CounsellorChat = () => {
   const [saveChatHistory, setSaveChatHistory] = useState(true);
   const handleSaveChatHistoryToggle = (e) => {

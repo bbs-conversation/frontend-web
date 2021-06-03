@@ -1,12 +1,5 @@
-import {
-  Box,
-  Flex,
-  Grid,
-  GridItem,
-  Text,
-  useMediaQuery,
-} from '@chakra-ui/react';
-import React, { useEffect } from 'react';
+import { Flex, Grid, GridItem, Text, useMediaQuery } from '@chakra-ui/react';
+import React from 'react';
 
 const EventList = ({ name, startTime, endTime }) => {
   const start = startTime.toDate();

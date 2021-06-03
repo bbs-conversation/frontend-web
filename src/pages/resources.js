@@ -6,11 +6,11 @@ import {
   useMediaQuery,
   VStack,
 } from '@chakra-ui/react';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../config/firebase';
-import dynamic from 'next/dynamic';
 import useListenToSocket from '../hooks/useListenToSocket';
 
 const AppointmentPage = () => {

@@ -1,24 +1,20 @@
 import {
   Container,
-  Flex,
   Grid,
   GridItem,
-  IconButton,
   Text,
-  useColorModeValue,
   useDisclosure,
   useMediaQuery,
 } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
-import { IoClose, IoMenu } from 'react-icons/io5';
-import ChatSidebar from '../ChatSidebar';
 import dynamic from 'next/dynamic';
-import styled from 'styled-components';
 import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import useListenToSocket from '../../hooks/useListenToSocket';
 import ChatMessages from '../ChatMessages';
 import ChatSectionHeader from '../ChatSectionHeader';
 import MobileSidebar from '../ChatSectionHeader/MobileSidebar';
-import useListenToSocket from '../../hooks/useListenToSocket';
+import ChatSidebar from '../ChatSidebar';
 
 const ChatSection = React.memo(() => {
   const [isLargerThan992] = useMediaQuery('(min-width: 992px)');

@@ -1,22 +1,24 @@
-import React, { useState } from 'react';
 import {
+  Box,
+  Container,
+  Flex,
+  IconButton,
+  Spacer,
   Text,
   useColorMode,
   useColorModeValue,
   useDisclosure,
   useMediaQuery,
 } from '@chakra-ui/react';
-import { Flex, Spacer, Box } from '@chakra-ui/react';
-import { IconButton } from '@chakra-ui/react';
-import { Container } from '@chakra-ui/react';
-import Menu from './Menu';
-import { IoMenu } from 'react-icons/io5';
+import Link from 'next/link';
+import React, { useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { BiUserCircle } from 'react-icons/bi';
 import { BsMoon } from 'react-icons/bs';
 import { FiSun } from 'react-icons/fi';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { IoMenu } from 'react-icons/io5';
 import { auth } from '../../config/firebase';
-import { BiUserCircle } from 'react-icons/bi';
-import Link from 'next/link';
+import Menu from './Menu';
 
 const Header = ({ appName, withNav }) => {
   const [menuOpen, setMenuOpen] = useState(false);

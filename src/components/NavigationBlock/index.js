@@ -1,15 +1,15 @@
-import React from 'react';
 import {
   Box,
+  Flex,
+  Icon,
+  Spacer,
   Text,
   useColorModeValue,
-  Flex,
-  Spacer,
-  Icon,
 } from '@chakra-ui/react';
+import Link from 'next/link';
+import React from 'react';
 import { BsArrowRightShort as BsArrowRight } from 'react-icons/bs';
 import styled from 'styled-components';
-import Link from 'next/link';
 
 const NavigationBlock = ({ title, linkDescription, link, icon, iconSize }) => {
   const textHeadingColor = useColorModeValue('black', 'gray.900');

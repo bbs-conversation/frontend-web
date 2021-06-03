@@ -1,7 +1,6 @@
 import { Container, Text, VStack } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import Link from 'next/link';
 import React from 'react';
 import useListenToSocket from '../../hooks/useListenToSocket';
 const RequestPage = () => {

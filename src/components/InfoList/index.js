@@ -1,6 +1,6 @@
 import { Flex, Text, Tooltip, useMediaQuery, VStack } from '@chakra-ui/react';
-import styled from 'styled-components';
 import React from 'react';
+import styled from 'styled-components';
 
 const InfoList = ({ link, text, createdAt }) => {
   const [isLargerThan576] = useMediaQuery('(min-width: 576px)');
