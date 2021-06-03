@@ -5,7 +5,7 @@ import { Button, Container } from '@chakra-ui/react';
 
 const InstallApp = () => {
   let defferedPrompt;
-  const [showInstallBtn, setShowInstallBtn] = useState(false);
+  const [showInstallBtn, setShowInstallBtn] = useState(true);
   const hideInstallPromotion = () => {
     setShowInstallBtn(false);
   };
