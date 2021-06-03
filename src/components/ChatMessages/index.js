@@ -8,7 +8,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, db } from '../../config/firebase';
 import { useChatStateValue } from '../../context/providers/ChatProvider';
 
-const ChatMessages = () => {
+const ChatMessages = ({ messages }) => {
   const router = useRouter();
   const [user] = useAuthState(auth);
   const [previousMessages, setPreviousMessages] = useState([]);
@@ -45,21 +45,17 @@ const ChatMessages = () => {
               setPreviousMessagesError(data.message);
               setPreviousMessages([]);
             }
+            setPreviousMessagesLoading(false);
           });
       })
       .catch((e) => {
         setPreviousMessages([]);
         setPreviousMessagesError('Error getting chat history 500');
         console.error(e);
-      })
-      .finally(() => setPreviousMessagesLoading(false));
+        setPreviousMessagesLoading(false);
+      });
   }, [user, process.env.NEXT_PUBLIC_API_URI, router.query.id]);
-  const [{ messages }] = useChatStateValue();
-  // const query = db
-  //   .collection(`chatRooms/${router.query.id}/messages`)
-  //   .orderBy('createdAt', 'desc')
-  //   .limit(50);
-  // const [messages, loading, error] = useCollection(query);
+
   const messagesEndRef = useRef(null);
 
   // useEffect(() => {
@@ -69,7 +65,7 @@ const ChatMessages = () => {
   // }, [error]);
 
   const scrollToBottom = () => {
-    messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current.scrollIntoView();
   };
 
   useEffect(scrollToBottom, [router.query.id, messages, previousMessages]);
@@ -83,12 +79,6 @@ const ChatMessages = () => {
         )}
         {previousMessagesLoading && (
           <>
-            {/* <Skeleton height={'40px'} />
-            <Skeleton height={'40px'} />
-            <Skeleton height={'40px'} />
-            <Skeleton height={'40px'} />
-            <Skeleton height={'40px'} /> */}
-
             <Spinner />
           </>
         )}
@@ -108,7 +98,8 @@ const ChatMessages = () => {
               key={m.id}
             />
           ))}
-        {messages &&
+        {!previousMessagesLoading &&
+          messages &&
           messages.map((m) => (
             <ChatMessage
               type={

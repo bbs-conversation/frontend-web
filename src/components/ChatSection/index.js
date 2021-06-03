@@ -9,7 +9,7 @@ import {
   useDisclosure,
   useMediaQuery,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoClose, IoMenu } from 'react-icons/io5';
 import ChatSidebar from '../ChatSidebar';
 import dynamic from 'next/dynamic';
@@ -18,18 +18,27 @@ import { useRouter } from 'next/router';
 import ChatMessages from '../ChatMessages';
 import ChatSectionHeader from '../ChatSectionHeader';
 import MobileSidebar from '../ChatSectionHeader/MobileSidebar';
+import useListenToSocket from '../../hooks/useListenToSocket';
 
 const ChatSection = React.memo(() => {
   const [isLargerThan992] = useMediaQuery('(min-width: 992px)');
-  const [chatSidebarOpen, setChatSidebarOpen] = useState(false);
   const router = useRouter();
   const { id } = router.query;
-  const sideBarColor = useColorModeValue('white', 'gray.600');
   const { onClose, onOpen, isOpen } = useDisclosure();
+  const [messages, setMessages] = useState([]);
 
   const Chatbox = dynamic(() => import('../Chatbox'), {
     ssr: false,
   });
+  const ifToast = () => {
+    if (!id || id === undefined) return true;
+    if (id) return false;
+  };
+  useListenToSocket(ifToast(), setMessages, messages);
+
+  useEffect(() => {
+    console.log(id);
+  }, [id]);
   return (
     <Container maxW='container.xl' p={0}>
       <Grid
@@ -60,10 +69,10 @@ const ChatSection = React.memo(() => {
         {id ? (
           <>
             <GridItem rowSpan={10} colSpan={isLargerThan992 ? 4 : 5}>
-              <ChatMessages />
+              <ChatMessages messages={messages} />
             </GridItem>
             <GridItem rowSpan={1} colSpan={isLargerThan992 ? 4 : 5}>
-              <Chatbox />
+              <Chatbox setMessages={setMessages} messages={messages} />
             </GridItem>
           </>
         ) : (

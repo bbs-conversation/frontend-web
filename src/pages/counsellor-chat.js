@@ -26,7 +26,7 @@ const CounsellorChat = () => {
     console.log(saveChatHistory);
   };
   const [isLargerThan576] = useMediaQuery('(min-width: 576px)');
-  useListenToSocket(true);
+
   const router = useRouter();
 
   const socket = useSocket();

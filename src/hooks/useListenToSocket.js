@@ -5,8 +5,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../config/firebase';
 import { toast } from 'react-toastify';
 
-const useListenToSocket = (hasToastForMessage) => {
-  const [{ messages }, dispatch] = useChatStateValue();
+const useListenToSocket = (hasToastForMessage, setMessages, messages) => {
   const [user] = useAuthState(auth);
   const socket = useSocket();
   useEffect(() => {
@@ -23,10 +22,9 @@ const useListenToSocket = (hasToastForMessage) => {
         pauseOnFocusLoss: true,
       });
     const messageListener = (message) => {
-      dispatch({
-        type: 'ADD_TO_MESSAGES',
-        message: message,
-      });
+      if (setMessages && messages) {
+        setMessages(messages.concat(message));
+      }
       console.log(message);
       if (hasToastForMessage) {
         showMessage();
@@ -35,7 +33,7 @@ const useListenToSocket = (hasToastForMessage) => {
     socket.on('message', messageListener);
 
     return () => socket.off('message', messageListener);
-  }, [socket, dispatch, user]);
+  }, [socket, user]);
 
   useEffect(() => {
     if (!user) return;
@@ -44,10 +42,9 @@ const useListenToSocket = (hasToastForMessage) => {
 
     socket.on('connect_error', (message) => {
       if (message.type != 'TransportError') {
-        dispatch({
-          type: 'ADD_TO_MESSAGES',
-          message: message,
-        });
+        if (setMessages && messages) {
+          setMessages(messages.concat(message));
+        }
         toast({
           title: 'Error',
           description: "Couldn't connect to the server",
@@ -60,7 +57,7 @@ const useListenToSocket = (hasToastForMessage) => {
     });
 
     return () => socket.off('connect_error');
-  }, [socket, dispatch, user]);
+  }, [socket, user]);
 
   return;
 };

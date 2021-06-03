@@ -11,13 +11,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useChatStateValue } from '../../context/providers/ChatProvider';
 import { useSocket } from '../../context/providers/SocketProvider';
 
-const Chatbox = () => {
+const Chatbox = ({ messages, setMessages }) => {
   const [message, setMessage] = useState('');
   const [user] = useAuthState(auth);
   const router = useRouter();
   const { id } = router.query;
   const socket = useSocket();
-  const [{ messages }, dispatch] = useChatStateValue();
   const showError = () =>
     toast.error("Couldn't send message", {
       position: 'top-right',
@@ -30,16 +29,17 @@ const Chatbox = () => {
     });
   const handleSendMessage = (e) => {
     e.preventDefault();
-    dispatch({
-      type: 'ADD_TO_MESSAGES',
-      message: {
-        message: message,
-        time: new Date(),
-        senderName: user.displayName,
-        sender: user.uid,
-        recipient: id,
-      },
-    });
+
+    const newMessage = {
+      message: message,
+      time: new Date(),
+      senderName: user.displayName,
+      sender: user.uid,
+      recipient: id,
+    };
+
+    setMessages(messages.concat(newMessage));
+
     socket.emit('send-message', {
       message,
     });

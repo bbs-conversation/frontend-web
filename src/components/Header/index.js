@@ -24,7 +24,7 @@ const Header = ({ appName, withNav }) => {
   const headerBgColor = useColorModeValue('white', '#1A202C');
   const [user] = useAuthState(auth);
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
-   const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
@@ -36,7 +36,7 @@ const Header = ({ appName, withNav }) => {
       >
         <Flex>
           <Box p='2'>
-            <Link href='/'>
+            <Link href='/home'>
               <Text
                 fontWeight='bold'
                 fontSize={isLargerThan768 ? '3xl' : '2xl'}
@@ -78,8 +78,7 @@ const Header = ({ appName, withNav }) => {
             </>
           )}
 
-              <Menu onClose={onClose} isOpen={isOpen}/>
-           
+          <Menu onClose={onClose} isOpen={isOpen} />
         </Flex>
       </Container>
     </>
