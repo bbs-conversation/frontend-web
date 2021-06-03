@@ -24,14 +24,17 @@ function MyApp({ Component, pageProps }) {
   Router.events.on('routeChangeComplete', () => NProgress.done());
   Router.events.on('routeChangeError', () => NProgress.done());
   useEffect(() => {
-    if (router.asPath === '/redirect' || router.asPath === '/') {
+    if (
+      router.asPath === '/redirect' ||
+      router.asPath === '/' ||
+      router.asPath === '/install-app'
+    ) {
       return;
     } else if ((!loading && !user) || router.asPath === '/login') {
       router.push('/redirect');
     } else {
       router.push(`/redirect?path=${router.asPath}`);
     }
-    if (!loading) console.log(user.uid);
   }, [loading, user, error]);
   useEffect(() => {
     window.addEventListener('offline', () => {

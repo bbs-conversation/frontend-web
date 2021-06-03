@@ -74,8 +74,6 @@ const GroupSession = () => {
         });
         console.error(e);
       });
-
-    console.log(formData);
   };
   const showError = () =>
     toast.error("Couldn't load data", {

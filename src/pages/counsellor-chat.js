@@ -23,7 +23,6 @@ const CounsellorChat = () => {
   const handleSaveChatHistoryToggle = (e) => {
     e.preventDefault();
     setSaveChatHistory(e.target.checked);
-    console.log(saveChatHistory);
   };
   const [isLargerThan576] = useMediaQuery('(min-width: 576px)');
 

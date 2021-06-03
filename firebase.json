@@ -6,6 +6,7 @@
   "hosting": {
     "site": "bbs-conversations-students",
     "public": "build",
+    "cleanUrls": true,
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
   },
   "storage": {

@@ -4,48 +4,31 @@ import Head from 'next/head';
 import { Button, Container } from '@chakra-ui/react';
 
 const InstallApp = () => {
-  let defferedPrompt;
-  const [showInstallBtn, setShowInstallBtn] = useState(true);
-  const hideInstallPromotion = () => {
-    setShowInstallBtn(false);
-  };
-  const showInstallPromotion = () => {
-    setShowInstallBtn(true);
-  };
-  useEffect(() => {
-    window.addEventListener('appinstalled', () => {
-      // Hide the app-provided install promotion
-      hideInstallPromotion();
-      // Clear the deferredPrompt so it can be garbage collected
-      deferredPrompt = null;
-      // Optionally, send analytics event to indicate successful install
-      console.log('PWA was installed');
-    });
+  const [supportsPWA, setSupportsPWA] = useState(false);
+  const [promptInstall, setPromptInstall] = useState(null);
 
-    window.addEventListener('beforeinstallprompt', (e) => {
-      // Prevent the mini-infobar from appearing on mobile
+  useEffect(() => {
+    const handler = (e) => {
       e.preventDefault();
-      // Stash the event so it can be triggered later.
-      deferredPrompt = e;
-      // Update UI notify the user they can install the PWA
-      showInstallPromotion();
-      // Optionally, send analytics event that PWA install promo was shown.
-      console.log(`'beforeinstallprompt' event was fired.`);
-    });
+      setSupportsPWA(true);
+      setPromptInstall(e);
+    };
+    window.addEventListener('beforeinstallprompt', handler);
+
+    return () => window.removeEventListener('transitionend', handler);
   }, []);
 
-  const installPWA = async () => {
-    // Hide the app provided install promotion
-    hideInstallPromotion();
-    // Show the install prompt
-    deferredPrompt.prompt();
-    // Wait for the user to respond to the prompt
-    const { outcome } = await deferredPrompt.userChoice;
-    // Optionally, send analytics event with outcome of user choice
-    console.log(`User response to the install prompt: ${outcome}`);
-    // We've used the prompt, and can't use it again, throw it away
-    deferredPrompt = null;
+  const onClick = (evt) => {
+    evt.preventDefault();
+    if (!promptInstall) {
+      return;
+    }
+    promptInstall.prompt();
   };
+  if (!supportsPWA) {
+    return null;
+  }
+
   return (
     <>
       <Head>
@@ -53,11 +36,9 @@ const InstallApp = () => {
       </Head>
       <Header appName={'Conversations'} withNav={false} />
       <Container maxW='container.xl'>
-        {showInstallBtn && (
-          <Button width='100%' mt={2} onClick={installPWA}>
-            Hello
-          </Button>
-        )}
+        <Button width='100%' mt={2} onClick={onClick}>
+          Install App
+        </Button>
       </Container>
     </>
   );

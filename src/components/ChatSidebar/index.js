@@ -21,7 +21,6 @@ const ChatSidebar = React.memo(({ onClose }) => {
     if (!loading && error) {
       console.error(error);
     }
-    if (loading) console.log(`Loading`);
   }, [error, loading]);
 
   return (

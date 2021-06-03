@@ -47,9 +47,6 @@ const LoginPage = () => {
               },
               { merge: true }
             )
-            .then(() => {
-              console.log('User written to db');
-            })
             .catch((error) => {
               console.error('Error writing document: ', error);
             });

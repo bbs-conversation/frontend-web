@@ -36,9 +36,6 @@ const ChatSection = React.memo(() => {
   };
   useListenToSocket(ifToast(), setMessages, messages);
 
-  useEffect(() => {
-    console.log(id);
-  }, [id]);
   return (
     <Container maxW='container.xl' p={0}>
       <Grid

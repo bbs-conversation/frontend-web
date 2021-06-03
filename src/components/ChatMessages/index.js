@@ -35,7 +35,6 @@ const ChatMessages = ({ messages }) => {
             if (data.code === 200) {
               setPreviousMessages(data.message.messages);
               setPreviousMessagesError('');
-              console.log(data.message.messages);
             }
             if (data.code === 404) {
               setPreviousMessagesError('No messages found');

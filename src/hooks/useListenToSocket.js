@@ -25,7 +25,6 @@ const useListenToSocket = (hasToastForMessage, setMessages, messages) => {
       if (setMessages && messages) {
         setMessages(messages.concat(message));
       }
-      console.log(message);
       if (hasToastForMessage) {
         showMessage();
       }
