@@ -16,7 +16,7 @@ export function SocketProvider({ children }) {
   useEffect(() => {
     if (user) {
       user
-        .getIdToken()
+        .getIdToken(true)
         .then((token) => {
           const newSocket = io(process.env.NEXT_PUBLIC_SOCKETIO_URI, {
             reconnectionAttempts: 7,

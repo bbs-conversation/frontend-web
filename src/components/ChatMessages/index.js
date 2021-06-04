@@ -48,7 +48,7 @@ const ChatMessages = ({ messages }) => {
       })
       .catch((e) => {
         setPreviousMessages([]);
-        setPreviousMessagesError('Error getting chat history 500');
+        setPreviousMessagesError('Error getting chat history');
         console.error(e);
         setPreviousMessagesLoading(false);
       });
