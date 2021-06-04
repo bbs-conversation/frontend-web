@@ -33,12 +33,13 @@ const ChatMessages = ({ messages }) => {
             if (data.code === 200) {
               setPreviousMessages(data.message.messages);
               setPreviousMessagesError('');
-            }
-            if (data.code === 404) {
+            } else if (data.code === 404) {
               setPreviousMessagesError('No messages found');
               setPreviousMessages([]);
-            }
-            if (data.code === 400 || data.code === 401) {
+            } else if (data.code === 400 || data.code === 401) {
+              setPreviousMessagesError(data.message);
+              setPreviousMessages([]);
+            } else {
               setPreviousMessagesError(data.message);
               setPreviousMessages([]);
             }
@@ -59,12 +60,6 @@ const ChatMessages = ({ messages }) => {
 
   const messagesEndRef = useRef(null);
 
-  // useEffect(() => {
-  //   if (error) {
-  //     console.error(error);
-  //   }
-  // }, [error]);
-
   const scrollToBottom = () => {
     messagesEndRef.current.scrollIntoView();
   };
@@ -84,7 +79,7 @@ const ChatMessages = ({ messages }) => {
           </>
         )}
         {previousMessages !== [] &&
-          previousMessages.map((m) => (
+          previousMessages.map((m, i) => (
             <ChatMessage
               type={
                 m.sender
@@ -96,12 +91,12 @@ const ChatMessages = ({ messages }) => {
               message={m.message}
               name={m.senderName}
               time={m.time}
-              key={m.id}
+              key={i}
             />
           ))}
         {!previousMessagesLoading &&
           messages &&
-          messages.map((m) => (
+          messages.map((m, i) => (
             <ChatMessage
               type={
                 m.sender
@@ -113,7 +108,7 @@ const ChatMessages = ({ messages }) => {
               message={m.message}
               name={m.senderName}
               time={m.time}
-              key={m.id}
+              key={i}
             />
           ))}
         <div ref={messagesEndRef} />
