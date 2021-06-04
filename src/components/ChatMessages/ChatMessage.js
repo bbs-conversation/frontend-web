@@ -54,8 +54,8 @@ const ChatMessage = ({ message, type, name, time }) => {
               <Text>{message}</Text>
               <Text fontSize={'xs'}>By {name}</Text>
             </Box>
-            <Spacer />
           </Tooltip>
+          <Spacer />
         </Flex>
       )}
       {type === 'fromServer' && (
