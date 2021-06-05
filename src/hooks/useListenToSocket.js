@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { toast } from 'react-toastify';
@@ -7,6 +8,7 @@ import { useSocket } from '../context/providers/SocketProvider';
 const useListenToSocket = (hasToastForMessage, setMessages, messages) => {
   const [user] = useAuthState(auth);
   const socket = useSocket();
+  const router = useRouter();
   useEffect(() => {
     if (!user) return;
     if (socket == null) return;
@@ -21,17 +23,27 @@ const useListenToSocket = (hasToastForMessage, setMessages, messages) => {
         pauseOnFocusLoss: true,
       });
     const messageListener = (message) => {
-      if (setMessages && messages) {
-        setMessages((messages) => messages.concat(message));
-      }
-      if (hasToastForMessage) {
-        showMessage();
+      if (router.query.id) {
+        if (
+          router.query.id === message.recipient ||
+          message.senderName === 'Chat Bot'
+        ) {
+          if (setMessages && messages) {
+            setMessages((messages) => messages.concat(message));
+          }
+        } else {
+          showMessage();
+        }
+      } else {
+        if (hasToastForMessage) {
+          showMessage();
+        }
       }
     };
     socket.on('message', messageListener);
 
     return () => socket.off('message', messageListener);
-  }, [socket, user]);
+  }, [socket, user, router.query.id]);
 
   useEffect(() => {
     if (!user) return;
