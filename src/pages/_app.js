@@ -14,9 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 // import theme from '../config/chakraTheme';
 import { auth } from '../config/firebase';
 import GlobalStyles from '../config/globalStyles';
-import { ChatProvider } from '../context/providers/ChatProvider';
 import { SocketProvider } from '../context/providers/SocketProvider';
-import chatReducer, { chatInitialState } from '../context/reducers/chatReducer';
 
 function MyApp({ Component, pageProps }) {
   const [user, loading, error] = useAuthState(auth);
@@ -55,26 +53,24 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <SocketProvider>
-        <ChatProvider reducer={chatReducer} initialState={chatInitialState}>
-          <ToastContainer
-            autoClose={3000}
-            hideProgressBar={false}
-            newestOnTop
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-          />
-          <GlobalStyles />
+        <ToastContainer
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        <GlobalStyles />
 
-          <ChakraProvider>
-            <ThemeProvider theme={theme}>
-              <CSSReset />
-              <Component {...pageProps} />
-            </ThemeProvider>
-          </ChakraProvider>
-        </ChatProvider>
+        <ChakraProvider>
+          <ThemeProvider theme={theme}>
+            <CSSReset />
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </ChakraProvider>
       </SocketProvider>
     </>
   );

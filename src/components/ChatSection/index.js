@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import useListenToSocket from '../../hooks/useListenToSocket';
 import ChatMessages from '../ChatMessages';
@@ -22,6 +22,9 @@ const ChatSection = React.memo(() => {
   const { id } = router.query;
   const { onClose, onOpen, isOpen } = useDisclosure();
   const [messages, setMessages] = useState([]);
+  useEffect(() => {
+    setMessages([]);
+  }, [router.query.id]);
 
   const Chatbox = dynamic(() => import('../Chatbox'), {
     ssr: false,

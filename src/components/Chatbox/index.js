@@ -35,7 +35,7 @@ const Chatbox = ({ messages, setMessages }) => {
       recipient: id,
     };
 
-    setMessages(messages.concat(newMessage));
+    setMessages((messages) => messages.concat(newMessage));
 
     socket.emit('send-message', {
       message,

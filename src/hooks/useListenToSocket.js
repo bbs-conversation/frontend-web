@@ -22,7 +22,7 @@ const useListenToSocket = (hasToastForMessage, setMessages, messages) => {
       });
     const messageListener = (message) => {
       if (setMessages && messages) {
-        setMessages(messages.concat(message));
+        setMessages((messages) => messages.concat(message));
       }
       if (hasToastForMessage) {
         showMessage();
@@ -41,7 +41,7 @@ const useListenToSocket = (hasToastForMessage, setMessages, messages) => {
     socket.on('connect_error', (message) => {
       if (message.type != 'TransportError') {
         if (setMessages && messages) {
-          setMessages(messages.concat(message));
+          setMessages((messages) => messages.concat(message));
         }
         toast({
           title: 'Error',
