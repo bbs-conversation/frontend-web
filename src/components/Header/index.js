@@ -5,8 +5,6 @@ import {
   IconButton,
   Spacer,
   Text,
-  useColorMode,
-  useColorModeValue,
   useDisclosure,
   useMediaQuery,
 } from '@chakra-ui/react';
@@ -14,15 +12,13 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { BiUserCircle } from 'react-icons/bi';
-import { BsMoon } from 'react-icons/bs';
-import { FiSun } from 'react-icons/fi';
-import styled from 'styled-components';
 import { IoMenu } from 'react-icons/io5';
+import styled from 'styled-components';
 import { auth } from '../../config/firebase';
 import Menu from './Menu';
 
 const Header = ({ appName, withNav }) => {
-  const [user] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [scrolledEffects, showScrolledEffects] = useState(false);
@@ -41,7 +37,7 @@ const Header = ({ appName, withNav }) => {
         <Container maxW='container.xl'>
           <Flex>
             <Box px={1} py={3}>
-              <Link href='/home'>
+              <Link href={!loading && user ? '/home' : '/login'}>
                 <Text
                   fontWeight='bold'
                   fontSize={isLargerThan768 ? '3xl' : '2xl'}
