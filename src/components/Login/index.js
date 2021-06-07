@@ -66,11 +66,12 @@ const LoginPage = () => {
         withNav={false}
       />
       <Container maxW='container.xl'>
-        <Flex>
+        <Flex minHeight={'90vh'}>
           {loading && (
             <Button
               margin={'auto'}
               isLoading
+              border={'1px'}
               loadingText='Loading'
               colorScheme='gray'
               variant='outline'
@@ -86,8 +87,11 @@ const LoginPage = () => {
                   <Button
                     margin={'auto'}
                     rightIcon={<BiErrorCircle />}
-                    colorScheme='gray'
-                    variant='outline'
+                    border={'1px'}
+                    boxShadow={'lg'}
+                    fontSize={isLargerThan768 ? '26px' : '22px'}
+                    p={isLargerThan768 ? 7 : 6}
+                    borderRadius={isLargerThan768 ? 30 : 23}
                     isDisabled
                   >
                     An error occurred
@@ -101,10 +105,12 @@ const LoginPage = () => {
               <Button
                 margin={'auto'}
                 rightIcon={<FaMicrosoft />}
-                colorScheme='gray'
-                variant='outline'
+                border={'1px'}
+                boxShadow={'lg'}
                 onClick={loginWithMicrosoft}
-                fontSize='22px'
+                fontSize={isLargerThan768 ? '28px' : '24px'}
+                p={isLargerThan768 ? 7 : 6}
+                borderRadius={isLargerThan768 ? 30 : 23}
               >
                 Login with Microsoft
               </Button>
