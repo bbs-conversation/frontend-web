@@ -23,21 +23,18 @@ const useListenToSocket = (hasToastForMessage, setMessages, messages) => {
         pauseOnFocusLoss: true,
       });
     const messageListener = (message) => {
-      if (router.query.id) {
-        if (
-          router.query.id === message.recipient ||
-          message.senderName === 'Chat Bot'
-        ) {
-          if (setMessages && messages) {
-            setMessages((messages) => messages.concat(message));
-          }
-        } else {
-          showMessage();
+      if (
+        router.query.id === message.recipient ||
+        message.senderName === 'Chat Bot'
+      ) {
+        if (setMessages && messages) {
+          setMessages((messages) => messages.concat(message));
         }
       } else {
-        if (hasToastForMessage) {
-          showMessage();
+        if (setMessages && messages) {
+          setMessages((messages) => messages.concat(message));
         }
+        showMessage();
       }
     };
     socket.on('message', messageListener);

@@ -46,6 +46,9 @@ const HomePage = () => {
             textAlign='center'
             fontSize={isLargerThan768 ? '4xl' : '3xl'}
             as={'h3'}
+            mt={2}
+            fontWeight={'500'}
+            color={'#023047'}
           >
             Hello, {user?.displayName}!
           </Text>
@@ -60,7 +63,9 @@ const HomePage = () => {
           </>
         ) : (
           <>
-            <Text textAlign='center'>{quote}</Text>
+            <Text textAlign='center' color={'#023047'}>
+              {quote}
+            </Text>
           </>
         )}
         <NavigationGrid />

@@ -11,24 +11,32 @@ import React from 'react';
 import { BsArrowRightShort as BsArrowRight } from 'react-icons/bs';
 import styled from 'styled-components';
 
-const NavigationBlock = ({ title, linkDescription, link, icon, iconSize }) => {
+const NavigationBlock = ({
+  title,
+  linkDescription,
+  link,
+  icon,
+  iconSize,
+  bg,
+}) => {
   const textHeadingColor = useColorModeValue('black', 'gray.900');
   return (
     <>
       <Link href={link}>
         <WrapperBox
           w='100%'
-          minH='20'
-          bg='gray.100'
-          borderRadius={10}
+          minH='24'
+          borderRadius={18}
           p={2}
-          boxShadow={'md'}
+          bg={!bg ? 'white' : bg}
         >
           <Flex>
             <Text
               fontSize={'2xl'}
               color={textHeadingColor}
               alignSelf={'center'}
+              color={'#023047'}
+              fontWeight={500}
             >
               {title}
             </Text>
@@ -38,10 +46,11 @@ const NavigationBlock = ({ title, linkDescription, link, icon, iconSize }) => {
               fontSize={iconSize ? iconSize : 40}
               color={textHeadingColor}
               as={icon ? icon : BsArrowRight}
+              color={'#023047'}
             />
           </Flex>
           <Flex>
-            <Text fontSize={'sm'} color={textHeadingColor}>
+            <Text fontSize={'sm'} color={textHeadingColor} color={'#023047'}>
               {linkDescription}
             </Text>
           </Flex>
@@ -54,9 +63,11 @@ const NavigationBlock = ({ title, linkDescription, link, icon, iconSize }) => {
 export default NavigationBlock;
 
 const WrapperBox = styled(Box)`
-  transition: 0.3s !important;
+  transition: all 0.3s ease !important;
+  border: 2.5px solid #00b2ff;
+  box-shadow: 5px 6.4px 0px rgba(0, 87, 255, 0.81);
+
   &:hover {
-    box-shadow: 2px 2px 0px #d0d3d4 !important;
-    cursor: pointer !important;
+    box-shadow: 0.9px 0.9px 3px rgba(0, 87, 255, 0.81);
   }
 `;

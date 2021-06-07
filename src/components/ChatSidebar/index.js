@@ -19,6 +19,8 @@ const ChatSidebar = React.memo(({ onClose }) => {
   const [error, setError] = useState();
   useEffect(() => {
     setLoading(true);
+    console.log(tokenClaims);
+    console.log(token);
     if (!user) return;
     if (token === null) return;
     if (tokenClaims === null) return;
@@ -57,6 +59,7 @@ const ChatSidebar = React.memo(({ onClose }) => {
           setLoading(false);
         });
     } else if (!tokenClaims.counsellor) {
+      console.log('No claims');
       query.onSnapshot(
         {
           // Listen for document metadata changes
@@ -73,7 +76,7 @@ const ChatSidebar = React.memo(({ onClose }) => {
         }
       );
     }
-  }, [user, tokenClaims, db, token]);
+  }, [user, tokenClaims, token]);
 
   useEffect(() => {
     if (!loading && error) {
@@ -127,28 +130,30 @@ const ChatSidebar = React.memo(({ onClose }) => {
             ))}
         </>
       )}
-      {user && tokenClaims !== null && tokenClaims.counsellor === false && (
-        <>
-          {!loading && error && (
-            <Text color='red.500'>
-              {
-                'Sorry there was some error loading the content, please try again later'
-              }
-            </Text>
-          )}
-          {value &&
-            value.map((doc) => (
-              <React.Fragment key={doc.id}>
-                <ChatUser
-                  setChatSidebarOpen={onClose}
-                  name={doc.data().name}
-                  role={doc.data().role.displayRole}
-                  id={doc.id}
-                />
-              </React.Fragment>
-            ))}
-        </>
-      )}
+      {user &&
+        tokenClaims !== null &&
+        (!tokenClaims.counsellor || tokenClaims.counsellor === false) && (
+          <>
+            {!loading && error && (
+              <Text color='red.500'>
+                {
+                  'Sorry there was some error loading the content, please try again later'
+                }
+              </Text>
+            )}
+            {value &&
+              value.map((doc) => (
+                <React.Fragment key={doc.id}>
+                  <ChatUser
+                    setChatSidebarOpen={onClose}
+                    name={doc.data().name}
+                    role={doc.data().role.displayRole}
+                    id={doc.id}
+                  />
+                </React.Fragment>
+              ))}
+          </>
+        )}
     </Grid>
   );
 });

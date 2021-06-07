@@ -23,6 +23,7 @@ const NavigationGrid = () => {
           linkDescription={'with your counsellors privately'}
           link={'/counsellor-chat'}
           icon={BsChatDots}
+          bg={'#EAE4E9'}
           iconSize={32}
         />
         <NavigationBlock
@@ -30,10 +31,12 @@ const NavigationGrid = () => {
           link={'/appointments'}
           linkDescription={'with your counsellors'}
           icon={AiOutlineSchedule}
+          bg={'#FFF1E6'}
           iconSize={36}
         />
         <NavigationBlock
           link={'/request'}
+          bg={'#F0EFEB'}
           title={'Request'}
           linkDescription={
             'your counsellors for an appointment or a group session'
@@ -43,6 +46,7 @@ const NavigationGrid = () => {
         />
         <NavigationBlock
           link={'/group-sessions'}
+          bg={'#E2ECE9'}
           title={'Attend'}
           linkDescription={'a group session with your peers and counsellors'}
           icon={AiOutlineVideoCamera}
@@ -57,6 +61,7 @@ const NavigationGrid = () => {
       >
         <NavigationBlock
           link={'/'}
+          bg={'#E5E8EF'}
           title={'Mindful Activities'}
           linkDescription={'Do mindful activities to calm yourself'}
           icon={GiMeditation}
@@ -64,6 +69,7 @@ const NavigationGrid = () => {
         />
         <NavigationBlock
           title={'Resources and tips'}
+          bg={'#E9DDDE'}
           linkDescription={
             'Get access to resources and tips to help you in your tough times'
           }

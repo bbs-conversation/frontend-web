@@ -51,17 +51,18 @@ class MyDocument extends Document {
           ></script>
         </Head>
         <body
-        // style={{
-        //   backgroundImage:
-        //     'url(https://media.discordapp.net/attachments/763767615042224149/848662035348979772/Layer_2.png)',
-        // }}
-        // style={{
-        //   background:
-        //     'url(/images/mainbg.png) no-repeat center fixed !important',
-        //   backgroundSize: 'cover !important',
-        //   width: '100%',
-        //   minHeight: '100vh',
-        // }}
+          // style={{
+          //   backgroundImage:
+          //     'url(https://media.discordapp.net/attachments/763767615042224149/848662035348979772/Layer_2.png)',
+          // }}
+          // style={{
+          //   background:
+          //     'url(/images/background.webp) no-repeat center fixed !important',
+          //   backgroundSize: 'cover !important',
+          //   width: '100%',
+          //   minHeight: '100vh',
+          // }}
+          style={{ background: '#F0EEEA' }}
         >
           <Main />
           <NextScript />
