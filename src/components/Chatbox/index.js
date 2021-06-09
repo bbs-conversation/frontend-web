@@ -7,6 +7,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import 'firebase/firestore';
 import { auth } from '../../config/firebase';
 import { useSocket } from '../../context/providers/SocketProvider';
+import { textColor } from '../../config/globalVariables';
 
 const Chatbox = ({ messages, setMessages }) => {
   const [message, setMessage] = useState('');
@@ -71,10 +72,12 @@ const Chatbox = ({ messages, setMessages }) => {
         <Flex>
           <FormControl id='first-name' isRequired>
             <Input
+              bg={'#fff'}
               placeholder='Type in a message'
               onChange={(e) => setMessage(e.target.value)}
               value={message}
               autoComplete={'off'}
+              color={textColor}
               name='message'
             />
           </FormControl>
@@ -85,6 +88,7 @@ const Chatbox = ({ messages, setMessages }) => {
             fontSize='20px'
             icon={<IoSend />}
             isRound={true}
+            bg={'white'}
             marginLeft={3}
             type='submit'
           />
