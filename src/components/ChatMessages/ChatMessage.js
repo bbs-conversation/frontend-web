@@ -1,5 +1,6 @@
 import { Box, Flex, Spacer, Text, Tooltip } from '@chakra-ui/react';
 import React from 'react';
+import { textColor } from '../../config/globalVariables';
 
 const ChatMessage = ({ message, type, name, time }) => {
   return (
@@ -9,6 +10,7 @@ const ChatMessage = ({ message, type, name, time }) => {
           <Spacer />
           <Tooltip
             label={time && `At ${time && new Date(time).toString()}`}
+            color={textColor}
             hasArrow={true}
             bg='gray.300'
             color='black'
@@ -22,11 +24,14 @@ const ChatMessage = ({ message, type, name, time }) => {
               flexDirection={'column'}
               paddingRight={5}
               paddingLeft={5}
-              borderRadius={'12px'}
-              bg='gray.100'
+              borderRadius={'10px'}
+              border={'1px solid #5f5f5f21'}
+              bg='gray.200'
             >
-              <Text>{message}</Text>
-              <Text fontSize={'xs'}>By {name}</Text>
+              <Text color={textColor}>{message}</Text>
+              <Text color={textColor} fontSize={'xs'}>
+                By {name}
+              </Text>
             </Box>
           </Tooltip>
         </Flex>
@@ -35,6 +40,7 @@ const ChatMessage = ({ message, type, name, time }) => {
         <Flex width={'100%'}>
           <Tooltip
             label={time && `At ${time && new Date(time).toString()}`}
+            color={textColor}
             hasArrow={true}
             bg='gray.300'
             color='black'
@@ -48,11 +54,14 @@ const ChatMessage = ({ message, type, name, time }) => {
               flexDirection={'column'}
               paddingRight={5}
               paddingLeft={5}
-              borderRadius={'12px'}
-              bg='gray.100'
+              borderRadius={'10px'}
+              border={'1px solid #5f5f5f21'}
+              bg='gray.200'
             >
-              <Text>{message}</Text>
-              <Text fontSize={'xs'}>By {name}</Text>
+              <Text color={textColor}>{message}</Text>
+              <Text color={textColor} fontSize={'xs'}>
+                By {name}
+              </Text>
             </Box>
           </Tooltip>
           <Spacer />
@@ -62,6 +71,7 @@ const ChatMessage = ({ message, type, name, time }) => {
         <Flex flexDirection={'column'}>
           <Tooltip
             label={time && `At ${time && new Date(time).toString()}`}
+            color={textColor}
             hasArrow={true}
             bg='gray.300'
             color='black'
@@ -75,12 +85,17 @@ const ChatMessage = ({ message, type, name, time }) => {
               pb={1}
               paddingRight={5}
               paddingLeft={5}
-              borderRadius={'12px'}
-              bg='gray.100'
+              borderRadius={'10px'}
+              border={'1px solid #5f5f5f21'}
+              bg='gray.200'
             >
-              <Text fontSize={'xs'}>Chat Bot</Text>
+              <Text color={textColor} fontSize={'xs'}>
+                Chat Bot
+              </Text>
 
-              <Text fontSize={'sm'}>{message}</Text>
+              <Text color={textColor} fontSize={'sm'}>
+                {message}
+              </Text>
             </Box>
           </Tooltip>
         </Flex>
