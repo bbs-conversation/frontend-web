@@ -1,13 +1,8 @@
-import {
-  Flex,
-  IconButton,
-  Spacer,
-  Text,
-  useMediaQuery,
-} from '@chakra-ui/react';
+import { Button, Flex, Spacer, Text, useMediaQuery } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { IoMenu } from 'react-icons/io5';
+import { RiMenuUnfoldLine } from 'react-icons/ri';
+import { textColor } from '../../config/globalVariables';
 
 const ChatSectionHeader = ({ setChatSidebarOpen, chatSidebarOpen }) => {
   const router = useRouter();
@@ -15,17 +10,21 @@ const ChatSectionHeader = ({ setChatSidebarOpen, chatSidebarOpen }) => {
   return (
     <Flex>
       {!isLargerThan992 && (
-        <IconButton
-          size={'md'}
-          icon={<IoMenu />}
-          left={0}
-          alignSelf={'center'}
+        <Button
+          leftIcon={<RiMenuUnfoldLine />}
+          border={'1px'}
           onClick={setChatSidebarOpen}
-          mr={2}
-        />
+        >
+          Users
+        </Button>
       )}
       {!isLargerThan992 && <Spacer />}
-      <Text alignSelf={'center'} fontSize={'xl'} fontWeight={'semibold'}>
+      <Text
+        alignSelf={'center'}
+        fontSize={'xl'}
+        fontWeight={'semibold'}
+        color={textColor}
+      >
         {router.query.name}
       </Text>
     </Flex>
