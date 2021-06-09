@@ -10,6 +10,7 @@ import Link from 'next/link';
 import React from 'react';
 import { BsArrowRightShort as BsArrowRight } from 'react-icons/bs';
 import styled from 'styled-components';
+import { textColor } from '../../config/globalVariables';
 
 const NavigationBlock = ({
   title,
@@ -33,9 +34,8 @@ const NavigationBlock = ({
           <Flex>
             <Text
               fontSize={'2xl'}
-              color={textHeadingColor}
+              color={textColor}
               alignSelf={'center'}
-              color={'#023047'}
               fontWeight={500}
             >
               {title}
@@ -44,13 +44,12 @@ const NavigationBlock = ({
             <Icon
               alignSelf={'center'}
               fontSize={iconSize ? iconSize : 40}
-              color={textHeadingColor}
+              color={textColor}
               as={icon ? icon : BsArrowRight}
-              color={'#023047'}
             />
           </Flex>
           <Flex>
-            <Text fontSize={'sm'} color={textHeadingColor} color={'#023047'}>
+            <Text fontSize={'sm'} color={textColor}>
               {linkDescription}
             </Text>
           </Flex>

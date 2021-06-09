@@ -5,6 +5,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import Header from '../components/Header';
 import NavigationGrid from '../components/NavigationGrid';
 import { auth } from '../config/firebase';
+import { textColor } from '../config/globalVariables';
 import useListenToSocket from '../hooks/useListenToSocket';
 const HomePage = () => {
   useEffect(() => {
@@ -48,7 +49,7 @@ const HomePage = () => {
             as={'h3'}
             mt={2}
             fontWeight={'500'}
-            color={'#023047'}
+            color={textColor}
           >
             Hello, {user?.displayName}!
           </Text>
@@ -63,7 +64,7 @@ const HomePage = () => {
           </>
         ) : (
           <>
-            <Text textAlign='center' color={'#023047'}>
+            <Text textAlign='center' color={textColor}>
               {quote}
             </Text>
           </>

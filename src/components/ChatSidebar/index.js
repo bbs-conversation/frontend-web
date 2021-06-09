@@ -19,8 +19,6 @@ const ChatSidebar = React.memo(({ onClose }) => {
   const [error, setError] = useState();
   useEffect(() => {
     setLoading(true);
-    console.log(tokenClaims);
-    console.log(token);
     if (!user) return;
     if (token === null) return;
     if (tokenClaims === null) return;
@@ -59,7 +57,6 @@ const ChatSidebar = React.memo(({ onClose }) => {
           setLoading(false);
         });
     } else if (!tokenClaims.counsellor) {
-      console.log('No claims');
       query.onSnapshot(
         {
           // Listen for document metadata changes
@@ -85,7 +82,7 @@ const ChatSidebar = React.memo(({ onClose }) => {
   }, [error, loading]);
 
   return (
-    <Grid overflowY='auto'>
+    <Grid overflowY='auto' p={2}>
       {loading && (
         <>
           <Skeleton

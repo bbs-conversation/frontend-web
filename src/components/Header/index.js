@@ -9,12 +9,15 @@ import {
   useMediaQuery,
 } from '@chakra-ui/react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { BiUserCircle } from 'react-icons/bi';
+import { BiHome, BiUserCircle } from 'react-icons/bi';
+import { HiOutlineHome, HiHome } from 'react-icons/hi';
 import { IoMenu } from 'react-icons/io5';
 import styled from 'styled-components';
 import { auth } from '../../config/firebase';
+import { textColor } from '../../config/globalVariables';
 import Menu from './Menu';
 
 const Header = ({ appName, withNav }) => {
@@ -22,6 +25,8 @@ const Header = ({ appName, withNav }) => {
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [scrolledEffects, showScrolledEffects] = useState(false);
+  const [homeIconHovered, setHomeIconHovered] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
@@ -35,17 +40,43 @@ const Header = ({ appName, withNav }) => {
     <>
       <NavWrapper boxShadow={scrolledEffects ? true : false}>
         <Container maxW='container.xl'>
-          <Flex>
+          <Flex justifyContent={'center'} alignItems={'center'}>
             <Box px={1} py={3}>
               <Link href={!loading && user ? '/home' : '/login'}>
-                <Text
-                  fontWeight='bold'
-                  fontSize={isLargerThan768 ? '3xl' : '2xl'}
-                  color={'#ffffff'}
-                  as={'h1'}
-                >
-                  {appName}
-                </Text>
+                {router.asPath === '/home' ||
+                router.asPath === '/login' ||
+                router.asPath === '/redirect' ||
+                router.asPath === '/' ? (
+                  <>
+                    <Text
+                      fontWeight='bold'
+                      fontSize={isLargerThan768 ? '3xl' : '2xl'}
+                      color={'#ffffff'}
+                      as={'h1'}
+                    >
+                      {appName}
+                    </Text>
+                  </>
+                ) : (
+                  <>
+                    {homeIconHovered === false && (
+                      <HiOutlineHome
+                        fontSize={35}
+                        color={'#ffffff'}
+                        onMouseEnter={() => setHomeIconHovered(true)}
+                      />
+                    )}
+                    {homeIconHovered === true && (
+                      <Link href={!loading && user ? '/home' : '/login'}>
+                        <HiHome
+                          fontSize={35}
+                          color={'#ffffff'}
+                          onMouseLeave={() => setHomeIconHovered(false)}
+                        />
+                      </Link>
+                    )}
+                  </>
+                )}
               </Link>
             </Box>
             <Spacer />
@@ -57,6 +88,7 @@ const Header = ({ appName, withNav }) => {
                 alignSelf={'center'}
                 onClick={() => auth.signOut()}
                 marginRight={2}
+                color={textColor}
               />
             )}
             {/* <IconButton
@@ -76,6 +108,7 @@ const Header = ({ appName, withNav }) => {
                   right={0}
                   alignSelf={'center'}
                   onClick={onOpen}
+                  color={textColor}
                 />
               </>
             )}
