@@ -12,8 +12,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { BiHome, BiUserCircle } from 'react-icons/bi';
-import { HiOutlineHome, HiHome } from 'react-icons/hi';
+import { BiUserCircle } from 'react-icons/bi';
+import { HiHome, HiOutlineHome } from 'react-icons/hi';
 import { IoMenu } from 'react-icons/io5';
 import styled from 'styled-components';
 import { auth } from '../../config/firebase';
@@ -60,11 +60,13 @@ const Header = ({ appName, withNav }) => {
                 ) : (
                   <>
                     {homeIconHovered === false && (
-                      <HiOutlineHome
-                        fontSize={35}
-                        color={'#ffffff'}
-                        onMouseEnter={() => setHomeIconHovered(true)}
-                      />
+                      <Link href={!loading && user ? '/home' : '/login'}>
+                        <HiOutlineHome
+                          fontSize={35}
+                          color={'#ffffff'}
+                          onMouseEnter={() => setHomeIconHovered(true)}
+                        />
+                      </Link>
                     )}
                     {homeIconHovered === true && (
                       <Link href={!loading && user ? '/home' : '/login'}>
