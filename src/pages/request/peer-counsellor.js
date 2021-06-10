@@ -42,7 +42,7 @@ const PeerCounsellorAppointment = () => {
     return id.id === slot;
   }
   const formData = {
-    approved: true,
+    approved: false,
     forUser: user?.uid,
     sessionName,
     teacher,

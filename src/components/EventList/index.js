@@ -1,25 +1,7 @@
 import { Flex, Grid, GridItem, Text, useMediaQuery } from '@chakra-ui/react';
 import React from 'react';
 
-const EventList = ({ name, startTime, endTime }) => {
-  const start = startTime.toDate();
-  const end = endTime.toDate();
-
-  let monthArray = [];
-  monthArray[0] = 'January';
-  monthArray[1] = 'February';
-  monthArray[2] = 'March';
-  monthArray[3] = 'April';
-  monthArray[4] = 'May';
-  monthArray[5] = 'June';
-  monthArray[6] = 'July';
-  monthArray[7] = 'August';
-  monthArray[8] = 'September';
-  monthArray[9] = 'October';
-  monthArray[10] = 'November';
-  monthArray[11] = 'December';
-  const month = monthArray[start.getMonth()];
-
+const EventList = ({ name, time }) => {
   const [isLargerThan576] = useMediaQuery('(min-width: 576)');
 
   return (
@@ -38,7 +20,7 @@ const EventList = ({ name, startTime, endTime }) => {
             color={'white'}
             textAlign='center'
           >
-            {start.getDate()}
+            {/* {start.getDate()} */}
           </Text>
           <Text
             fontSize={'xs'}
@@ -46,7 +28,7 @@ const EventList = ({ name, startTime, endTime }) => {
             color={'white'}
             textAlign='center'
           >
-            {month} {start.getFullYear()}
+            {/* {month} {start.getFullYear()} */}
           </Text>
         </Flex>
       </GridItem>
@@ -80,8 +62,7 @@ const EventList = ({ name, startTime, endTime }) => {
             alignSelf={'center'}
             justifyContent='end'
           >
-            {start.getHours()}:{start.getMinutes()} - {end.getHours()}:
-            {end.getMinutes()}
+            {time}
           </Text>
         </Flex>
       </GridItem>

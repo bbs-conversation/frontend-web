@@ -31,10 +31,11 @@ const useListenToSocket = (hasToastForMessage, setMessages, messages) => {
           setMessages((messages) => messages.concat(message));
         }
       } else {
-        if (setMessages && messages) {
+        if (setMessages && messages && message === user?.uid) {
           setMessages((messages) => messages.concat(message));
+        } else {
+          showMessage();
         }
-        showMessage();
       }
     };
     socket.on('message', messageListener);

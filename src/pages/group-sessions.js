@@ -29,42 +29,17 @@ const AppointmentPage = () => {
     ssr: false,
   });
 
-  const today = new Date();
-  const month = ('0' + (today.getMonth() + 1)).slice(-2);
-  const day = ('0' + today.getDate()).slice(-2);
-  const todayFormatted = `${today.getFullYear()}-${month}-${day}`;
-  const [filterDateValue, setFilterDateValue] = useState(todayFormatted);
-  const [radioValue, setRadioValue] = useState('1');
   const [user] = useAuthState(auth);
-  let dateFilterDate = new Date(filterDateValue || todayFormatted);
-  let startHours = new Date(dateFilterDate.setHours(0, 0, 0));
-  let startTime = dbTimestamp.fromDate(startHours);
-  let endHours = new Date(dateFilterDate.setHours(23, 59, 59));
-  let endTime = dbTimestamp.fromDate(endHours);
-  const queryByDate = db
-    .collection('groupSessions')
-    .where('display', '==', 'public')
-    .where('startTime', '>=', startTime)
-    .where('startTime', '<=', endTime)
-    .orderBy('startTime');
 
   const queryAll = db
-    .collection('groupSessions')
-    .where('display', '==', 'public')
-    .orderBy('startTime')
+    .collection('appointments')
+    .where('forUser', '==', 'all')
+    .where('approved', '==', true)
+    .where('type', '==', 'groupSession')
+    .orderBy('createdAt')
     .limit(10);
 
-  const getQuery = () => {
-    if (radioValue == '1') {
-      return queryByDate;
-    } else if (radioValue == '2') {
-      return queryAll;
-    } else {
-      return queryAll;
-    }
-  };
-
-  const [value, loading, error] = useCollection(getQuery());
+  const [value, loading, error] = useCollection(queryAll);
 
   useEffect(() => {
     if (error) {
@@ -81,7 +56,7 @@ const AppointmentPage = () => {
         <title>Conversations | Group Sessions</title>
       </Head>
       <Header appName={'Conversations'} withNav={true} />
-      <Container maxW='container.xl' width={'100%'}>
+      <Container maxW='container.xl' width={'100%'} mt={2}>
         <Flex
           px={2}
           flexDirection={isLargerThan576 ? 'row' : 'column'}
@@ -91,33 +66,6 @@ const AppointmentPage = () => {
             Group Session
           </Text>
           {isLargerThan576 && <Spacer />}
-          <RadioGroup
-            onChange={setRadioValue}
-            value={radioValue}
-            alignSelf='center'
-            mr={isLargerThan576 && 3}
-          >
-            <Stack direction='row'>
-              <Radio value={'1'}>
-                <Tooltip label='See all your group sessions by date'>
-                  By Date
-                </Tooltip>
-              </Radio>
-              <Radio value={'2'}>
-                <Tooltip label='See all your group sessions limited to 10'>
-                  Show All
-                </Tooltip>
-              </Radio>
-            </Stack>
-          </RadioGroup>
-          <Input
-            disabled={radioValue === '2' ? true : false}
-            placeholder='Filter by Date'
-            type='date'
-            maxWidth={'25vh'}
-            value={filterDateValue}
-            onChange={(e) => setFilterDateValue(e.target.value)}
-          />
         </Flex>
         <Grid p={2}>
           {loading && (
@@ -138,10 +86,7 @@ const AppointmentPage = () => {
           )}
           {value && value.docs.length < 1 && (
             <>
-              <Text>
-                No content found
-                {radioValue === '1' && ` for ${filterDateValue}`}
-              </Text>
+              <Text>No content found</Text>
             </>
           )}
           {value &&
@@ -149,8 +94,7 @@ const AppointmentPage = () => {
               <React.Fragment key={doc.id}>
                 <EventList
                   name={doc.data().sessionName}
-                  startTime={doc.data().startTime}
-                  endTime={doc.data().endTime}
+                  time={doc.data().time}
                 />
               </React.Fragment>
             ))}
