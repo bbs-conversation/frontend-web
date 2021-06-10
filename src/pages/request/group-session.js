@@ -48,10 +48,7 @@ const GroupSession = () => {
     sessionName,
     teacher,
     timeSlotId: slot,
-    startTime:
-      timeSlots && slot && timeSlots?.docs?.find(timeSlotById).data().from,
-    endTime:
-      timeSlots && slot && timeSlots?.docs?.find(timeSlotById).data().till,
+    time: timeSlots && slot && timeSlots?.docs?.find(timeSlotById).data().name,
     type: 'groupSession',
     createdAt: dbCurrentTime,
   };
@@ -157,7 +154,9 @@ const GroupSession = () => {
               >
                 {timeSlots &&
                   timeSlots.docs.map((c) => (
-                    <option value={c.id}>{c.data().name}</option>
+                    <option key={c.id} value={c.id}>
+                      {c.data().name}
+                    </option>
                   ))}
               </Select>
             </FormControl>

@@ -42,15 +42,12 @@ const PeerCounsellorAppointment = () => {
     return id.id === slot;
   }
   const formData = {
-    approved: false,
+    approved: true,
     forUser: user?.uid,
     sessionName,
     teacher,
     timeSlotId: slot,
-    startTime:
-      timeSlots && slot && timeSlots?.docs?.find(timeSlotById).data().from,
-    endTime:
-      timeSlots && slot && timeSlots?.docs?.find(timeSlotById).data().till,
+    time: timeSlots && slot && timeSlots?.docs?.find(timeSlotById).data().name,
     type: 'peerCounsellor',
     createdAt: dbCurrentTime,
   };
@@ -156,7 +153,9 @@ const PeerCounsellorAppointment = () => {
               >
                 {timeSlots &&
                   timeSlots.docs.map((c) => (
-                    <option value={c.id}>{c.data().name}</option>
+                    <option value={c.id} key={c.id}>
+                      {c.data().name}
+                    </option>
                   ))}
               </Select>
             </FormControl>
