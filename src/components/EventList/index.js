@@ -1,7 +1,7 @@
 import { Flex, Grid, GridItem, Text, useMediaQuery } from '@chakra-ui/react';
 import React from 'react';
 
-const EventList = ({ name, time }) => {
+const EventList = React.memo(({ name, time }) => {
   const [isLargerThan576] = useMediaQuery('(min-width: 576)');
 
   return (
@@ -68,6 +68,6 @@ const EventList = ({ name, time }) => {
       </GridItem>
     </Grid>
   );
-};
+});
 
 export default EventList;

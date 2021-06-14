@@ -5,7 +5,6 @@ import {
   Input,
   Radio,
   RadioGroup,
-  Skeleton,
   Spacer,
   Stack,
   Text,
@@ -16,9 +15,9 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useCollection } from 'react-firebase-hooks/firestore';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import Header from '../components/Header';
-import { auth, db, dbTimestamp } from '../config/firebase';
+import { auth, db } from '../config/firebase';
 import useListenToSocket from '../hooks/useListenToSocket';
 
 const AppointmentPage = () => {
@@ -34,43 +33,61 @@ const AppointmentPage = () => {
   const [filterDateValue, setFilterDateValue] = useState(todayFormatted);
   const [radioValue, setRadioValue] = useState('1');
   const [user] = useAuthState(auth);
-  let dateFilterDate = new Date(filterDateValue || todayFormatted);
-  let startHours = new Date(dateFilterDate.setHours(0, 0, 0));
-  let startTime = dbTimestamp.fromDate(startHours);
-  let endHours = new Date(dateFilterDate.setHours(23, 59, 59));
-  let endTime = dbTimestamp.fromDate(endHours);
-  const queryByDate = db
-    .collection('appointments')
-    .where('forUser', '==', user?.uid || null)
-    .where('startTime', '>=', startTime)
-    .where('startTime', '<=', endTime)
-    .where('approved', '==', true)
-    .orderBy('startTime');
 
-  const queryAll = db
-    .collection('appointments')
-    .where('forUser', '==', user?.uid || null)
-    .where('approved', '==', true)
-    .orderBy('startTime')
-    .limit(10);
-
-  const getQuery = () => {
-    if (radioValue == '1') {
-      return queryByDate;
-    } else if (radioValue == '2') {
-      return queryAll;
-    } else {
-      return queryAll;
-    }
-  };
-
-  const [value, loading, error] = useCollection(getQuery());
-
+  const [data, setData] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
   useEffect(() => {
-    if (error) {
-      console.error(error);
-    }
-  }, [error]);
+    const query = db
+      .collection('appointments')
+      .where('forUser', '==', user?.uid || null)
+      .where('approved', '==', true)
+      .where('type', 'in', ['peerCounsellor', 'counsellor'])
+      .orderBy('createdAt')
+      .limit(10);
+    if (hasMore == false) return;
+    query
+      .get()
+      .then((data) => {
+        if (data.empty || data.docs.length < 10) {
+          setHasMore(false);
+        } else {
+          setHasMore(true);
+        }
+        setData(data.docs);
+      })
+      .catch((err) => {
+        setData([]);
+        setHasMore(false);
+        console.error(err);
+      });
+  }, []);
+
+  const fetchNextData = (lastDoc) => {
+    const query = db
+      .collection('appointments')
+      .where('forUser', '==', user?.uid || null)
+      .where('approved', '==', true)
+      .where('type', 'in', ['peerCounsellor', 'counsellor'])
+      .orderBy('createdAt')
+      .startAfter(lastDoc)
+      .limit(10);
+    if (hasMore == false) return;
+    query
+      .get()
+      .then((data) => {
+        if (data.empty || data.docs.length < 10) {
+          setHasMore(false);
+        } else {
+          setHasMore(true);
+        }
+        setData((prevData) => prevData.concat(data.docs));
+      })
+      .catch((err) => {
+        setData([]);
+        setHasMore(false);
+        console.error(err);
+      });
+  };
 
   const [isLargerThan576] = useMediaQuery('(min-width: 576px)');
   return (
@@ -79,79 +96,27 @@ const AppointmentPage = () => {
         <title>Conversations | Appointments</title>
       </Head>
       <Header appName={'Conversations'} withNav={true} />
-      <Container maxW='container.xl' width={'100%'}>
-        <Flex
-          px={2}
-          flexDirection={isLargerThan576 ? 'row' : 'column'}
-          alignItems={!isLargerThan576 && 'center'}
-        >
-          <Text fontSize={'xl'} fontWeight={'semibold'} textAlign={'center'}>
-            Appointments
-          </Text>
-          {isLargerThan576 && <Spacer />}
-          <RadioGroup
-            onChange={setRadioValue}
-            value={radioValue}
-            alignSelf='center'
-            mr={isLargerThan576 && 3}
-          >
-            <Stack direction='row'>
-              <Radio value={'1'}>
-                <Tooltip label='See all your appointments by date'>
-                  By Date
-                </Tooltip>
-              </Radio>
-              <Radio value={'2'}>
-                <Tooltip label='See all your appointments limited to 10'>
-                  Show All
-                </Tooltip>
-              </Radio>
-            </Stack>
-          </RadioGroup>
-          <Input
-            disabled={radioValue === '2' ? true : false}
-            placeholder='Filter by Date'
-            type='date'
-            maxWidth={'25vh'}
-            value={filterDateValue}
-            onChange={(e) => setFilterDateValue(e.target.value)}
-          />
-        </Flex>
+      <Container maxW='container.xl' width={'100%'} mt={2}>
+        <Text fontSize={'xl'} fontWeight={'semibold'} textAlign={'center'}>
+          Appointments
+        </Text>
         <Grid p={2}>
-          {loading && (
-            <>
-              <Skeleton height={'70px'} marginTop={0} marginBottom={2} />
-              <Skeleton height={'70px'} marginTop={2} marginBottom={2} />
-              <Skeleton height={'70px'} marginTop={2} marginBottom={2} />
-              <Skeleton height={'70px'} marginTop={2} marginBottom={2} />
-              <Skeleton height={'70px'} marginTop={2} marginBottom={2} />
-            </>
-          )}
-          {error && (
-            <Text color='red'>
-              {
-                'Sorry there was some error loading the content, please try again later'
-              }
-            </Text>
-          )}
-          {value && value.docs.length < 1 && (
-            <>
-              <Text>
-                No content found
-                {radioValue === '1' && ` for ${filterDateValue}`}
-              </Text>
-            </>
-          )}
-          {value &&
-            value.docs.map((doc) => (
-              <React.Fragment key={doc.id}>
-                <EventList
-                  name={doc.data().sessionName}
-                  startTime={doc.data().startTime}
-                  endTime={doc.data().endTime}
-                />
-              </React.Fragment>
-            ))}
+          <InfiniteScroll
+            dataLength={data.length}
+            next={() => fetchNextData(data[data.length - 1])}
+            hasMore={hasMore}
+            loader={<h4>Loading...</h4>}
+            endMessage={
+              <p style={{ textAlign: 'center' }}>
+                <b>End of the appointments</b>
+              </p>
+            }
+          >
+            {data &&
+              data.map((doc) => (
+                <EventList key={doc.id} name={doc.data().sessionName} />
+              ))}
+          </InfiniteScroll>
         </Grid>
       </Container>
     </>

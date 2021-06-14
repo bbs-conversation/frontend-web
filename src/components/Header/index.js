@@ -40,7 +40,11 @@ const Header = ({ appName, withNav }) => {
     <>
       <NavWrapper boxShadow={scrolledEffects ? true : false}>
         <Container maxW='container.xl'>
-          <Flex justifyContent={'center'} alignItems={'center'}>
+          <Flex
+            justifyContent={'center'}
+            alignItems={'center'}
+            height={isLargerThan768 && '69px'}
+          >
             <Box px={1} py={3}>
               <Link href={!loading && user ? '/home' : '/login'}>
                 {router.asPath === '/home' ||
