@@ -1,4 +1,5 @@
 const textColor = '#023047';
+const dev = process.env.NODE_ENV !== 'production';
 const bgColorsChatUser = [
   '#F0EFEB',
   '#F6FCD4',
@@ -13,4 +14,4 @@ const bgColorsChatUser = [
   '#FFD4CB',
 ];
 
-export { textColor, bgColorsChatUser };
+export { textColor, bgColorsChatUser, dev };

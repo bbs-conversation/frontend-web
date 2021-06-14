@@ -31,6 +31,7 @@ class MyDocument extends Document {
     return (
       <Html lang='en'>
         <Head>
+          <link rel='shortcut icon' type='image/png' href='/icon-512x512.png' />
           <link rel='preconnect' href='https://fonts.gstatic.com' />
           <link
             href='https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'
@@ -43,12 +44,23 @@ class MyDocument extends Document {
             href='/static/icons/safari-pinned-tab.svg'
             color='#5bbad5'
           />
-
-          <script
-            data-ad-client='ca-pub-9945040118733921'
-            async
-            src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
-          ></script>
+          <meta
+            name='title'
+            content='Conversations by Bluebells | An app to communicate privately'
+          />
+          <meta
+            name='description'
+            content='Conversations is an app developed for the students by the students, this solves the challenge of communicating privately with their school counsellors'
+          />
+          <meta
+            name='keywords'
+            content='Bluebells School International, conversations, private Chat, School students, counseling app'
+          />
+          <meta name='robots' content='index, follow' />
+          <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+          <meta name='language' content='English' />
+          <meta name='revisit-after' content='1 days' />
+          <meta name='author' content='Yashraj Pahwa' />
         </Head>
         <body
           style={{

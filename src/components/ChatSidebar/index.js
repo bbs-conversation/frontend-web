@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { auth, db } from '../../config/firebase';
+import { dev } from '../../config/globalVariables';
 import ChatUser from '../Chatuser';
 
 const ChatSidebar = React.memo(({ onClose }) => {
@@ -10,8 +11,11 @@ const ChatSidebar = React.memo(({ onClose }) => {
   const [tokenClaims, setTokenClaims] = useState(null);
   const [token, setToken] = useState(null);
   useEffect(() => {
-    user && user.getIdTokenResult(true).then((t) => setTokenClaims(t.claims));
-    user && user.getIdToken(true).then((t) => setToken(t));
+    user &&
+      user
+        .getIdTokenResult(dev ? true : false)
+        .then((t) => setTokenClaims(t.claims));
+    user && user.getIdToken(dev ? true : false).then((t) => setToken(t));
   }, [user]);
 
   const [value, setValue] = useState();

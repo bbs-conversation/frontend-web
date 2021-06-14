@@ -48,9 +48,6 @@ const Menu = ({ onClose, isOpen }) => {
               <ChakraLink fontSize={20} as={Link} href={'/request'}>
                 Request
               </ChakraLink>
-              <ChakraLink fontSize={20} as={Link} href={'/group-sessions'}>
-                Group sessions
-              </ChakraLink>
               <ChakraLink fontSize={20} as={Link} href={'#'}>
                 Mindfullness activities
               </ChakraLink>

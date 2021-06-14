@@ -1,16 +1,4 @@
-import {
-  Container,
-  Flex,
-  Grid,
-  Input,
-  Radio,
-  RadioGroup,
-  Spacer,
-  Stack,
-  Text,
-  Tooltip,
-  useMediaQuery,
-} from '@chakra-ui/react';
+import { Container, Grid, Progress, Spinner, Text } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
@@ -18,6 +6,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Header from '../components/Header';
 import { auth, db } from '../config/firebase';
+import { dev } from '../config/globalVariables';
 import useListenToSocket from '../hooks/useListenToSocket';
 
 const AppointmentPage = () => {
@@ -26,23 +15,29 @@ const AppointmentPage = () => {
     ssr: false,
   });
 
-  const today = new Date();
-  const month = ('0' + (today.getMonth() + 1)).slice(-2);
-  const day = ('0' + today.getDate()).slice(-2);
-  const todayFormatted = `${today.getFullYear()}-${month}-${day}`;
-  const [filterDateValue, setFilterDateValue] = useState(todayFormatted);
-  const [radioValue, setRadioValue] = useState('1');
   const [user] = useAuthState(auth);
+
+  const [tokenResult, setTokenResult] = useState(undefined);
+  useEffect(() => {
+    user &&
+      user.getIdTokenResult(dev ? true : false).then((t) => setTokenResult(t));
+  }, [user]);
 
   const [data, setData] = useState([]);
   const [hasMore, setHasMore] = useState(true);
+  const [isError, setIsError] = useState(false);
   useEffect(() => {
+    if (!tokenResult) return;
     const query = db
       .collection('appointments')
-      .where('forUser', '==', user?.uid || null)
+      .where(
+        tokenResult.claims.counsellor ? 'teacher' : 'forUser',
+        '==',
+        user?.uid
+      )
       .where('approved', '==', true)
       .where('type', 'in', ['peerCounsellor', 'counsellor'])
-      .orderBy('createdAt')
+      .orderBy('createdAt', 'desc')
       .limit(10);
     if (hasMore == false) return;
     query
@@ -54,21 +49,28 @@ const AppointmentPage = () => {
           setHasMore(true);
         }
         setData(data.docs);
+        setIsError(false);
       })
       .catch((err) => {
         setData([]);
         setHasMore(false);
+        setIsError(true);
         console.error(err);
       });
-  }, []);
+  }, [tokenResult]);
 
   const fetchNextData = (lastDoc) => {
+    if (!tokenResult) return;
     const query = db
       .collection('appointments')
-      .where('forUser', '==', user?.uid || null)
+      .where(
+        tokenResult.claims.counsellor ? 'teacher' : 'forUser',
+        '==',
+        user?.uid || null
+      )
       .where('approved', '==', true)
       .where('type', 'in', ['peerCounsellor', 'counsellor'])
-      .orderBy('createdAt')
+      .orderBy('createdAt', 'desc')
       .startAfter(lastDoc)
       .limit(10);
     if (hasMore == false) return;
@@ -89,7 +91,7 @@ const AppointmentPage = () => {
       });
   };
 
-  const [isLargerThan576] = useMediaQuery('(min-width: 576px)');
+  // const [isLargerThan576] = useMediaQuery('(min-width: 576px)');
   return (
     <>
       <Head>
@@ -100,23 +102,38 @@ const AppointmentPage = () => {
         <Text fontSize={'xl'} fontWeight={'semibold'} textAlign={'center'}>
           Appointments
         </Text>
+
         <Grid p={2}>
-          <InfiniteScroll
-            dataLength={data.length}
-            next={() => fetchNextData(data[data.length - 1])}
-            hasMore={hasMore}
-            loader={<h4>Loading...</h4>}
-            endMessage={
-              <p style={{ textAlign: 'center' }}>
-                <b>End of the appointments</b>
-              </p>
-            }
-          >
-            {data &&
-              data.map((doc) => (
-                <EventList key={doc.id} name={doc.data().sessionName} />
-              ))}
-          </InfiniteScroll>
+          {isError ? (
+            <Text fontSize={'lg'} textAlign={'center'} color={'red'}>
+              An error occurred, please try again later
+            </Text>
+          ) : (
+            <InfiniteScroll
+              dataLength={data.length}
+              next={() => fetchNextData(data[data.length - 1])}
+              hasMore={hasMore}
+              loader={
+                <center>
+                  <Spinner size='lg' />
+                </center>
+              }
+              scrollThreshold={0.9}
+              endMessage={
+                <Text textAlign={'center'}>
+                  <b>No more appointments found</b>
+                </Text>
+              }
+            >
+              {data &&
+                data.map((doc) => (
+                  <React.Fragment key={doc.id}>
+                    <Text>{doc.data().createdAt.toDate().toString()}</Text>
+                    <EventList key={doc.id} name={doc.data().sessionName} />
+                  </React.Fragment>
+                ))}
+            </InfiniteScroll>
+          )}
         </Grid>
       </Container>
     </>

@@ -5,6 +5,7 @@ import React, { useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../config/firebase';
 import useListenToSocket from '../hooks/useListenToSocket';
+import paths from '../config/paths.json';
 
 const Redirect = () => {
   const router = useRouter();
@@ -13,6 +14,7 @@ const Redirect = () => {
   useListenToSocket(true);
   useEffect(() => {
     if (path) {
+      if (!paths.includes(path)) return router.push('/home');
       router.push(path);
     } else if (user) {
       router.push('/home');

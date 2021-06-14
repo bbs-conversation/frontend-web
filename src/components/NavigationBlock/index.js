@@ -20,7 +20,6 @@ const NavigationBlock = ({
   iconSize,
   bg,
 }) => {
-  const textHeadingColor = useColorModeValue('black', 'gray.900');
   return (
     <>
       <Link href={link}>

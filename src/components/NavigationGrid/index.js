@@ -14,7 +14,7 @@ const NavigationGrid = () => {
   return (
     <>
       <Grid
-        templateColumns='repeat(auto-fill, minmax(260px, 1fr))'
+        templateColumns='repeat(auto-fill, minmax(295px, 1fr))'
         gap={6}
         marginTop={5}
       >
@@ -44,18 +44,10 @@ const NavigationGrid = () => {
           icon={AiOutlineQuestion}
           iconSize={32}
         />
-        <NavigationBlock
-          link={'/group-sessions'}
-          bg={'#E2ECE9'}
-          title={'Attend'}
-          linkDescription={'a group session with your peers and counsellors'}
-          icon={AiOutlineVideoCamera}
-          iconSize={33}
-        />
       </Grid>
 
       <Grid
-        templateColumns='repeat(auto-fill, max(260px, 1fr))'
+        templateColumns='repeat(auto-fill, max(295px, 1fr))'
         gap={6}
         marginTop={5}
       >
